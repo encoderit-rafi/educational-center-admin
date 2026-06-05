@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
+import { Route as ZohoSuccessIndexRouteImport } from './routes/zoho-success/index'
+import { Route as ZohoFailedIndexRouteImport } from './routes/zoho-failed/index'
 import { Route as AuthRoutecopyRouteImport } from './routes/_auth/route copy'
 import { Route as AuthResetPasswordIndexRouteImport } from './routes/_auth/reset-password/index'
 import { Route as AuthLoginIndexRouteImport } from './routes/_auth/login/index'
@@ -43,6 +45,16 @@ const AuthRouteRoute = AuthRouteRouteImport.update({
 } as any)
 const AppRouteRoute = AppRouteRouteImport.update({
   id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ZohoSuccessIndexRoute = ZohoSuccessIndexRouteImport.update({
+  id: '/zoho-success/',
+  path: '/zoho-success/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ZohoFailedIndexRoute = ZohoFailedIndexRouteImport.update({
+  id: '/zoho-failed/',
+  path: '/zoho-failed/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoutecopyRoute = AuthRoutecopyRouteImport.update({
@@ -175,6 +187,8 @@ const AppDashboardIndexRoute = AppDashboardIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof AppDashboardIndexRoute
   '/route copy': typeof AuthRoutecopyRoute
+  '/zoho-failed/': typeof ZohoFailedIndexRoute
+  '/zoho-success/': typeof ZohoSuccessIndexRoute
   '/consultations/': typeof AppConsultationsIndexRoute
   '/contacts/': typeof AppContactsIndexRoute
   '/course-bookings/': typeof AppCourseBookingsIndexRoute
@@ -202,6 +216,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof AppDashboardIndexRoute
   '/route copy': typeof AuthRoutecopyRoute
+  '/zoho-failed': typeof ZohoFailedIndexRoute
+  '/zoho-success': typeof ZohoSuccessIndexRoute
   '/consultations': typeof AppConsultationsIndexRoute
   '/contacts': typeof AppContactsIndexRoute
   '/course-bookings': typeof AppCourseBookingsIndexRoute
@@ -231,6 +247,8 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteRouteWithChildren
   '/_auth': typeof AuthRouteRouteWithChildren
   '/_auth/route copy': typeof AuthRoutecopyRoute
+  '/zoho-failed/': typeof ZohoFailedIndexRoute
+  '/zoho-success/': typeof ZohoSuccessIndexRoute
   '/_app/_dashboard/': typeof AppDashboardIndexRoute
   '/_app/consultations/': typeof AppConsultationsIndexRoute
   '/_app/contacts/': typeof AppContactsIndexRoute
@@ -261,6 +279,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/route copy'
+    | '/zoho-failed/'
+    | '/zoho-success/'
     | '/consultations/'
     | '/contacts/'
     | '/course-bookings/'
@@ -288,6 +308,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/route copy'
+    | '/zoho-failed'
+    | '/zoho-success'
     | '/consultations'
     | '/contacts'
     | '/course-bookings'
@@ -316,6 +338,8 @@ export interface FileRouteTypes {
     | '/_app'
     | '/_auth'
     | '/_auth/route copy'
+    | '/zoho-failed/'
+    | '/zoho-success/'
     | '/_app/_dashboard/'
     | '/_app/consultations/'
     | '/_app/contacts/'
@@ -345,6 +369,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   AppRouteRoute: typeof AppRouteRouteWithChildren
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
+  ZohoFailedIndexRoute: typeof ZohoFailedIndexRoute
+  ZohoSuccessIndexRoute: typeof ZohoSuccessIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -361,6 +387,20 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AppRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/zoho-success/': {
+      id: '/zoho-success/'
+      path: '/zoho-success'
+      fullPath: '/zoho-success/'
+      preLoaderRoute: typeof ZohoSuccessIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/zoho-failed/': {
+      id: '/zoho-failed/'
+      path: '/zoho-failed'
+      fullPath: '/zoho-failed/'
+      preLoaderRoute: typeof ZohoFailedIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_auth/route copy': {
@@ -614,6 +654,8 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   AppRouteRoute: AppRouteRouteWithChildren,
   AuthRouteRoute: AuthRouteRouteWithChildren,
+  ZohoFailedIndexRoute: ZohoFailedIndexRoute,
+  ZohoSuccessIndexRoute: ZohoSuccessIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
