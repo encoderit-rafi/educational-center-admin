@@ -15,6 +15,7 @@ export interface Exam {
   totalFee: string | null
   examType: unknown | null
   parentId: string | null
+  examFormRedirectUrl: string | null
   isActive: boolean | null
   createdAt: string
   updatedAt: string
@@ -39,6 +40,7 @@ export interface CreateExamInput {
   vat_rate: number
   total_fee: number
   parent_id?: string
+  exam_form_redirect_url?: string
   is_active?: boolean
 }
 

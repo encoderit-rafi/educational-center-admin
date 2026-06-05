@@ -168,3 +168,16 @@ export function useDeleteCourseBooking() {
     },
   })
 }
+
+export function useArrangeCourses() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async (items: { id: string; order_index: number }[]) => {
+      const res = await api.put('/admin/courses/arrange-order', { items })
+      return res.data
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['courses'] })
+    },
+  })
+}

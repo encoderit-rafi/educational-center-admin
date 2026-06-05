@@ -32,7 +32,6 @@ import {
   Wallet,
   CalendarClock,
   Phone,
-  Workflow,
 } from "lucide-react";
 
 export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
@@ -72,7 +71,21 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
       name: "Courses",
       url: "/courses",
       icon: BookOpen,
-      isActive: isActiveLink(["/courses"]),
+      isActive: isActiveLink(["/courses", "/course-bookings"]),
+      children: [
+        {
+          name: "Courses",
+          url: "/courses",
+          icon: BookOpen,
+          isActive: isActiveLink(["/courses"]),
+        },
+        {
+          name: "Course Bookings",
+          url: "/course-bookings",
+          icon: CalendarCheck,
+          isActive: isActiveLink(["/course-bookings"]),
+        },
+      ],
     },
     {
       name: "Sub Courses",
@@ -181,9 +194,9 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
       isActive: isActiveLink(["/contacts"]),
     },
     {
-      name: "Zoho",
+      name: "ZOHO Book",
       url: "/zoho",
-      icon: Workflow,
+      icon: BookOpenCheck,
       isActive: isActiveLink(["/zoho"]),
     },
   ];

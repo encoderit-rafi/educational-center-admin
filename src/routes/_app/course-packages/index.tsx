@@ -21,6 +21,13 @@ import {
   InputGroupInput,
 } from '@/components/ui/input-group'
 import { Button } from '@/components/ui/button'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { usePagination } from '@/hooks/use-pagination'
 import { useDebounce } from '@/hooks/use-debounce'
 import { useQuery, keepPreviousData } from '@tanstack/react-query'
@@ -32,6 +39,7 @@ import {
   useCreateCoursePackage,
   useUpdateCoursePackage,
   useDeleteCoursePackage,
+  useArrangeCoursePackages,
 } from './-api'
 import { createFileRoute } from '@tanstack/react-router'
 import { Search, X, Plus } from 'lucide-react'
@@ -44,12 +52,12 @@ export const Route = createFileRoute('/_app/course-packages/')({
 
 function CoursePackagesPage() {
   const [page, setPage] = useState(1)
-  const [sortBy, setSortBy] = useState('createdAt')
-  const [sortOrder, setSortOrder] = useState('desc')
+  const [sortBy, setSortBy] = useState('orderIndex')
+  const [sortOrder, setSortOrder] = useState('asc')
   const [searchQuery, setSearchQuery] = useState('')
+  const [limit, setLimit] = useState(20)
   const debouncedSearch = useDebounce(searchQuery, 300)
   const isFirstRender = useRef(true)
-  const limit = 20
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -107,6 +115,7 @@ function CoursePackagesPage() {
   const createMutation = useCreateCoursePackage()
   const updateMutation = useUpdateCoursePackage()
   const deleteMutation = useDeleteCoursePackage()
+  const arrangeMutation = useArrangeCoursePackages()
 
   const handleView = (pkg: CoursePackage) => {
     setSelectedPackage(pkg)
@@ -248,50 +257,52 @@ function CoursePackagesPage() {
               sortBy={sortBy}
               sortOrder={sortOrder}
               onSort={handleSort}
+              onReorder={(items) => arrangeMutation.mutate(items)}
+              isDragDisabled={!!debouncedSearch}
             />
-            {totalPages > 1 && (
-              <div className="flex items-center justify-between pt-4">
-                <p className="text-sm text-muted-foreground">
-                  Page {page} of {totalPages}
-                </p>
-                <Pagination>
+            <div className="grid grid-cols-3 items-center pt-4">
+              <p className="text-sm text-muted-foreground">
+                Page {page} of {totalPages}
+              </p>
+              {totalPages > 1 ? (
+                <Pagination className="justify-self-center">
                   <PaginationContent>
                     <PaginationItem>
-                      <PaginationPrevious
-                        onClick={() => setPage(Math.max(1, page - 1))}
-                      />
+                      <PaginationPrevious onClick={() => setPage(Math.max(1, page - 1))} />
                     </PaginationItem>
                     {showLeftEllipsis && (
-                      <PaginationItem>
-                        <PaginationEllipsis />
-                      </PaginationItem>
+                      <PaginationItem><PaginationEllipsis /></PaginationItem>
                     )}
                     {pages.map((p) => (
                       <PaginationItem key={p}>
-                        <PaginationLink
-                          isActive={p === page}
-                          onClick={() => setPage(p)}
-                        >
+                        <PaginationLink isActive={p === page} onClick={() => setPage(p)}>
                           {p}
                         </PaginationLink>
                       </PaginationItem>
                     ))}
                     {showRightEllipsis && (
-                      <PaginationItem>
-                        <PaginationEllipsis />
-                      </PaginationItem>
+                      <PaginationItem><PaginationEllipsis /></PaginationItem>
                     )}
                     <PaginationItem>
-                      <PaginationNext
-                        onClick={() =>
-                          setPage(Math.min(totalPages, page + 1))
-                        }
-                      />
+                      <PaginationNext onClick={() => setPage(Math.min(totalPages, page + 1))} />
                     </PaginationItem>
                   </PaginationContent>
                 </Pagination>
+              ) : <div />}
+              <div className="flex items-center gap-2 justify-end">
+                <span className="text-sm text-muted-foreground">Rows per page</span>
+                <Select value={String(limit)} onValueChange={(v) => { setLimit(Number(v)); setPage(1) }}>
+                  <SelectTrigger className="w-[70px] h-8 text-sm">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {[10, 20, 50, 100].map((n) => (
+                      <SelectItem key={n} value={String(n)}>{n}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
-            )}
+            </div>
           </>
         )}
       </PageBody>

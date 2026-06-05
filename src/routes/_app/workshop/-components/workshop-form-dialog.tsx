@@ -35,9 +35,6 @@ export interface WorkshopFormData {
   banner_image: string
   price: number
   duration: number
-  discount_type: string
-  discount_value: number
-  vat_rate: number
   start_time: string
   end_time: string
   is_active: boolean
@@ -62,9 +59,6 @@ const emptyForm: WorkshopFormData = {
   banner_image: '',
   price: 0,
   duration: 0,
-  discount_type: '',
-  discount_value: 0,
-  vat_rate: 0,
   start_time: '',
   end_time: '',
   is_active: true,
@@ -125,9 +119,6 @@ export function WorkshopFormDialog({
         banner_image: workshop.bannerImage ?? '',
         price: workshop.price ?? 0,
         duration: workshop.duration ?? 0,
-        discount_type: workshop.discountType ?? '',
-        discount_value: workshop.discountValue ?? 0,
-        vat_rate: workshop.vatRate ?? 0,
         start_time: workshop.startTime ?? '',
         end_time: workshop.endTime ?? '',
         is_active: workshop.isActive,
@@ -291,60 +282,6 @@ export function WorkshopFormDialog({
                   setForm((prev) => ({
                     ...prev,
                     duration: parseFloat(e.target.value) || 0,
-                  }))
-                }
-                placeholder="0"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-3 gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="discount_type">Discount Type</Label>
-              <Select
-                value={form.discount_type}
-                onValueChange={(val) =>
-                  setForm((prev) => ({ ...prev, discount_type: val }))
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="FLAT">FLAT</SelectItem>
-                  <SelectItem value="PERCENTAGE">PERCENTAGE</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="discount_value">Discount Value</Label>
-              <Input
-                id="discount_value"
-                type="number"
-                min={0}
-                step="0.01"
-                value={form.discount_value}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    discount_value: parseFloat(e.target.value) || 0,
-                  }))
-                }
-                placeholder="0"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="vat_rate">VAT Rate (%)</Label>
-              <Input
-                id="vat_rate"
-                type="number"
-                min={0}
-                step="0.1"
-                value={form.vat_rate}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    vat_rate: parseFloat(e.target.value) || 0,
                   }))
                 }
                 placeholder="0"

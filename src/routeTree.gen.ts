@@ -32,6 +32,7 @@ import { Route as AppEnglishTestIndexRouteImport } from './routes/_app/english-t
 import { Route as AppDemoIndexRouteImport } from './routes/_app/demo/index'
 import { Route as AppCoursesIndexRouteImport } from './routes/_app/courses/index'
 import { Route as AppCoursePackagesIndexRouteImport } from './routes/_app/course-packages/index'
+import { Route as AppCourseBookingsIndexRouteImport } from './routes/_app/course-bookings/index'
 import { Route as AppContactsIndexRouteImport } from './routes/_app/contacts/index'
 import { Route as AppConsultationsIndexRouteImport } from './routes/_app/consultations/index'
 import { Route as AppDashboardIndexRouteImport } from './routes/_app/_dashboard/index'
@@ -150,6 +151,11 @@ const AppCoursePackagesIndexRoute = AppCoursePackagesIndexRouteImport.update({
   path: '/course-packages/',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppCourseBookingsIndexRoute = AppCourseBookingsIndexRouteImport.update({
+  id: '/course-bookings/',
+  path: '/course-bookings/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppContactsIndexRoute = AppContactsIndexRouteImport.update({
   id: '/contacts/',
   path: '/contacts/',
@@ -167,36 +173,38 @@ const AppDashboardIndexRoute = AppDashboardIndexRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/route copy': typeof AuthRoutecopyRoute
   '/': typeof AppDashboardIndexRoute
-  '/consultations': typeof AppConsultationsIndexRoute
-  '/contacts': typeof AppContactsIndexRoute
-  '/course-packages': typeof AppCoursePackagesIndexRoute
-  '/courses': typeof AppCoursesIndexRoute
-  '/demo': typeof AppDemoIndexRoute
-  '/english-test': typeof AppEnglishTestIndexRoute
-  '/events': typeof AppEventsIndexRoute
-  '/exam-bookings': typeof AppExamBookingsIndexRoute
-  '/exams': typeof AppExamsIndexRoute
-  '/holidays': typeof AppHolidaysIndexRoute
-  '/mock-test-bookings': typeof AppMockTestBookingsIndexRoute
-  '/mock-tests': typeof AppMockTestsIndexRoute
-  '/payments': typeof AppPaymentsIndexRoute
-  '/routines': typeof AppRoutinesIndexRoute
-  '/sub-courses': typeof AppSubCoursesIndexRoute
-  '/users': typeof AppUsersIndexRoute
-  '/videos': typeof AppVideosIndexRoute
-  '/workshop': typeof AppWorkshopIndexRoute
-  '/zoho': typeof AppZohoIndexRoute
-  '/forgot-password': typeof AuthForgotPasswordIndexRoute
-  '/login': typeof AuthLoginIndexRoute
-  '/reset-password': typeof AuthResetPasswordIndexRoute
+  '/route copy': typeof AuthRoutecopyRoute
+  '/consultations/': typeof AppConsultationsIndexRoute
+  '/contacts/': typeof AppContactsIndexRoute
+  '/course-bookings/': typeof AppCourseBookingsIndexRoute
+  '/course-packages/': typeof AppCoursePackagesIndexRoute
+  '/courses/': typeof AppCoursesIndexRoute
+  '/demo/': typeof AppDemoIndexRoute
+  '/english-test/': typeof AppEnglishTestIndexRoute
+  '/events/': typeof AppEventsIndexRoute
+  '/exam-bookings/': typeof AppExamBookingsIndexRoute
+  '/exams/': typeof AppExamsIndexRoute
+  '/holidays/': typeof AppHolidaysIndexRoute
+  '/mock-test-bookings/': typeof AppMockTestBookingsIndexRoute
+  '/mock-tests/': typeof AppMockTestsIndexRoute
+  '/payments/': typeof AppPaymentsIndexRoute
+  '/routines/': typeof AppRoutinesIndexRoute
+  '/sub-courses/': typeof AppSubCoursesIndexRoute
+  '/users/': typeof AppUsersIndexRoute
+  '/videos/': typeof AppVideosIndexRoute
+  '/workshop/': typeof AppWorkshopIndexRoute
+  '/zoho/': typeof AppZohoIndexRoute
+  '/forgot-password/': typeof AuthForgotPasswordIndexRoute
+  '/login/': typeof AuthLoginIndexRoute
+  '/reset-password/': typeof AuthResetPasswordIndexRoute
 }
 export interface FileRoutesByTo {
-  '/route copy': typeof AuthRoutecopyRoute
   '/': typeof AppDashboardIndexRoute
+  '/route copy': typeof AuthRoutecopyRoute
   '/consultations': typeof AppConsultationsIndexRoute
   '/contacts': typeof AppContactsIndexRoute
+  '/course-bookings': typeof AppCourseBookingsIndexRoute
   '/course-packages': typeof AppCoursePackagesIndexRoute
   '/courses': typeof AppCoursesIndexRoute
   '/demo': typeof AppDemoIndexRoute
@@ -226,6 +234,7 @@ export interface FileRoutesById {
   '/_app/_dashboard/': typeof AppDashboardIndexRoute
   '/_app/consultations/': typeof AppConsultationsIndexRoute
   '/_app/contacts/': typeof AppContactsIndexRoute
+  '/_app/course-bookings/': typeof AppCourseBookingsIndexRoute
   '/_app/course-packages/': typeof AppCoursePackagesIndexRoute
   '/_app/courses/': typeof AppCoursesIndexRoute
   '/_app/demo/': typeof AppDemoIndexRoute
@@ -250,36 +259,38 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/route copy'
     | '/'
-    | '/consultations'
-    | '/contacts'
-    | '/course-packages'
-    | '/courses'
-    | '/demo'
-    | '/english-test'
-    | '/events'
-    | '/exam-bookings'
-    | '/exams'
-    | '/holidays'
-    | '/mock-test-bookings'
-    | '/mock-tests'
-    | '/payments'
-    | '/routines'
-    | '/sub-courses'
-    | '/users'
-    | '/videos'
-    | '/workshop'
-    | '/zoho'
-    | '/forgot-password'
-    | '/login'
-    | '/reset-password'
+    | '/route copy'
+    | '/consultations/'
+    | '/contacts/'
+    | '/course-bookings/'
+    | '/course-packages/'
+    | '/courses/'
+    | '/demo/'
+    | '/english-test/'
+    | '/events/'
+    | '/exam-bookings/'
+    | '/exams/'
+    | '/holidays/'
+    | '/mock-test-bookings/'
+    | '/mock-tests/'
+    | '/payments/'
+    | '/routines/'
+    | '/sub-courses/'
+    | '/users/'
+    | '/videos/'
+    | '/workshop/'
+    | '/zoho/'
+    | '/forgot-password/'
+    | '/login/'
+    | '/reset-password/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/route copy'
     | '/'
+    | '/route copy'
     | '/consultations'
     | '/contacts'
+    | '/course-bookings'
     | '/course-packages'
     | '/courses'
     | '/demo'
@@ -308,6 +319,7 @@ export interface FileRouteTypes {
     | '/_app/_dashboard/'
     | '/_app/consultations/'
     | '/_app/contacts/'
+    | '/_app/course-bookings/'
     | '/_app/course-packages/'
     | '/_app/courses/'
     | '/_app/demo/'
@@ -340,14 +352,14 @@ declare module '@tanstack/react-router' {
     '/_auth': {
       id: '/_auth'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof AuthRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app': {
       id: '/_app'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof AppRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -361,154 +373,161 @@ declare module '@tanstack/react-router' {
     '/_auth/reset-password/': {
       id: '/_auth/reset-password/'
       path: '/reset-password'
-      fullPath: '/reset-password'
+      fullPath: '/reset-password/'
       preLoaderRoute: typeof AuthResetPasswordIndexRouteImport
       parentRoute: typeof AuthRouteRoute
     }
     '/_auth/login/': {
       id: '/_auth/login/'
       path: '/login'
-      fullPath: '/login'
+      fullPath: '/login/'
       preLoaderRoute: typeof AuthLoginIndexRouteImport
       parentRoute: typeof AuthRouteRoute
     }
     '/_auth/forgot-password/': {
       id: '/_auth/forgot-password/'
       path: '/forgot-password'
-      fullPath: '/forgot-password'
+      fullPath: '/forgot-password/'
       preLoaderRoute: typeof AuthForgotPasswordIndexRouteImport
       parentRoute: typeof AuthRouteRoute
     }
     '/_app/zoho/': {
       id: '/_app/zoho/'
       path: '/zoho'
-      fullPath: '/zoho'
+      fullPath: '/zoho/'
       preLoaderRoute: typeof AppZohoIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/workshop/': {
       id: '/_app/workshop/'
       path: '/workshop'
-      fullPath: '/workshop'
+      fullPath: '/workshop/'
       preLoaderRoute: typeof AppWorkshopIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/videos/': {
       id: '/_app/videos/'
       path: '/videos'
-      fullPath: '/videos'
+      fullPath: '/videos/'
       preLoaderRoute: typeof AppVideosIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/users/': {
       id: '/_app/users/'
       path: '/users'
-      fullPath: '/users'
+      fullPath: '/users/'
       preLoaderRoute: typeof AppUsersIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/sub-courses/': {
       id: '/_app/sub-courses/'
       path: '/sub-courses'
-      fullPath: '/sub-courses'
+      fullPath: '/sub-courses/'
       preLoaderRoute: typeof AppSubCoursesIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/routines/': {
       id: '/_app/routines/'
       path: '/routines'
-      fullPath: '/routines'
+      fullPath: '/routines/'
       preLoaderRoute: typeof AppRoutinesIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/payments/': {
       id: '/_app/payments/'
       path: '/payments'
-      fullPath: '/payments'
+      fullPath: '/payments/'
       preLoaderRoute: typeof AppPaymentsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/mock-tests/': {
       id: '/_app/mock-tests/'
       path: '/mock-tests'
-      fullPath: '/mock-tests'
+      fullPath: '/mock-tests/'
       preLoaderRoute: typeof AppMockTestsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/mock-test-bookings/': {
       id: '/_app/mock-test-bookings/'
       path: '/mock-test-bookings'
-      fullPath: '/mock-test-bookings'
+      fullPath: '/mock-test-bookings/'
       preLoaderRoute: typeof AppMockTestBookingsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/holidays/': {
       id: '/_app/holidays/'
       path: '/holidays'
-      fullPath: '/holidays'
+      fullPath: '/holidays/'
       preLoaderRoute: typeof AppHolidaysIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/exams/': {
       id: '/_app/exams/'
       path: '/exams'
-      fullPath: '/exams'
+      fullPath: '/exams/'
       preLoaderRoute: typeof AppExamsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/exam-bookings/': {
       id: '/_app/exam-bookings/'
       path: '/exam-bookings'
-      fullPath: '/exam-bookings'
+      fullPath: '/exam-bookings/'
       preLoaderRoute: typeof AppExamBookingsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/events/': {
       id: '/_app/events/'
       path: '/events'
-      fullPath: '/events'
+      fullPath: '/events/'
       preLoaderRoute: typeof AppEventsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/english-test/': {
       id: '/_app/english-test/'
       path: '/english-test'
-      fullPath: '/english-test'
+      fullPath: '/english-test/'
       preLoaderRoute: typeof AppEnglishTestIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/demo/': {
       id: '/_app/demo/'
       path: '/demo'
-      fullPath: '/demo'
+      fullPath: '/demo/'
       preLoaderRoute: typeof AppDemoIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/courses/': {
       id: '/_app/courses/'
       path: '/courses'
-      fullPath: '/courses'
+      fullPath: '/courses/'
       preLoaderRoute: typeof AppCoursesIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/course-packages/': {
       id: '/_app/course-packages/'
       path: '/course-packages'
-      fullPath: '/course-packages'
+      fullPath: '/course-packages/'
       preLoaderRoute: typeof AppCoursePackagesIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/course-bookings/': {
+      id: '/_app/course-bookings/'
+      path: '/course-bookings'
+      fullPath: '/course-bookings/'
+      preLoaderRoute: typeof AppCourseBookingsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/contacts/': {
       id: '/_app/contacts/'
       path: '/contacts'
-      fullPath: '/contacts'
+      fullPath: '/contacts/'
       preLoaderRoute: typeof AppContactsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/consultations/': {
       id: '/_app/consultations/'
       path: '/consultations'
-      fullPath: '/consultations'
+      fullPath: '/consultations/'
       preLoaderRoute: typeof AppConsultationsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
@@ -526,6 +545,7 @@ interface AppRouteRouteChildren {
   AppDashboardIndexRoute: typeof AppDashboardIndexRoute
   AppConsultationsIndexRoute: typeof AppConsultationsIndexRoute
   AppContactsIndexRoute: typeof AppContactsIndexRoute
+  AppCourseBookingsIndexRoute: typeof AppCourseBookingsIndexRoute
   AppCoursePackagesIndexRoute: typeof AppCoursePackagesIndexRoute
   AppCoursesIndexRoute: typeof AppCoursesIndexRoute
   AppDemoIndexRoute: typeof AppDemoIndexRoute
@@ -549,6 +569,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppDashboardIndexRoute: AppDashboardIndexRoute,
   AppConsultationsIndexRoute: AppConsultationsIndexRoute,
   AppContactsIndexRoute: AppContactsIndexRoute,
+  AppCourseBookingsIndexRoute: AppCourseBookingsIndexRoute,
   AppCoursePackagesIndexRoute: AppCoursePackagesIndexRoute,
   AppCoursesIndexRoute: AppCoursesIndexRoute,
   AppDemoIndexRoute: AppDemoIndexRoute,

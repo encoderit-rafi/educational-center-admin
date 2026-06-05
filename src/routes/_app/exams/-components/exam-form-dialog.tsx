@@ -37,6 +37,7 @@ interface ExamFormData {
   vat_rate: number | null
   total_fee: number | null
   parent_id: string
+  exam_form_redirect_url: string
   is_active: boolean
 }
 
@@ -59,6 +60,7 @@ const emptyForm: ExamFormData = {
   vat_rate: null,
   total_fee: null,
   parent_id: '',
+  exam_form_redirect_url: '',
   is_active: true,
 }
 
@@ -221,6 +223,7 @@ export function ExamFormDialog({
         vat_rate: exam.vatRate ? Number(exam.vatRate) : null,
         total_fee: exam.totalFee ? Number(exam.totalFee) : null,
         parent_id: exam.parentId ?? '',
+        exam_form_redirect_url: exam.examFormRedirectUrl ?? '',
         is_active: exam.isActive ?? true,
       })
     } else {
@@ -390,6 +393,18 @@ export function ExamFormDialog({
                 placeholder="0.00"
               />
             </div>
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="exam_form_redirect_url">Form Redirect URL</Label>
+            <Input
+              id="exam_form_redirect_url"
+              value={form.exam_form_redirect_url}
+              onChange={(e) =>
+                setForm((prev) => ({ ...prev, exam_form_redirect_url: e.target.value }))
+              }
+              placeholder="https://..."
+            />
           </div>
 
           <div className="flex items-center gap-2">

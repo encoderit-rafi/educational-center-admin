@@ -1,6 +1,7 @@
 export interface CoursePackage {
   id: string
   courseId: string | null
+  course: { id: string; title: string | null } | null
   subCourseId: string | null
   name: string
   slug: string | null
@@ -8,6 +9,8 @@ export interface CoursePackage {
   price: number
   discountType: 'FLAT' | 'PERCENTAGE' | null
   discountValue: number | null
+  specialDiscountType: 'FLAT' | 'PERCENTAGE' | null
+  specialDiscount: number | null
   vatRate: number | null
   deliveryType: 'CLASSROOM' | 'ONLINE'
   duration: number | null
@@ -38,6 +41,8 @@ export interface CreateCoursePackageInput {
   price: number
   discountType?: string
   discountValue?: number
+  specialDiscountType?: string
+  specialDiscount?: number
   vatRate?: number
   deliveryType: string
   duration?: number

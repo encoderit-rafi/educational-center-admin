@@ -82,6 +82,7 @@ function buildExamPayload(data: CreateExamInput) {
   if (data.description) payload.description = data.description
   if (data.exam_type) payload.exam_type = data.exam_type
   if (data.parent_id) payload.parent_id = data.parent_id
+  if (data.exam_form_redirect_url) payload.exam_form_redirect_url = data.exam_form_redirect_url
   if (data.is_active !== undefined) payload.is_active = data.is_active
   return payload
 }
@@ -210,6 +211,19 @@ export function useDeleteTestSchedule() {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['test-schedules'] })
+    },
+  })
+}
+
+export function useArrangeExams() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async (items: { id: string; order_index: number }[]) => {
+      const res = await api.put('/admin/exams/arrange-order', { items })
+      return res.data
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['exams'] })
     },
   })
 }

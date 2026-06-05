@@ -41,9 +41,6 @@ export interface CreateWorkshopInput {
   banner_image?: string
   price: number
   duration: number
-  discount_type?: string
-  discount_value?: number
-  vat_rate?: number
   start_time?: string
   end_time?: string
   is_active?: boolean

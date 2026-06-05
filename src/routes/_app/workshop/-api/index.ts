@@ -75,9 +75,6 @@ function buildWorkshopPayload(data: CreateWorkshopInput) {
   if (data.logo) payload.logo = data.logo
   if (data.banner_image) payload.banner_image = data.banner_image
   if (data.description) payload.description = data.description
-  if (data.discount_type) payload.discount_type = data.discount_type
-  if (data.discount_value !== undefined) payload.discount_value = data.discount_value
-  if (data.vat_rate !== undefined) payload.vat_rate = data.vat_rate
   if (data.start_time) payload.start_time = data.start_time
   if (data.end_time) payload.end_time = data.end_time
   if (data.is_active !== undefined) payload.is_active = data.is_active
@@ -216,7 +213,7 @@ function buildWorkshopPackagePayload(data: CreateWorkshopPackageInput) {
 
   if (data.course_id) payload.course_id = data.course_id
   if (data.workshop_id) payload.workshop_id = data.workshop_id
-  if (data.discount_type) payload.discount_type = data.discount_type
+  if (data.discount_type) payload.discount_type = data.discount_type.toLowerCase()
   if (data.discount_value !== undefined) payload.discount_value = data.discount_value
   if (data.vat_rate !== undefined) payload.vat_rate = data.vat_rate
 
@@ -262,6 +259,19 @@ export function useDeleteWorkshopPackage() {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['workshop-packages'] })
+    },
+  })
+}
+
+export function useArrangeWorkshops() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async (items: { id: string; order_index: number }[]) => {
+      const res = await api.put('/admin/workshops/arrange-order', { items })
+      return res.data
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['workshops'] })
     },
   })
 }

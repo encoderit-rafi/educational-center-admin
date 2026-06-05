@@ -10,4 +10,3 @@ export { WeekHoursGrid } from "./week-hours-grid";
 export { DataTable } from "./data-table";
 export { DateRangePicker } from "./date-range-picker";
 export { SearchableSelect, AsyncSearchableSelect } from "./searchable-select";
-export { CreateAppointmentDialog } from "./create-appointment-dialog";

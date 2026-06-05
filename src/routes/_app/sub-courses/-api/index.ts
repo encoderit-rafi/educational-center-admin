@@ -63,7 +63,7 @@ function buildPayload(data: CreateSubCourseInput) {
   if (data.logo) payload.logo = data.logo
   if (data.bannerImage) payload.banner_image = data.bannerImage
   if (data.price !== undefined) payload.price = data.price
-  if (data.discountType) payload.discount_type = data.discountType
+  if (data.discountType) payload.discount_type = (data.discountType as string).toLowerCase()
   if (data.discountValue !== undefined) payload.discount_value = data.discountValue
   if (data.vatRate !== undefined) payload.vat_rate = data.vatRate
   payload.is_active = data.isActive ?? true

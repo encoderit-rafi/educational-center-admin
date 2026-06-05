@@ -32,6 +32,8 @@ interface CoursePackageFormData {
   price: string
   discountType: string
   discountValue: string
+  specialDiscountType: string
+  specialDiscount: string
   vatRate: string
   deliveryType: string
   duration: string
@@ -60,6 +62,8 @@ const emptyForm: CoursePackageFormData = {
   price: '',
   discountType: '',
   discountValue: '',
+  specialDiscountType: '',
+  specialDiscount: '',
   vatRate: '0',
   deliveryType: '',
   duration: '',
@@ -160,6 +164,8 @@ export function CoursePackageFormDialog({
         price: pkg.price.toString(),
         discountType: pkg.discountType ?? '',
         discountValue: pkg.discountValue?.toString() ?? '',
+        specialDiscountType: pkg.specialDiscountType ?? '',
+        specialDiscount: pkg.specialDiscount?.toString() ?? '',
         vatRate: pkg.vatRate?.toString() ?? '',
         deliveryType: pkg.deliveryType,
         duration: pkg.duration?.toString() ?? '',
@@ -321,6 +327,42 @@ export function CoursePackageFormDialog({
                 value={form.vatRate}
                 onChange={(e) =>
                   setForm((prev) => ({ ...prev, vatRate: e.target.value }))
+                }
+                placeholder="0"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="specialDiscountType">Special Discount Type</Label>
+              <Select
+                value={form.specialDiscountType}
+                onValueChange={(value) =>
+                  setForm((prev) => ({ ...prev, specialDiscountType: value }))
+                }
+              >
+                <SelectTrigger className='w-full'>
+                  <SelectValue placeholder="None" />
+                </SelectTrigger>
+                <SelectContent>
+                  {DISCOUNT_TYPES.map((type) => (
+                    <SelectItem key={type} value={type}>
+                      {type.charAt(0) + type.slice(1).toLowerCase()}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="specialDiscount">Special Discount Value</Label>
+              <Input
+                id="specialDiscount"
+                type="number"
+                step="0.01"
+                value={form.specialDiscount}
+                onChange={(e) =>
+                  setForm((prev) => ({ ...prev, specialDiscount: e.target.value }))
                 }
                 placeholder="0"
               />

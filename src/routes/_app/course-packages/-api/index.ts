@@ -72,6 +72,9 @@ function buildPayload(data: CreateCoursePackageInput) {
   if (data.discountType) payload.discount_type = (data.discountType as string).toLowerCase()
   const discountValue = toNum(data.discountValue)
   if (discountValue !== undefined) payload.discount_value = discountValue
+  if (data.specialDiscountType) payload.special_discount_type = (data.specialDiscountType as string).toLowerCase()
+  const specialDiscount = toNum(data.specialDiscount)
+  if (specialDiscount !== undefined) payload.special_discount = specialDiscount
   const vatRate = toNum(data.vatRate)
   if (vatRate !== undefined) payload.vat_rate = vatRate
   const duration = toNum(data.duration)
@@ -121,6 +124,19 @@ export function useDeleteCoursePackage() {
   return useMutation({
     mutationFn: async (id: string) => {
       const res = await api.delete(`/admin/course-packages/${id}`)
+      return res.data
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['course-packages'] })
+    },
+  })
+}
+
+export function useArrangeCoursePackages() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async (items: { id: string; order_index: number }[]) => {
+      const res = await api.put('/admin/course-packages/arrange-order', { items })
       return res.data
     },
     onSuccess: async () => {
