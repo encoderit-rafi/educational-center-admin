@@ -1,18 +1,23 @@
-import { Controller, type Control } from 'react-hook-form'
+import { Controller, type Control, type FieldValues, type Path } from 'react-hook-form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { TiptapEditor } from '@/components/blocks/tiptap-editor'
 
-interface FormFieldProps {
-  name: string
-  control: Control<any>
+interface FormFieldProps<TFieldValues extends FieldValues = FieldValues> {
+  name: Path<TFieldValues>
+  control: Control<TFieldValues>
   label: string
   placeholder?: string
   description?: string
 }
 
-export function FormInput({ name, control, label, placeholder }: FormFieldProps) {
+export function FormInput<TFieldValues extends FieldValues>({
+  name,
+  control,
+  label,
+  placeholder,
+}: FormFieldProps<TFieldValues>) {
   return (
     <Controller
       name={name}
@@ -30,7 +35,12 @@ export function FormInput({ name, control, label, placeholder }: FormFieldProps)
   )
 }
 
-export function FormTextarea({ name, control, label, placeholder }: FormFieldProps) {
+export function FormTextarea<TFieldValues extends FieldValues>({
+  name,
+  control,
+  label,
+  placeholder,
+}: FormFieldProps<TFieldValues>) {
   return (
     <Controller
       name={name}
@@ -48,7 +58,15 @@ export function FormTextarea({ name, control, label, placeholder }: FormFieldPro
   )
 }
 
-export function FormTiptap({ name, control, label }: { name: string; control: Control<any>; label: string }) {
+export function FormTiptap<TFieldValues extends FieldValues>({
+  name,
+  control,
+  label,
+}: {
+  name: Path<TFieldValues>
+  control: Control<TFieldValues>
+  label: string
+}) {
   return (
     <Controller
       name={name}
@@ -66,7 +84,12 @@ export function FormTiptap({ name, control, label }: { name: string; control: Co
   )
 }
 
-export function FormImageUpload({ name, control, label, description }: FormFieldProps) {
+export function FormImageUpload<TFieldValues extends FieldValues>({
+  name,
+  control,
+  label,
+  description,
+}: FormFieldProps<TFieldValues>) {
   return (
     <Controller
       name={name}
@@ -85,15 +108,15 @@ export function FormImageUpload({ name, control, label, description }: FormField
   )
 }
 
-export function FormColorPicker({
+export function FormColorPicker<TFieldValues extends FieldValues>({
   name,
   control,
   label,
   placeholder,
   defaultColor,
 }: {
-  name: string
-  control: Control<any>
+  name: Path<TFieldValues>
+  control: Control<TFieldValues>
   label: string
   placeholder?: string
   defaultColor?: string
@@ -102,7 +125,7 @@ export function FormColorPicker({
     <Controller
       name={name}
       control={control}
-      defaultValue={defaultColor}
+      defaultValue={defaultColor as any}
       render={({ field, fieldState }) => (
         <div className="space-y-2">
           <Label>{label}</Label>
