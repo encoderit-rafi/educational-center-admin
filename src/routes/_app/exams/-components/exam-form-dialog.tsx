@@ -33,6 +33,7 @@ interface ExamFormData {
   description: string
   available_seats: number | null
   exam_fee: number | null
+  usd_exam_fee: number | null
   additional_fee: number | null
   vat_rate: number | null
   total_fee: number | null
@@ -56,6 +57,7 @@ const emptyForm: ExamFormData = {
   description: '',
   available_seats: null,
   exam_fee: null,
+  usd_exam_fee: null,
   additional_fee: null,
   vat_rate: null,
   total_fee: null,
@@ -219,6 +221,7 @@ export function ExamFormDialog({
         description: exam.description ?? '',
         available_seats: exam.availableSeats,
         exam_fee: exam.examFee ? Number(exam.examFee) : null,
+        usd_exam_fee: exam.usdExamFee ? Number(exam.usdExamFee) : null,
         additional_fee: exam.additionalFee ? Number(exam.additionalFee) : null,
         vat_rate: exam.vatRate ? Number(exam.vatRate) : null,
         total_fee: exam.totalFee ? Number(exam.totalFee) : null,
@@ -304,24 +307,6 @@ export function ExamFormDialog({
             />
           </div>
 
-          <div className="grid gap-2">
-            <Label htmlFor="available_seats">Available Seats</Label>
-            <Input
-              id="available_seats"
-              type="number"
-              value={form.available_seats ?? ''}
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...prev,
-                  available_seats: e.target.value
-                    ? Number(e.target.value)
-                    : null,
-                }))
-              }
-              placeholder="0"
-            />
-          </div>
-
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-2">
               <Label htmlFor="exam_fee">Exam Fee</Label>
@@ -340,6 +325,25 @@ export function ExamFormDialog({
               />
             </div>
             <div className="grid gap-2">
+              <Label htmlFor="usd_exam_fee">USD Exam Fee</Label>
+              <Input
+                id="usd_exam_fee"
+                type="number"
+                step="0.01"
+                value={form.usd_exam_fee ?? ''}
+                onChange={(e) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    usd_exam_fee: e.target.value ? Number(e.target.value) : null,
+                  }))
+                }
+                placeholder="0.00"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-2">
               <Label htmlFor="additional_fee">Additional Fee</Label>
               <Input
                 id="additional_fee"
@@ -355,9 +359,6 @@ export function ExamFormDialog({
                 placeholder="0.00"
               />
             </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-2">
               <Label htmlFor="vat_rate">VAT Rate (%)</Label>
               <Input
@@ -374,6 +375,9 @@ export function ExamFormDialog({
                 placeholder="0"
               />
             </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-2">
               <Label htmlFor="total_fee">Total Fee <span className="text-xs text-muted-foreground">
                 Calculated: ${form.exam_fee ?? 0} + ${form.additional_fee ?? 0}{' '}
@@ -391,6 +395,23 @@ export function ExamFormDialog({
                   }))
                 }
                 placeholder="0.00"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="available_seats">Available Seats</Label>
+              <Input
+                id="available_seats"
+                type="number"
+                value={form.available_seats ?? ''}
+                onChange={(e) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    available_seats: e.target.value
+                      ? Number(e.target.value)
+                      : null,
+                  }))
+                }
+                placeholder="0"
               />
             </div>
           </div>

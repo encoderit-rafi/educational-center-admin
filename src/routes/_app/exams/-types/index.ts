@@ -10,6 +10,7 @@ export interface Exam {
   examStartTime: string | null
   examEndTime: string | null
   examFee: string | null
+  usdExamFee: string | null
   additionalFee: string | null
   vatRate: string | null
   totalFee: string | null
@@ -36,6 +37,7 @@ export interface CreateExamInput {
   description?: string
   available_seats: number
   exam_fee: number
+  usd_exam_fee?: number | null
   additional_fee: number
   vat_rate: number
   total_fee: number

@@ -76,6 +76,7 @@ function buildExamPayload(data: CreateExamInput) {
   }
   if (data.available_seats !== null) payload.available_seats = data.available_seats
   if (data.exam_fee !== null) payload.exam_fee = data.exam_fee
+  if (data.usd_exam_fee !== undefined && data.usd_exam_fee !== null) payload.usd_exam_fee = data.usd_exam_fee
   if (data.additional_fee !== null) payload.additional_fee = data.additional_fee
   if (data.vat_rate !== null) payload.vat_rate = data.vat_rate
   if (data.total_fee !== null) payload.total_fee = data.total_fee
