@@ -35,6 +35,7 @@ import { Route as AppDemoIndexRouteImport } from './routes/_app/demo/index'
 import { Route as AppCoursesIndexRouteImport } from './routes/_app/courses/index'
 import { Route as AppCoursePackagesIndexRouteImport } from './routes/_app/course-packages/index'
 import { Route as AppCourseBookingsIndexRouteImport } from './routes/_app/course-bookings/index'
+import { Route as AppCouponsIndexRouteImport } from './routes/_app/coupons/index'
 import { Route as AppContactsIndexRouteImport } from './routes/_app/contacts/index'
 import { Route as AppConsultationsIndexRouteImport } from './routes/_app/consultations/index'
 import { Route as AppDashboardIndexRouteImport } from './routes/_app/_dashboard/index'
@@ -168,6 +169,11 @@ const AppCourseBookingsIndexRoute = AppCourseBookingsIndexRouteImport.update({
   path: '/course-bookings/',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppCouponsIndexRoute = AppCouponsIndexRouteImport.update({
+  id: '/coupons/',
+  path: '/coupons/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppContactsIndexRoute = AppContactsIndexRouteImport.update({
   id: '/contacts/',
   path: '/contacts/',
@@ -191,6 +197,7 @@ export interface FileRoutesByFullPath {
   '/zoho-success/': typeof ZohoSuccessIndexRoute
   '/consultations/': typeof AppConsultationsIndexRoute
   '/contacts/': typeof AppContactsIndexRoute
+  '/coupons/': typeof AppCouponsIndexRoute
   '/course-bookings/': typeof AppCourseBookingsIndexRoute
   '/course-packages/': typeof AppCoursePackagesIndexRoute
   '/courses/': typeof AppCoursesIndexRoute
@@ -220,6 +227,7 @@ export interface FileRoutesByTo {
   '/zoho-success': typeof ZohoSuccessIndexRoute
   '/consultations': typeof AppConsultationsIndexRoute
   '/contacts': typeof AppContactsIndexRoute
+  '/coupons': typeof AppCouponsIndexRoute
   '/course-bookings': typeof AppCourseBookingsIndexRoute
   '/course-packages': typeof AppCoursePackagesIndexRoute
   '/courses': typeof AppCoursesIndexRoute
@@ -252,6 +260,7 @@ export interface FileRoutesById {
   '/_app/_dashboard/': typeof AppDashboardIndexRoute
   '/_app/consultations/': typeof AppConsultationsIndexRoute
   '/_app/contacts/': typeof AppContactsIndexRoute
+  '/_app/coupons/': typeof AppCouponsIndexRoute
   '/_app/course-bookings/': typeof AppCourseBookingsIndexRoute
   '/_app/course-packages/': typeof AppCoursePackagesIndexRoute
   '/_app/courses/': typeof AppCoursesIndexRoute
@@ -283,6 +292,7 @@ export interface FileRouteTypes {
     | '/zoho-success/'
     | '/consultations/'
     | '/contacts/'
+    | '/coupons/'
     | '/course-bookings/'
     | '/course-packages/'
     | '/courses/'
@@ -312,6 +322,7 @@ export interface FileRouteTypes {
     | '/zoho-success'
     | '/consultations'
     | '/contacts'
+    | '/coupons'
     | '/course-bookings'
     | '/course-packages'
     | '/courses'
@@ -343,6 +354,7 @@ export interface FileRouteTypes {
     | '/_app/_dashboard/'
     | '/_app/consultations/'
     | '/_app/contacts/'
+    | '/_app/coupons/'
     | '/_app/course-bookings/'
     | '/_app/course-packages/'
     | '/_app/courses/'
@@ -557,6 +569,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppCourseBookingsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/coupons/': {
+      id: '/_app/coupons/'
+      path: '/coupons'
+      fullPath: '/coupons/'
+      preLoaderRoute: typeof AppCouponsIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/contacts/': {
       id: '/_app/contacts/'
       path: '/contacts'
@@ -585,6 +604,7 @@ interface AppRouteRouteChildren {
   AppDashboardIndexRoute: typeof AppDashboardIndexRoute
   AppConsultationsIndexRoute: typeof AppConsultationsIndexRoute
   AppContactsIndexRoute: typeof AppContactsIndexRoute
+  AppCouponsIndexRoute: typeof AppCouponsIndexRoute
   AppCourseBookingsIndexRoute: typeof AppCourseBookingsIndexRoute
   AppCoursePackagesIndexRoute: typeof AppCoursePackagesIndexRoute
   AppCoursesIndexRoute: typeof AppCoursesIndexRoute
@@ -609,6 +629,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppDashboardIndexRoute: AppDashboardIndexRoute,
   AppConsultationsIndexRoute: AppConsultationsIndexRoute,
   AppContactsIndexRoute: AppContactsIndexRoute,
+  AppCouponsIndexRoute: AppCouponsIndexRoute,
   AppCourseBookingsIndexRoute: AppCourseBookingsIndexRoute,
   AppCoursePackagesIndexRoute: AppCoursePackagesIndexRoute,
   AppCoursesIndexRoute: AppCoursesIndexRoute,

@@ -32,6 +32,7 @@ import {
   Wallet,
   CalendarClock,
   Phone,
+  Ticket,
 } from "lucide-react";
 
 export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
@@ -180,6 +181,12 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
       url: "/payments",
       icon: Wallet,
       isActive: isActiveLink(["/payments"]),
+    },
+    {
+      name: "Coupons",
+      url: "/coupons",
+      icon: Ticket,
+      isActive: isActiveLink(["/coupons"]),
     },
     {
       name: "Holidays",
