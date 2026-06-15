@@ -29,6 +29,11 @@ interface CourseFormData {
   key_benefits: string[]
   focus_area: string[]
   is_active: boolean
+  translations: {
+    ar: {
+      description: string
+    }
+  }
 }
 
 interface CourseFormDialogProps {
@@ -52,6 +57,11 @@ const emptyForm: CourseFormData = {
   key_benefits: [],
   focus_area: [],
   is_active: true,
+  translations: {
+    ar: {
+      description: '',
+    },
+  },
 }
 
 export function CourseFormDialog({
@@ -78,6 +88,11 @@ export function CourseFormDialog({
         key_benefits: Array.isArray(course.keyBenefits) ? course.keyBenefits.map(String) : [],
         focus_area: Array.isArray(course.focusArea) ? course.focusArea.map(String) : [],
         is_active: course.isActive,
+        translations: {
+          ar: {
+            description: course.translations?.ar?.description ?? '',
+          },
+        },
       })
     } else {
       setForm(emptyForm)
@@ -162,6 +177,29 @@ export function CourseFormDialog({
               }
               placeholder="Full course description"
               rows={4}
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="ar_description">Arabic Description</Label>
+            <Textarea
+              id="ar_description"
+              value={form.translations.ar.description}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  translations: {
+                    ...prev.translations,
+                    ar: {
+                      ...prev.translations.ar,
+                      description: e.target.value,
+                    },
+                  },
+                }))
+              }
+              placeholder="وصف الدورة"
+              rows={4}
+              dir="rtl"
             />
           </div>
 

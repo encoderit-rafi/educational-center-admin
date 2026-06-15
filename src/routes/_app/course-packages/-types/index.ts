@@ -1,3 +1,9 @@
+export interface CoursePackageTranslations {
+  description?: string | null
+  requirements?: string | null
+  best_for?: string | null
+}
+
 export interface CoursePackage {
   id: string
   courseId: string | null
@@ -21,6 +27,7 @@ export interface CoursePackage {
   bestFor: string[] | null
   image: string | null
   isActive: boolean
+  translations?: Record<string, CoursePackageTranslations> | null
   createdAt: string
   updatedAt: string
   deletedAt: string | null
@@ -53,4 +60,11 @@ export interface CreateCoursePackageInput {
   image?: string
   bestFor?: string[]
   isActive?: boolean
+  translations?: {
+    ar?: {
+      description?: string
+      requirements?: string
+      best_for?: string
+    }
+  }
 }

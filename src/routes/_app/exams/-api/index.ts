@@ -85,6 +85,7 @@ function buildExamPayload(data: CreateExamInput) {
   if (data.parent_id) payload.parent_id = data.parent_id
   if (data.exam_form_redirect_url) payload.exam_form_redirect_url = data.exam_form_redirect_url
   if (data.is_active !== undefined) payload.is_active = data.is_active
+  if (data.translations) payload.translations = data.translations
   return payload
 }
 

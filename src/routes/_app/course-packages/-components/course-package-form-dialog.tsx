@@ -44,6 +44,13 @@ interface CoursePackageFormData {
   bestFor: string
   image: string
   isActive: boolean
+  translations: {
+    ar: {
+      description: string
+      requirements: string
+      best_for: string
+    }
+  }
 }
 
 interface CoursePackageFormDialogProps {
@@ -74,6 +81,13 @@ const emptyForm: CoursePackageFormData = {
   bestFor: '',
   image: '',
   isActive: true,
+  translations: {
+    ar: {
+      description: '',
+      requirements: '',
+      best_for: '',
+    },
+  },
 }
 
 const DELIVERY_TYPES = ['CLASSROOM', 'ONLINE', 'HYBRID'] as const
@@ -176,6 +190,13 @@ export function CoursePackageFormDialog({
         bestFor: Array.isArray(pkg.bestFor) ? pkg.bestFor.join('\n') : '',
         image: pkg.image ?? '',
         isActive: pkg.isActive,
+        translations: {
+          ar: {
+            description: pkg.translations?.ar?.description ?? '',
+            requirements: pkg.translations?.ar?.requirements ?? '',
+            best_for: pkg.translations?.ar?.best_for ?? '',
+          },
+        },
       })
     } else {
       setForm(emptyForm)
@@ -241,6 +262,26 @@ export function CoursePackageFormDialog({
               }
               placeholder="Package description"
               rows={2}
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="ar_description">Arabic Description</Label>
+            <Textarea
+              id="ar_description"
+              value={form.translations.ar.description}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  translations: {
+                    ...prev.translations,
+                    ar: { ...prev.translations.ar, description: e.target.value },
+                  },
+                }))
+              }
+              placeholder="وصف الباقة"
+              rows={2}
+              dir="rtl"
             />
           </div>
 
@@ -430,6 +471,26 @@ export function CoursePackageFormDialog({
           </div>
 
           <div className="grid gap-2">
+            <Label htmlFor="ar_requirements">Arabic Requirements</Label>
+            <Textarea
+              id="ar_requirements"
+              value={form.translations.ar.requirements}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  translations: {
+                    ...prev.translations,
+                    ar: { ...prev.translations.ar, requirements: e.target.value },
+                  },
+                }))
+              }
+              placeholder="المتطلبات والشروط"
+              rows={2}
+              dir="rtl"
+            />
+          </div>
+
+          <div className="grid gap-2">
             <Label htmlFor="scheduleInfo">Schedule Info</Label>
             <Textarea
               id="scheduleInfo"
@@ -461,8 +522,31 @@ export function CoursePackageFormDialog({
               onChange={(e) =>
                 setForm((prev) => ({ ...prev, bestFor: e.target.value }))
               }
-              placeholder="One item per line&#10;e.g.&#10;Prefer both online &amp; classroom instruction&#10;High schedule adaptability requirement"
+              placeholder={"One item per line\ne.g.\nPrefer both online & classroom instruction\nHigh schedule adaptability requirement"}
               rows={4}
+            />
+            <p className="text-xs text-muted-foreground">
+              Enter each item on a new line
+            </p>
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="ar_bestFor">Arabic Best For</Label>
+            <Textarea
+              id="ar_bestFor"
+              value={form.translations.ar.best_for}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  translations: {
+                    ...prev.translations,
+                    ar: { ...prev.translations.ar, best_for: e.target.value },
+                  },
+                }))
+              }
+              placeholder="مناسب لـ"
+              rows={4}
+              dir="rtl"
             />
             <p className="text-xs text-muted-foreground">
               Enter each item on a new line

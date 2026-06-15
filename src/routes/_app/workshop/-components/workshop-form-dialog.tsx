@@ -38,6 +38,12 @@ export interface WorkshopFormData {
   start_time: string
   end_time: string
   is_active: boolean
+  translations: {
+    ar: {
+      short_description: string
+      description: string
+    }
+  }
 }
 
 interface WorkshopFormDialogProps {
@@ -62,6 +68,12 @@ const emptyForm: WorkshopFormData = {
   start_time: '',
   end_time: '',
   is_active: true,
+  translations: {
+    ar: {
+      short_description: '',
+      description: '',
+    },
+  },
 }
 
 function CourseSelect({
@@ -122,6 +134,12 @@ export function WorkshopFormDialog({
         start_time: workshop.startTime ?? '',
         end_time: workshop.endTime ?? '',
         is_active: workshop.isActive,
+        translations: {
+          ar: {
+            short_description: workshop.translations?.ar?.short_description ?? '',
+            description: workshop.translations?.ar?.description ?? '',
+          },
+        },
       })
     } else {
       setForm(emptyForm)
@@ -212,6 +230,29 @@ export function WorkshopFormDialog({
           </div>
 
           <div className="grid gap-2">
+            <Label htmlFor="ar_short_description">Arabic Short Description</Label>
+            <Textarea
+              id="ar_short_description"
+              value={form.translations.ar.short_description}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  translations: {
+                    ...prev.translations,
+                    ar: {
+                      ...prev.translations.ar,
+                      short_description: e.target.value,
+                    },
+                  },
+                }))
+              }
+              placeholder="وصف قصير للورشة"
+              rows={2}
+              dir="rtl"
+            />
+          </div>
+
+          <div className="grid gap-2">
             <Label htmlFor="description">Description</Label>
             <Textarea
               id="description"
@@ -224,6 +265,29 @@ export function WorkshopFormDialog({
               }
               placeholder="Full workshop description"
               rows={4}
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="ar_description">Arabic Description</Label>
+            <Textarea
+              id="ar_description"
+              value={form.translations.ar.description}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  translations: {
+                    ...prev.translations,
+                    ar: {
+                      ...prev.translations.ar,
+                      description: e.target.value,
+                    },
+                  },
+                }))
+              }
+              placeholder="وصف الورشة الكامل"
+              rows={4}
+              dir="rtl"
             />
           </div>
 

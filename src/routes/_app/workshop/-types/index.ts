@@ -1,3 +1,8 @@
+export interface WorkshopTranslations {
+  short_description?: string | null
+  description?: string | null
+}
+
 export interface Workshop {
   id: string
   courseId: string | null
@@ -18,6 +23,7 @@ export interface Workshop {
   discountValue: number | null
   discountType: string | null
   vatRate: number | null
+  translations?: Record<string, WorkshopTranslations> | null
   createdAt: string
   updatedAt: string
   deletedAt: string | null
@@ -44,6 +50,12 @@ export interface CreateWorkshopInput {
   start_time?: string
   end_time?: string
   is_active?: boolean
+  translations?: {
+    ar?: {
+      short_description?: string
+      description?: string
+    }
+  }
 }
 
 export type WorkshopBookingStatus =
