@@ -61,6 +61,7 @@ function buildCoursePayload(data: CreateCourseInput) {
   if (data.key_benefits?.length) payload.key_benefits = data.key_benefits
   if (data.focus_area?.length) payload.focus_area = data.focus_area
   if (data.is_active !== undefined) payload.is_active = data.is_active
+  if (data.translations) payload.translations = data.translations
 
   return payload
 }

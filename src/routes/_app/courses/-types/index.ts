@@ -1,3 +1,7 @@
+export interface CourseTranslations {
+  description?: string | null
+}
+
 export interface Course {
   id: string
   name: string | null
@@ -14,6 +18,7 @@ export interface Course {
   keyBenefits: unknown | null
   focusArea: unknown | null
   isActive: boolean
+  translations?: Record<string, CourseTranslations> | null
   createdAt: string
   updatedAt: string
   deletedAt: string | null
@@ -56,6 +61,11 @@ export interface CreateCourseInput {
   key_benefits?: string[]
   focus_area?: string[]
   is_active?: boolean
+  translations?: {
+    ar?: {
+      description?: string
+    }
+  }
 }
 
 export type CourseBookingStatus =

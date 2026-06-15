@@ -1,3 +1,7 @@
+export interface ExamTranslations {
+  description?: string | null
+}
+
 export interface Exam {
   id: string
   courseId: string | null
@@ -18,6 +22,7 @@ export interface Exam {
   parentId: string | null
   examFormRedirectUrl: string | null
   isActive: boolean | null
+  translations?: Record<string, ExamTranslations> | null
   createdAt: string
   updatedAt: string
   deletedAt: string | null
@@ -44,6 +49,11 @@ export interface CreateExamInput {
   parent_id?: string
   exam_form_redirect_url?: string
   is_active?: boolean
+  translations?: {
+    ar?: {
+      description?: string
+    }
+  }
 }
 
 export interface ExamFormField {

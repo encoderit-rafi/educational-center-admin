@@ -87,6 +87,7 @@ function buildPayload(data: CreateCoursePackageInput) {
   if (data.scheduleInfo) payload.schedule_info = data.scheduleInfo
   if (data.image) payload.image = data.image
   if (data.bestFor) payload.best_for = data.bestFor
+  if (data.translations) payload.translations = data.translations
   return payload
 }
 

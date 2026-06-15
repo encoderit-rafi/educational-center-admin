@@ -40,6 +40,11 @@ interface ExamFormData {
   parent_id: string
   exam_form_redirect_url: string
   is_active: boolean
+  translations: {
+    ar: {
+      description: string
+    }
+  }
 }
 
 interface ExamFormDialogProps {
@@ -64,6 +69,11 @@ const emptyForm: ExamFormData = {
   parent_id: '',
   exam_form_redirect_url: '',
   is_active: true,
+  translations: {
+    ar: {
+      description: '',
+    },
+  },
 }
 
 function CourseSelect({
@@ -228,6 +238,11 @@ export function ExamFormDialog({
         parent_id: exam.parentId ?? '',
         exam_form_redirect_url: exam.examFormRedirectUrl ?? '',
         is_active: exam.isActive ?? true,
+        translations: {
+          ar: {
+            description: exam.translations?.ar?.description ?? '',
+          },
+        },
       })
     } else {
       setForm(emptyForm)
@@ -304,6 +319,29 @@ export function ExamFormDialog({
               }
               placeholder="Exam description"
               rows={3}
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="ar_description">Arabic Description</Label>
+            <Textarea
+              id="ar_description"
+              value={form.translations.ar.description}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  translations: {
+                    ...prev.translations,
+                    ar: {
+                      ...prev.translations.ar,
+                      description: e.target.value,
+                    },
+                  },
+                }))
+              }
+              placeholder="وصف الامتحان"
+              rows={3}
+              dir="rtl"
             />
           </div>
 
