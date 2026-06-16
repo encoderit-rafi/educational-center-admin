@@ -131,7 +131,7 @@ export function MockTestsTable({
                 {mt.type ?? '-'}
               </TableCell>
               <TableCell>{mt.price ? `$${mt.price}` : '-'}</TableCell>
-              <TableCell>{mt.centerPrice ? `$${mt.centerPrice}` : '-'}</TableCell>
+              <TableCell>{mt.details?.center_price ? `$${mt.details.center_price}` : '-'}</TableCell>
               <TableCell>
                 {mt.discountType && mt.discountValue
                   ? `${mt.discountType === 'PERCENTAGE' ? '' : '$'}${mt.discountValue}${mt.discountType === 'PERCENTAGE' ? '%' : ''}`

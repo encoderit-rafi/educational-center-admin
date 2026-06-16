@@ -62,13 +62,12 @@ function buildMockTestPayload(data: CreateMockTestInput) {
   if (data.courseId) payload.course_id = data.courseId
   if (data.type) payload.type = data.type
   if (data.price !== undefined) payload.price = Number(data.price)
-  if (data.centerPrice !== undefined)
-    payload.center_price = Number(data.centerPrice)
   if (data.discountType) payload.discount_type = (data.discountType as string).toLowerCase()
   if (data.discountValue !== undefined)
     payload.discount_value = Number(data.discountValue)
   if (data.vatRate !== undefined) payload.vat_rate = Number(data.vatRate)
   if (data.description) payload.description = data.description
+  if (data.details !== undefined) payload.details = data.details
   return payload
 }
 

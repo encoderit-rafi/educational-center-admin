@@ -106,7 +106,7 @@ export function MockTestFormDialog({
         name: mockTest.name ?? '',
         type: mockTest.type ?? '',
         price: mockTest.price ?? '',
-        centerPrice: mockTest.centerPrice ?? '',
+        centerPrice: mockTest.details?.center_price ?? '',
         discountType: mockTest.discountType ?? '',
         discountValue: mockTest.discountValue ?? '',
         vatRate: mockTest.vatRate ?? '',

@@ -5,12 +5,14 @@ export interface MockTest {
   slug: string | null
   type: string | null
   price: string | null
-  centerPrice: string | null
   discountType: 'FLAT' | 'PERCENTAGE' | null
   discountValue: string | null
   vatRate: string | null
   description: string | null
-  details: unknown | null
+  details: {
+    center_price?: string | null
+    [key: string]: any
+  } | null
   variant: unknown | null
   isActive: boolean
   createdAt: string
@@ -30,11 +32,14 @@ export interface CreateMockTestInput {
   name?: string
   type?: string
   price?: number
-  centerPrice?: number
   discountType?: 'FLAT' | 'PERCENTAGE'
   discountValue?: number
   vatRate?: number
   description?: string
   isActive?: boolean
+  details?: {
+    center_price?: number
+    [key: string]: any
+  }
 }
 

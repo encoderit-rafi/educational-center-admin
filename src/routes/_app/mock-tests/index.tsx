@@ -170,9 +170,6 @@ function MockTestsTab() {
       courseId: formData.courseId || undefined,
       type: formData.type || undefined,
       price: formData.price ? Number(formData.price) : undefined,
-      centerPrice: formData.centerPrice
-        ? Number(formData.centerPrice)
-        : undefined,
       discountType: (formData.discountType || undefined) as
         | 'FLAT'
         | 'PERCENTAGE'
@@ -183,6 +180,12 @@ function MockTestsTab() {
       vatRate: formData.vatRate ? Number(formData.vatRate) : undefined,
       description: formData.description || undefined,
       isActive: formData.isActive,
+      details: {
+        ...selectedMockTest?.details,
+        center_price: formData.centerPrice
+          ? Number(formData.centerPrice)
+          : undefined,
+      },
     }
 
     if (selectedMockTest) {
