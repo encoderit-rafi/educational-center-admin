@@ -5,6 +5,7 @@ export interface MockTest {
   slug: string | null
   type: string | null
   price: string | null
+  centerPrice: string | null
   discountType: 'FLAT' | 'PERCENTAGE' | null
   discountValue: string | null
   vatRate: string | null
@@ -29,6 +30,7 @@ export interface CreateMockTestInput {
   name?: string
   type?: string
   price?: number
+  centerPrice?: number
   discountType?: 'FLAT' | 'PERCENTAGE'
   discountValue?: number
   vatRate?: number

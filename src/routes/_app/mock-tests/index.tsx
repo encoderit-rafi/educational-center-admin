@@ -170,6 +170,9 @@ function MockTestsTab() {
       courseId: formData.courseId || undefined,
       type: formData.type || undefined,
       price: formData.price ? Number(formData.price) : undefined,
+      centerPrice: formData.centerPrice
+        ? Number(formData.centerPrice)
+        : undefined,
       discountType: (formData.discountType || undefined) as
         | 'FLAT'
         | 'PERCENTAGE'

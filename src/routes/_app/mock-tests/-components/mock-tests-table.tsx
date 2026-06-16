@@ -102,6 +102,7 @@ export function MockTestsTable({
               sortOrder={sortOrder}
               onSort={onSort}
             />
+            <TableHead>Center Price</TableHead>
             <TableHead>Discount</TableHead>
             <SortHeader
               column="isActive"
@@ -130,6 +131,7 @@ export function MockTestsTable({
                 {mt.type ?? '-'}
               </TableCell>
               <TableCell>{mt.price ? `$${mt.price}` : '-'}</TableCell>
+              <TableCell>{mt.centerPrice ? `$${mt.centerPrice}` : '-'}</TableCell>
               <TableCell>
                 {mt.discountType && mt.discountValue
                   ? `${mt.discountType === 'PERCENTAGE' ? '' : '$'}${mt.discountValue}${mt.discountType === 'PERCENTAGE' ? '%' : ''}`
@@ -170,7 +172,7 @@ export function MockTestsTable({
           {mockTests.length === 0 && (
             <TableRow>
               <TableCell
-                colSpan={7}
+                colSpan={8}
                 className="text-center py-8 text-muted-foreground"
               >
                 No mock tests found.

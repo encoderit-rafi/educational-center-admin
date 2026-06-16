@@ -28,6 +28,7 @@ export interface MockTestFormData {
   name: string
   type: string
   price: string
+  centerPrice: string
   discountType: string
   discountValue: string
   vatRate: string
@@ -48,6 +49,7 @@ const emptyForm: MockTestFormData = {
   name: '',
   type: '',
   price: '',
+  centerPrice: '',
   discountType: '',
   discountValue: '',
   vatRate: '0',
@@ -104,6 +106,7 @@ export function MockTestFormDialog({
         name: mockTest.name ?? '',
         type: mockTest.type ?? '',
         price: mockTest.price ?? '',
+        centerPrice: mockTest.centerPrice ?? '',
         discountType: mockTest.discountType ?? '',
         discountValue: mockTest.discountValue ?? '',
         vatRate: mockTest.vatRate ?? '',
@@ -169,7 +172,7 @@ export function MockTestFormDialog({
             />
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-2">
               <Label htmlFor="price">Price</Label>
               <Input
@@ -183,6 +186,22 @@ export function MockTestFormDialog({
                 placeholder="0.00"
               />
             </div>
+            <div className="grid gap-2">
+              <Label htmlFor="centerPrice">Center Price</Label>
+              <Input
+                id="centerPrice"
+                type="number"
+                step="0.01"
+                value={form.centerPrice}
+                onChange={(e) =>
+                  setForm((prev) => ({ ...prev, centerPrice: e.target.value }))
+                }
+                placeholder="0.00"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-2">
               <Label htmlFor="discountType">Discount Type</Label>
               <Select
