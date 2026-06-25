@@ -35,16 +35,16 @@ export interface CreateEventInput {
   description?: string
   location?: string
   is_online?: boolean
-  meeting_link?: string
+  meeting_link?: string | null
   start_date: string
   end_date: string
   start_time?: string
   end_time?: string
-  total_seats?: number
+  total_seats?: number | null
   price: number
-  vat_rate?: number
+  vat_rate?: number | null
   is_active?: boolean
-  banner?: File
+  banner_image?: string
 }
 
 export interface EventBooking {

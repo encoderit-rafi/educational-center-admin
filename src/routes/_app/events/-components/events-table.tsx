@@ -108,7 +108,9 @@ export function EventsTable({
                 {event.title ?? '-'}
               </TableCell>
               <TableCell>
-                <Badge variant="outline">{event.eventType ?? '-'}</Badge>
+                <Badge variant="outline" className="capitalize">
+                  {event.eventType ? event.eventType.toLowerCase() : '-'}
+                </Badge>
               </TableCell>
               <TableCell className="text-xs text-muted-foreground">
                 {formatDate(event.startDate)}

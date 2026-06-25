@@ -22,6 +22,7 @@ import {
 import { Loader2 } from 'lucide-react'
 import { format } from 'date-fns'
 import type { Event } from '../-types'
+import { FileUpload } from '@/components/blocks/file-upload'
 
 interface EventFormData {
   title: string
@@ -38,7 +39,7 @@ interface EventFormData {
   price: number | null
   vat_rate: number | null
   is_active: boolean
-  banner: File | null
+  banner_image: string
 }
 
 interface EventFormDialogProps {
@@ -64,7 +65,7 @@ const emptyForm: EventFormData = {
   price: null,
   vat_rate: 0,
   is_active: true,
-  banner: null,
+  banner_image: '',
 }
 
 export function EventFormDialog({
@@ -78,9 +79,10 @@ export function EventFormDialog({
 
   useEffect(() => {
     if (event) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setForm({
         title: event.title ?? '',
-        event_type: event.eventType ?? '',
+        event_type: event.eventType ? event.eventType.toLowerCase() : '',
         description: event.description ?? '',
         location: event.location ?? '',
         is_online: event.isOnline ?? false,
@@ -97,7 +99,7 @@ export function EventFormDialog({
         price: event.price ? Number(event.price) : null,
         vat_rate: event.vatRate ? Number(event.vatRate) : null,
         is_active: event.isActive ?? true,
-        banner: null,
+        banner_image: event.bannerImage ?? '',
       })
     } else {
       setForm(emptyForm)
@@ -323,16 +325,11 @@ export function EventFormDialog({
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="banner">Banner Image</Label>
-            <Input
-              id="banner"
-              type="file"
-              accept="image/*"
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...prev,
-                  banner: e.target.files?.[0] ?? null,
-                }))
+            <Label>Banner Image</Label>
+            <FileUpload
+              value={form.banner_image}
+              onChange={(url) =>
+                setForm((prev) => ({ ...prev, banner_image: url }))
               }
             />
           </div>

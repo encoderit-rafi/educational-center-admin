@@ -26,7 +26,7 @@ import { usePagination } from '@/hooks/use-pagination'
 import { useDebounce } from '@/hooks/use-debounce'
 import { useQuery, keepPreviousData } from '@tanstack/react-query'
 import { EventsTable } from './-components/events-table'
-import { EventFormDialog } from './-components/event-form-dialog'
+import { EventFormDialog, type EventFormData } from './-components/event-form-dialog'
 import { EventDeleteDialog } from './-components/event-delete-dialog'
 import { EventBookingsTable } from './-components/event-bookings-table'
 import { EventBookingDetailsSheet } from './-components/event-booking-details-sheet'
@@ -43,7 +43,7 @@ import {
 import { createFileRoute } from '@tanstack/react-router'
 import { Search, X, Plus } from 'lucide-react'
 import { toast } from 'sonner'
-import type { Event, EventBooking } from './-types'
+import type { Event, EventBooking, CreateEventInput } from './-types'
 
 export const Route = createFileRoute('/_app/events/')({
   component: EventsPage,
@@ -114,9 +114,10 @@ function EventsTab() {
 
   useEffect(() => {
     if (data && page > data.totalPages && data.totalPages > 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPage(data.totalPages)
     }
-  }, [data?.totalPages])
+  }, [data, page, setPage])
 
   const { pages, showLeftEllipsis, showRightEllipsis } = usePagination({
     currentPage: page,
@@ -169,10 +170,10 @@ function EventsTab() {
     })
   }
 
-  const handleSave = (formData: any) => {
+  const handleSave = (formData: EventFormData) => {
     if (selectedEvent) {
       updateMutation.mutate(
-        { id: selectedEvent.id, ...formData },
+        { id: selectedEvent.id, ...formData } as CreateEventInput & { id: string },
         {
           onSuccess: () => {
             toast.success('Event updated successfully')
@@ -189,7 +190,7 @@ function EventsTab() {
       return
     }
 
-    createMutation.mutate(formData, {
+    createMutation.mutate(formData as CreateEventInput, {
       onSuccess: () => {
         toast.success('Event created successfully')
         setIsFormOpen(false)
@@ -374,9 +375,10 @@ function BookingsTab() {
 
   useEffect(() => {
     if (data && page > data.totalPages && data.totalPages > 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPage(data.totalPages)
     }
-  }, [data?.totalPages])
+  }, [data, page, setPage])
 
   const { pages, showLeftEllipsis, showRightEllipsis } = usePagination({
     currentPage: page,
