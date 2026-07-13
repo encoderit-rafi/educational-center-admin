@@ -1,4 +1,7 @@
 export interface CourseTranslations {
+  title?: string | null
+  sub_title?: string | null
+  short_description?: string | null
   description?: string | null
 }
 
@@ -63,6 +66,9 @@ export interface CreateCourseInput {
   is_active?: boolean
   translations?: {
     ar?: {
+      title?: string
+      sub_title?: string
+      short_description?: string
       description?: string
     }
   }

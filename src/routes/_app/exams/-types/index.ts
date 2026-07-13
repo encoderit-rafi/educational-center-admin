@@ -1,4 +1,5 @@
 export interface ExamTranslations {
+  name?: string | null
   description?: string | null
 }
 
@@ -51,6 +52,7 @@ export interface CreateExamInput {
   is_active?: boolean
   translations?: {
     ar?: {
+      name?: string
       description?: string
     }
   }

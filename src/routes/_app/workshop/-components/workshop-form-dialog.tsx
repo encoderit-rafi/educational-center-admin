@@ -40,6 +40,8 @@ export interface WorkshopFormData {
   is_active: boolean
   translations: {
     ar: {
+      title: string
+      sub_title: string
       short_description: string
       description: string
     }
@@ -70,6 +72,8 @@ const emptyForm: WorkshopFormData = {
   is_active: true,
   translations: {
     ar: {
+      title: '',
+      sub_title: '',
       short_description: '',
       description: '',
     },
@@ -136,6 +140,8 @@ export function WorkshopFormDialog({
         is_active: workshop.isActive,
         translations: {
           ar: {
+            title: workshop.translations?.ar?.title ?? '',
+            sub_title: workshop.translations?.ar?.sub_title ?? '',
             short_description: workshop.translations?.ar?.short_description ?? '',
             description: workshop.translations?.ar?.description ?? '',
           },
@@ -182,6 +188,28 @@ export function WorkshopFormDialog({
           </div>
 
           <div className="grid gap-2">
+            <Label htmlFor="ar_title">Arabic Title</Label>
+            <Input
+              id="ar_title"
+              value={form.translations.ar.title}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  translations: {
+                    ...prev.translations,
+                    ar: {
+                      ...prev.translations.ar,
+                      title: e.target.value,
+                    },
+                  },
+                }))
+              }
+              placeholder="عنوان الورشة"
+              dir="rtl"
+            />
+          </div>
+
+          <div className="grid gap-2">
             <Label htmlFor="sub_title">
               Sub Title <span className="text-destructive">*</span>
             </Label>
@@ -192,6 +220,28 @@ export function WorkshopFormDialog({
                 setForm((prev) => ({ ...prev, sub_title: e.target.value }))
               }
               placeholder="Workshop sub title"
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="ar_sub_title">Arabic Sub Title</Label>
+            <Input
+              id="ar_sub_title"
+              value={form.translations.ar.sub_title}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  translations: {
+                    ...prev.translations,
+                    ar: {
+                      ...prev.translations.ar,
+                      sub_title: e.target.value,
+                    },
+                  },
+                }))
+              }
+              placeholder="العنوان الفرعي للورشة"
+              dir="rtl"
             />
           </div>
 

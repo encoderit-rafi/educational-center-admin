@@ -31,6 +31,9 @@ interface CourseFormData {
   is_active: boolean
   translations: {
     ar: {
+      title: string
+      sub_title: string
+      short_description: string
       description: string
     }
   }
@@ -59,6 +62,9 @@ const emptyForm: CourseFormData = {
   is_active: true,
   translations: {
     ar: {
+      title: '',
+      sub_title: '',
+      short_description: '',
       description: '',
     },
   },
@@ -90,6 +96,9 @@ export function CourseFormDialog({
         is_active: course.isActive,
         translations: {
           ar: {
+            title: course.translations?.ar?.title ?? '',
+            sub_title: course.translations?.ar?.sub_title ?? '',
+            short_description: course.translations?.ar?.short_description ?? '',
             description: course.translations?.ar?.description ?? '',
           },
         },
@@ -135,6 +144,28 @@ export function CourseFormDialog({
           </div>
 
           <div className="grid gap-2">
+            <Label htmlFor="ar_title">Arabic Title</Label>
+            <Input
+              id="ar_title"
+              value={form.translations.ar.title}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  translations: {
+                    ...prev.translations,
+                    ar: {
+                      ...prev.translations.ar,
+                      title: e.target.value,
+                    },
+                  },
+                }))
+              }
+              placeholder="عنوان الدورة"
+              dir="rtl"
+            />
+          </div>
+
+          <div className="grid gap-2">
             <Label htmlFor="sub_title">
               Sub Title <span className="text-destructive">*</span>
             </Label>
@@ -145,6 +176,28 @@ export function CourseFormDialog({
                 setForm((prev) => ({ ...prev, sub_title: e.target.value }))
               }
               placeholder="Course sub title"
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="ar_sub_title">Arabic Sub Title</Label>
+            <Input
+              id="ar_sub_title"
+              value={form.translations.ar.sub_title}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  translations: {
+                    ...prev.translations,
+                    ar: {
+                      ...prev.translations.ar,
+                      sub_title: e.target.value,
+                    },
+                  },
+                }))
+              }
+              placeholder="العنوان الفرعي للدورة"
+              dir="rtl"
             />
           </div>
 
@@ -161,6 +214,29 @@ export function CourseFormDialog({
               }
               placeholder="Brief summary of the course"
               rows={2}
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="ar_short_description">Arabic Short Description</Label>
+            <Textarea
+              id="ar_short_description"
+              value={form.translations.ar.short_description}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  translations: {
+                    ...prev.translations,
+                    ar: {
+                      ...prev.translations.ar,
+                      short_description: e.target.value,
+                    },
+                  },
+                }))
+              }
+              placeholder="نبذة مختصرة عن الدورة"
+              rows={2}
+              dir="rtl"
             />
           </div>
 

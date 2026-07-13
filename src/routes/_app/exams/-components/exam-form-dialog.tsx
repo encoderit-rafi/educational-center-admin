@@ -42,6 +42,7 @@ interface ExamFormData {
   is_active: boolean
   translations: {
     ar: {
+      name: string
       description: string
     }
   }
@@ -71,6 +72,7 @@ const emptyForm: ExamFormData = {
   is_active: true,
   translations: {
     ar: {
+      name: '',
       description: '',
     },
   },
@@ -240,6 +242,7 @@ export function ExamFormDialog({
         is_active: exam.isActive ?? true,
         translations: {
           ar: {
+            name: exam.translations?.ar?.name ?? '',
             description: exam.translations?.ar?.description ?? '',
           },
         },
@@ -306,6 +309,28 @@ export function ExamFormDialog({
                 setForm((prev) => ({ ...prev, name: e.target.value }))
               }
               placeholder="Exam name"
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="ar_name">Arabic Name</Label>
+            <Input
+              id="ar_name"
+              value={form.translations.ar.name}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  translations: {
+                    ...prev.translations,
+                    ar: {
+                      ...prev.translations.ar,
+                      name: e.target.value,
+                    },
+                  },
+                }))
+              }
+              placeholder="اسم الامتحان"
+              dir="rtl"
             />
           </div>
 
