@@ -78,9 +78,8 @@ function SortHeader({
       <div className="flex items-center gap-1">
         {label}
         <Icon
-          className={`h-3 w-3 transition-opacity ${
-            isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-50'
-          }`}
+          className={`h-3 w-3 transition-opacity ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-50'
+            }`}
         />
       </div>
     </TableHead>
