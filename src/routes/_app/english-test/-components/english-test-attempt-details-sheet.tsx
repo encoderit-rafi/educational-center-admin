@@ -31,11 +31,6 @@ function DetailRow({
   );
 }
 
-function formatDate(val: string | null | undefined) {
-  if (!val) return "-";
-  return new Date(val).toLocaleDateString();
-}
-
 function formatDateTime(val: string | null | undefined) {
   if (!val) return "-";
   return new Date(val).toLocaleString();

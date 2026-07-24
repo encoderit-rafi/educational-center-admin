@@ -1,11 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import {
   PageBody,
   PageContainer,
   PageHeader,
   PageTitle,
 } from "@/components/blocks/app-page";
-import { AppTabs } from "@/components/blocks/app-tabs";
 import {
   Pagination,
   PaginationContent,
@@ -15,41 +14,19 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupInput,
-} from "@/components/ui/input-group";
+
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { usePagination } from "@/hooks/use-pagination";
-import { useDebounce } from "@/hooks/use-debounce";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { EnglishTestAttemptsTable } from "./-components/english-test-attempts-table";
 import { EnglishTestAttemptDeleteDialog } from "./-components/english-test-attempt-delete-dialog";
 import { EnglishTestAttemptDetailsSheet } from "./-components/english-test-attempt-details-sheet";
-import { EnglishTestLevelsTable } from "./-components/english-test-levels-table";
-import { EnglishTestLevelFormDialog } from "./-components/english-test-level-form-dialog";
-import { EnglishTestLevelDeleteDialog } from "./-components/english-test-level-delete-dialog";
-import {
-  useGetAttempts,
-  useDeleteAttempt,
-  useGetLevelDefinitions,
-  useCreateLevelDefinition,
-  useUpdateLevelDefinition,
-  useDeleteLevelDefinition,
-} from "./-api";
+
+import { useGetAttempts, useDeleteAttempt } from "./-api";
 import { createFileRoute } from "@tanstack/react-router";
-import { Search, X, Plus } from "lucide-react";
 import { toast } from "sonner";
-import type { EnglishLevelDefinition, EnglishTestAttempt } from "./-types";
+import type { EnglishTestAttempt } from "./-types";
 
 export const Route = createFileRoute("/_app/english-test/")({
   component: EnglishTestPage,
@@ -78,19 +55,19 @@ function AttemptsTab() {
   const [page, setPage] = useState(1);
   const [sortBy] = useState("createdAt");
   const [sortOrder] = useState("desc");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [levelFilter, setLevelFilter] = useState("");
-  const debouncedSearch = useDebounce(searchQuery, 300);
-  const isFirstRender = useRef(true);
+  // const [searchQuery, setSearchQuery] = useState("");
+  // const [levelFilter, setLevelFilter] = useState("");
+  // const debouncedSearch = useDebounce(searchQuery, 300);
+  // const isFirstRender = useRef(true);
   const limit = 20;
 
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-    setPage(1);
-  }, [debouncedSearch, levelFilter]);
+  // useEffect(() => {
+  //   if (isFirstRender.current) {
+  //     isFirstRender.current = false;
+  //     return;
+  //   }
+  //   setPage(1);
+  // }, [debouncedSearch, levelFilter]);
 
   const { data, isLoading, isFetching, isError } = useQuery({
     ...useGetAttempts({
@@ -98,15 +75,15 @@ function AttemptsTab() {
       limit,
       sortBy,
       sortOrder,
-      keyword: debouncedSearch || undefined,
-      level: levelFilter || undefined,
+      // keyword: debouncedSearch || undefined,
+      // level: levelFilter || undefined,
     }),
     placeholderData: keepPreviousData,
   });
 
-  const handleClearSearch = () => {
-    setSearchQuery("");
-  };
+  // const handleClearSearch = () => {
+  //   setSearchQuery("");
+  // };
 
   const attempts = data?.data ?? [];
   const totalPages = data?.totalPages ?? 1;
