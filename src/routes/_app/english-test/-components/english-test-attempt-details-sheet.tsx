@@ -4,41 +4,41 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from '@/components/ui/sheet'
-import { Badge } from '@/components/ui/badge'
-import { useQuery } from '@tanstack/react-query'
-import { useGetAttemptDetail } from '../-api'
-import { Loader2 } from 'lucide-react'
+} from "@/components/ui/sheet";
+import { Badge } from "@/components/ui/badge";
+import { useQuery } from "@tanstack/react-query";
+import { useGetAttemptDetail } from "../-api";
+import { Loader2 } from "lucide-react";
 
 interface EnglishTestAttemptDetailsSheetProps {
-  isOpen: boolean
-  onOpenChange: (open: boolean) => void
-  attemptId?: string | null
+  isOpen: boolean;
+  onOpenChange: (open: boolean) => void;
+  attemptId?: string | null;
 }
 
 function DetailRow({
   label,
   value,
 }: {
-  label: string
-  value: string | null | undefined
+  label: string;
+  value: string | null | undefined;
 }) {
   return (
     <div className="text-sm">
       <div className="text-muted-foreground">{label}</div>
-      <div className="font-medium">{value ?? '-'}</div>
+      <div className="font-medium">{value ?? "-"}</div>
     </div>
-  )
+  );
 }
 
 function formatDate(val: string | null | undefined) {
-  if (!val) return '-'
-  return new Date(val).toLocaleDateString()
+  if (!val) return "-";
+  return new Date(val).toLocaleDateString();
 }
 
 function formatDateTime(val: string | null | undefined) {
-  if (!val) return '-'
-  return new Date(val).toLocaleString()
+  if (!val) return "-";
+  return new Date(val).toLocaleString();
 }
 
 export function EnglishTestAttemptDetailsSheet({
@@ -47,15 +47,15 @@ export function EnglishTestAttemptDetailsSheet({
   attemptId,
 }: EnglishTestAttemptDetailsSheetProps) {
   const { data, isLoading, isError } = useQuery({
-    ...useGetAttemptDetail(attemptId ?? ''),
+    ...useGetAttemptDetail(attemptId ?? ""),
     enabled: !!attemptId && isOpen,
-  })
+  });
 
-  const attempt = data?.attempt
+  const attempt = data?.attempt;
 
   return (
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
-      <SheetContent className="sm:max-w-lg dark:bg-card overflow-y-auto">
+      <SheetContent className="sm:max-w-lg dark:bg-card overflow-y-auto p-4">
         <SheetHeader className="p-0 pb-4 border-b border-muted">
           <SheetTitle>Attempt Details</SheetTitle>
           <SheetDescription>
@@ -118,7 +118,7 @@ export function EnglishTestAttemptDetailsSheet({
                 <div className="grid grid-cols-2 gap-4">
                   <DetailRow
                     label="Total Score"
-                    value={attempt.total_score?.toString() ?? '0'}
+                    value={attempt.total_score?.toString() ?? "0"}
                   />
                   {data?.english_level && (
                     <div>
@@ -161,7 +161,7 @@ export function EnglishTestAttemptDetailsSheet({
                           </div>
                           <div className="text-sm">
                             <span className="text-muted-foreground">
-                              Answer:{' '}
+                              Answer:{" "}
                             </span>
                             {qa.answer_text ?? (
                               <span className="italic text-muted-foreground">
@@ -171,17 +171,17 @@ export function EnglishTestAttemptDetailsSheet({
                           </div>
                           <div className="text-sm">
                             <span className="text-muted-foreground">
-                              Correct Answer:{' '}
+                              Correct Answer:{" "}
                             </span>
                             {qa.correct_answer}
                           </div>
                           <div className="flex items-center gap-2">
                             <Badge
                               variant={
-                                qa.is_correct ? 'default' : 'destructive'
+                                qa.is_correct ? "default" : "destructive"
                               }
                             >
-                              {qa.is_correct ? 'Correct' : 'Incorrect'}
+                              {qa.is_correct ? "Correct" : "Incorrect"}
                             </Badge>
                             <span className="text-xs text-muted-foreground">
                               Score: {qa.score}/{qa.max_score}
@@ -217,5 +217,5 @@ export function EnglishTestAttemptDetailsSheet({
         </div>
       </SheetContent>
     </Sheet>
-  )
+  );
 }
