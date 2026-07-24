@@ -34,6 +34,7 @@ import { useDebounce } from "@/hooks/use-debounce";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { EnglishTestAttemptsTable } from "./-components/english-test-attempts-table";
 import { EnglishTestAttemptDeleteDialog } from "./-components/english-test-attempt-delete-dialog";
+import { EnglishTestAttemptDetailsSheet } from "./-components/english-test-attempt-details-sheet";
 import { EnglishTestLevelsTable } from "./-components/english-test-levels-table";
 import { EnglishTestLevelFormDialog } from "./-components/english-test-level-form-dialog";
 import { EnglishTestLevelDeleteDialog } from "./-components/english-test-level-delete-dialog";
@@ -122,11 +123,21 @@ function AttemptsTab() {
     paginationItemsToDisplay: 5,
   });
 
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [detailsTarget, setDetailsTarget] = useState<EnglishTestAttempt | null>(
+    null,
+  );
+
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<EnglishTestAttempt | null>(
     null,
   );
   const deleteMutation = useDeleteAttempt();
+
+  const handleView = (attempt: EnglishTestAttempt) => {
+    setDetailsTarget(attempt);
+    setIsDetailsOpen(true);
+  };
 
   const handleDelete = (attempt: EnglishTestAttempt) => {
     setDeleteTarget(attempt);
@@ -214,6 +225,7 @@ function AttemptsTab() {
           )}
           <EnglishTestAttemptsTable
             attempts={attempts}
+            onView={handleView}
             onDelete={handleDelete}
           />
           {totalPages > 1 && (
@@ -265,6 +277,11 @@ function AttemptsTab() {
         attemptId={deleteTarget?.id ?? ""}
         onConfirm={handleConfirmDelete}
         isPending={deleteMutation.isPending}
+      />
+      <EnglishTestAttemptDetailsSheet
+        isOpen={isDetailsOpen}
+        onOpenChange={setIsDetailsOpen}
+        attemptId={detailsTarget?.id}
       />
     </>
   );

@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-query'
 import type {
   EnglishTestAttemptsResponse,
+  EnglishTestAttemptDetailResponse,
   EnglishLevelDefinitionsResponse,
   CreateLevelDefinitionInput,
 } from '../-types'
@@ -28,6 +29,16 @@ export function useGetAttempts(params?: ListParams) {
     },
     staleTime: 15 * 60 * 1000,
     gcTime: 20 * 60 * 1000,
+  })
+}
+
+export function useGetAttemptDetail(attemptId: string) {
+  return queryOptions({
+    queryKey: ['english-test-attempt', attemptId],
+    queryFn: async (): Promise<EnglishTestAttemptDetailResponse> => {
+      const res = await api.get(`/english-test/${attemptId}`)
+      return res.data.data
+    },
   })
 }
 

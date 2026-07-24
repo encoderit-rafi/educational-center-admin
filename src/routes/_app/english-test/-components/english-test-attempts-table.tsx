@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import type { EnglishTestAttempt } from '../-types'
 import {
+  Eye,
   MoreHorizontal,
   Trash2,
 } from 'lucide-react'
@@ -27,11 +28,13 @@ function formatDate(dateStr: string | null) {
 
 interface EnglishTestAttemptsTableProps {
   attempts: EnglishTestAttempt[]
+  onView: (attempt: EnglishTestAttempt) => void
   onDelete: (attempt: EnglishTestAttempt) => void
 }
 
 export function EnglishTestAttemptsTable({
   attempts,
+  onView,
   onDelete,
 }: EnglishTestAttemptsTableProps) {
   return (
@@ -75,6 +78,10 @@ export function EnglishTestAttemptsTable({
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => onView(attempt)}>
+                      <Eye className="mr-2 h-4 w-4" />
+                      View
+                    </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => onDelete(attempt)}
                       className="text-destructive"

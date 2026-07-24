@@ -35,6 +35,45 @@ export interface EnglishLevelDefinitionsResponse {
   totalPages: number
 }
 
+export interface EnglishTestAttemptData {
+  id: string
+  email: string | null
+  user_id: string | null
+  full_name: string | null
+  first_name: string | null
+  middle_name: string | null
+  last_name: string | null
+  phone: string | null
+  address: string | null
+  country: string | null
+  city: string | null
+  preferred_contact_method: string | null
+  preferred_time_to_contact_you: string | null
+  started_at: string | null
+  submitted_at: string | null
+  total_score: number | null
+  pdf_url: string | null
+  email_sent_at: string | null
+  scores_by_skill: Record<string, number> | null
+  created_at: string
+  updated_at: string
+}
+
+export interface EnglishTestAttemptDetailResponse {
+  attempt: EnglishTestAttemptData
+  english_level: { id: string; level_code: string; label: string } | null
+  linked_user: { id: string; full_name: string; email: string } | null
+  questions_and_answers: Array<{
+    question_id: string
+    question_text: string
+    answer_text: string | null
+    correct_answer: string
+    is_correct: boolean
+    score: number
+    max_score: number
+  }>
+}
+
 export interface CreateLevelDefinitionInput {
   level_code: string
   label: string
