@@ -4,35 +4,35 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from '@/components/ui/sheet'
-import { useQuery } from '@tanstack/react-query'
-import { useGetSubmissionDetail } from '../-api'
-import { Loader2 } from 'lucide-react'
+} from "@/components/ui/sheet";
+import { useQuery } from "@tanstack/react-query";
+import { useGetSubmissionDetail } from "../-api";
+import { Loader2 } from "lucide-react";
 
 interface EnglishQuizSubmissionDetailsSheetProps {
-  isOpen: boolean
-  onOpenChange: (open: boolean) => void
-  submissionId?: string | null
+  isOpen: boolean;
+  onOpenChange: (open: boolean) => void;
+  submissionId?: string | null;
 }
 
 function DetailRow({
   label,
   value,
 }: {
-  label: string
-  value: string | null | undefined
+  label: string;
+  value: string | null | undefined;
 }) {
   return (
     <div className="text-sm">
       <div className="text-muted-foreground">{label}</div>
-      <div className="font-medium">{value ?? '-'}</div>
+      <div className="font-medium">{value ?? "-"}</div>
     </div>
-  )
+  );
 }
 
 function formatDateTime(val: string | null | undefined) {
-  if (!val) return '-'
-  return new Date(val).toLocaleString()
+  if (!val) return "-";
+  return new Date(val).toLocaleString();
 }
 
 export function EnglishQuizSubmissionDetailsSheet({
@@ -40,14 +40,18 @@ export function EnglishQuizSubmissionDetailsSheet({
   onOpenChange,
   submissionId,
 }: EnglishQuizSubmissionDetailsSheetProps) {
-  const { data: submission, isLoading, isError } = useQuery({
-    ...useGetSubmissionDetail(submissionId ?? ''),
+  const {
+    data: submission,
+    isLoading,
+    isError,
+  } = useQuery({
+    ...useGetSubmissionDetail(submissionId ?? ""),
     enabled: !!submissionId && isOpen,
-  })
+  });
 
   return (
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
-      <SheetContent className="sm:max-w-lg dark:bg-card overflow-y-auto">
+      <SheetContent className="sm:max-w-lg dark:bg-card overflow-y-auto p-4">
         <SheetHeader className="p-0 pb-4 border-b border-muted">
           <SheetTitle>Submission Details</SheetTitle>
           <SheetDescription>
@@ -100,7 +104,7 @@ export function EnglishQuizSubmissionDetailsSheet({
                     >
                       <div className="text-sm font-medium">
                         <span className="text-muted-foreground">
-                          Q{index + 1}:{' '}
+                          Q{index + 1}:{" "}
                         </span>
                         {qa.question}
                       </div>
@@ -141,5 +145,5 @@ export function EnglishQuizSubmissionDetailsSheet({
         </div>
       </SheetContent>
     </Sheet>
-  )
+  );
 }
