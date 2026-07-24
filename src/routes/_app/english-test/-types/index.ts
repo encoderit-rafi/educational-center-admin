@@ -1,12 +1,29 @@
 export interface EnglishTestAttempt {
   id: string
+  email: string | null
   userId: string | null
-  score: number | null
-  level: string | null
+  fullName: string | null
+  firstName: string | null
+  middleName: string | null
+  lastName: string | null
+  phone: string | null
+  address: string | null
+  country: string | null
+  city: string | null
+  preferredContactMethod: string | null
+  preferredTimeToContactYou: string | null
+  totalScore: number | null
+  englishLevelId: string | null
+  scoresBySkill: Record<string, number> | null
   startedAt: string | null
   completedAt: string | null
+  submittedAt: string | null
+  pdfUrl: string | null
+  emailSentAt: string | null
   createdAt: string
   updatedAt: string
+  level: string | null
+  score: number | null
 }
 
 export interface EnglishTestAttemptsResponse {

@@ -42,20 +42,36 @@ export function EnglishTestAttemptsTable({
       <Table containerClassName="flex-1">
         <TableHeader className="sticky top-0 z-10">
           <TableRow className="hover:bg-transparent">
-            <TableHead>User ID</TableHead>
+            <TableHead>Name</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>Phone</TableHead>
+            <TableHead>Country</TableHead>
+            <TableHead>City</TableHead>
             <TableHead>Score</TableHead>
             <TableHead>Level</TableHead>
             <TableHead>Started At</TableHead>
-            <TableHead>Completed At</TableHead>
-            <TableHead>Created At</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {attempts.map((attempt) => (
             <TableRow key={attempt.id}>
-              <TableCell className="font-mono text-xs">
-                {attempt.userId ?? '-'}
+              <TableCell className="font-medium">
+                {[attempt.firstName, attempt.lastName]
+                  .filter(Boolean)
+                  .join(' ') || '-'}
+              </TableCell>
+              <TableCell className="text-xs">
+                {attempt.email ?? '-'}
+              </TableCell>
+              <TableCell className="text-xs">
+                {attempt.phone ?? '-'}
+              </TableCell>
+              <TableCell className="text-xs">
+                {attempt.country ?? '-'}
+              </TableCell>
+              <TableCell className="text-xs">
+                {attempt.city ?? '-'}
               </TableCell>
               <TableCell>{attempt.score ?? '-'}</TableCell>
               <TableCell>
@@ -63,12 +79,6 @@ export function EnglishTestAttemptsTable({
               </TableCell>
               <TableCell className="text-xs text-muted-foreground">
                 {formatDate(attempt.startedAt)}
-              </TableCell>
-              <TableCell className="text-xs text-muted-foreground">
-                {formatDate(attempt.completedAt)}
-              </TableCell>
-              <TableCell className="text-xs text-muted-foreground">
-                {formatDate(attempt.createdAt)}
               </TableCell>
               <TableCell className="text-right">
                 <DropdownMenu>
@@ -97,7 +107,7 @@ export function EnglishTestAttemptsTable({
           {attempts.length === 0 && (
             <TableRow>
               <TableCell
-                colSpan={7}
+                colSpan={9}
                 className="text-center py-8 text-muted-foreground"
               >
                 No attempts found.
