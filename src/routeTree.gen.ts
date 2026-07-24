@@ -31,6 +31,7 @@ import { Route as AppExamsIndexRouteImport } from './routes/_app/exams/index'
 import { Route as AppExamBookingsIndexRouteImport } from './routes/_app/exam-bookings/index'
 import { Route as AppEventsIndexRouteImport } from './routes/_app/events/index'
 import { Route as AppEnglishTestIndexRouteImport } from './routes/_app/english-test/index'
+import { Route as AppEnglishQuizIndexRouteImport } from './routes/_app/english-quiz/index'
 import { Route as AppDemoIndexRouteImport } from './routes/_app/demo/index'
 import { Route as AppCoursesIndexRouteImport } from './routes/_app/courses/index'
 import { Route as AppCoursePackagesIndexRouteImport } from './routes/_app/course-packages/index'
@@ -149,6 +150,11 @@ const AppEnglishTestIndexRoute = AppEnglishTestIndexRouteImport.update({
   path: '/english-test/',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppEnglishQuizIndexRoute = AppEnglishQuizIndexRouteImport.update({
+  id: '/english-quiz/',
+  path: '/english-quiz/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppDemoIndexRoute = AppDemoIndexRouteImport.update({
   id: '/demo/',
   path: '/demo/',
@@ -202,6 +208,7 @@ export interface FileRoutesByFullPath {
   '/course-packages/': typeof AppCoursePackagesIndexRoute
   '/courses/': typeof AppCoursesIndexRoute
   '/demo/': typeof AppDemoIndexRoute
+  '/english-quiz/': typeof AppEnglishQuizIndexRoute
   '/english-test/': typeof AppEnglishTestIndexRoute
   '/events/': typeof AppEventsIndexRoute
   '/exam-bookings/': typeof AppExamBookingsIndexRoute
@@ -232,6 +239,7 @@ export interface FileRoutesByTo {
   '/course-packages': typeof AppCoursePackagesIndexRoute
   '/courses': typeof AppCoursesIndexRoute
   '/demo': typeof AppDemoIndexRoute
+  '/english-quiz': typeof AppEnglishQuizIndexRoute
   '/english-test': typeof AppEnglishTestIndexRoute
   '/events': typeof AppEventsIndexRoute
   '/exam-bookings': typeof AppExamBookingsIndexRoute
@@ -265,6 +273,7 @@ export interface FileRoutesById {
   '/_app/course-packages/': typeof AppCoursePackagesIndexRoute
   '/_app/courses/': typeof AppCoursesIndexRoute
   '/_app/demo/': typeof AppDemoIndexRoute
+  '/_app/english-quiz/': typeof AppEnglishQuizIndexRoute
   '/_app/english-test/': typeof AppEnglishTestIndexRoute
   '/_app/events/': typeof AppEventsIndexRoute
   '/_app/exam-bookings/': typeof AppExamBookingsIndexRoute
@@ -297,6 +306,7 @@ export interface FileRouteTypes {
     | '/course-packages/'
     | '/courses/'
     | '/demo/'
+    | '/english-quiz/'
     | '/english-test/'
     | '/events/'
     | '/exam-bookings/'
@@ -327,6 +337,7 @@ export interface FileRouteTypes {
     | '/course-packages'
     | '/courses'
     | '/demo'
+    | '/english-quiz'
     | '/english-test'
     | '/events'
     | '/exam-bookings'
@@ -359,6 +370,7 @@ export interface FileRouteTypes {
     | '/_app/course-packages/'
     | '/_app/courses/'
     | '/_app/demo/'
+    | '/_app/english-quiz/'
     | '/_app/english-test/'
     | '/_app/events/'
     | '/_app/exam-bookings/'
@@ -541,6 +553,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEnglishTestIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/english-quiz/': {
+      id: '/_app/english-quiz/'
+      path: '/english-quiz'
+      fullPath: '/english-quiz/'
+      preLoaderRoute: typeof AppEnglishQuizIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/demo/': {
       id: '/_app/demo/'
       path: '/demo'
@@ -609,6 +628,7 @@ interface AppRouteRouteChildren {
   AppCoursePackagesIndexRoute: typeof AppCoursePackagesIndexRoute
   AppCoursesIndexRoute: typeof AppCoursesIndexRoute
   AppDemoIndexRoute: typeof AppDemoIndexRoute
+  AppEnglishQuizIndexRoute: typeof AppEnglishQuizIndexRoute
   AppEnglishTestIndexRoute: typeof AppEnglishTestIndexRoute
   AppEventsIndexRoute: typeof AppEventsIndexRoute
   AppExamBookingsIndexRoute: typeof AppExamBookingsIndexRoute
@@ -634,6 +654,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppCoursePackagesIndexRoute: AppCoursePackagesIndexRoute,
   AppCoursesIndexRoute: AppCoursesIndexRoute,
   AppDemoIndexRoute: AppDemoIndexRoute,
+  AppEnglishQuizIndexRoute: AppEnglishQuizIndexRoute,
   AppEnglishTestIndexRoute: AppEnglishTestIndexRoute,
   AppEventsIndexRoute: AppEventsIndexRoute,
   AppExamBookingsIndexRoute: AppExamBookingsIndexRoute,
