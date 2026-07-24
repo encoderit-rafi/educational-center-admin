@@ -4,7 +4,7 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query'
-import type { EnglishQuizSubmissionsResponse } from '../-types'
+import type { EnglishQuizSubmission, EnglishQuizSubmissionsResponse } from '../-types'
 
 export interface ListParams {
   page?: number
@@ -25,11 +25,21 @@ export function useGetSubmissions(params?: ListParams) {
   })
 }
 
+export function useGetSubmissionDetail(id: string) {
+  return queryOptions({
+    queryKey: ['english-quiz-submission', id],
+    queryFn: async (): Promise<EnglishQuizSubmission> => {
+      const res = await api.get(`/admin/english-quiz-submissions/${id}`)
+      return res.data.data
+    },
+  })
+}
+
 export function useDeleteSubmission() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (id: string) => {
-      const res = await api.delete(`/admin/english-quiz-submissions/delete/${id}`)
+      const res = await api.delete(`/admin/english-quiz-submissions/${id}`)
       return res.data
     },
     onSuccess: async () => {

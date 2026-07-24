@@ -185,7 +185,7 @@ function SubmissionsTab() {
       <EnglishQuizSubmissionDetailsSheet
         isOpen={isDetailsOpen}
         onOpenChange={setIsDetailsOpen}
-        submission={detailsTarget}
+        submissionId={detailsTarget?.id}
       />
     </>
   );

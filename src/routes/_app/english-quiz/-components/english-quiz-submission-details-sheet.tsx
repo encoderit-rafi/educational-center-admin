@@ -5,12 +5,14 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet'
-import type { EnglishQuizSubmission } from '../-types'
+import { useQuery } from '@tanstack/react-query'
+import { useGetSubmissionDetail } from '../-api'
+import { Loader2 } from 'lucide-react'
 
 interface EnglishQuizSubmissionDetailsSheetProps {
   isOpen: boolean
   onOpenChange: (open: boolean) => void
-  submission: EnglishQuizSubmission | null
+  submissionId?: string | null
 }
 
 function DetailRow({
@@ -36,8 +38,13 @@ function formatDateTime(val: string | null | undefined) {
 export function EnglishQuizSubmissionDetailsSheet({
   isOpen,
   onOpenChange,
-  submission,
+  submissionId,
 }: EnglishQuizSubmissionDetailsSheetProps) {
+  const { data: submission, isLoading, isError } = useQuery({
+    ...useGetSubmissionDetail(submissionId ?? ''),
+    enabled: !!submissionId && isOpen,
+  })
+
   return (
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
       <SheetContent className="sm:max-w-lg dark:bg-card overflow-y-auto">
@@ -48,7 +55,15 @@ export function EnglishQuizSubmissionDetailsSheet({
           </SheetDescription>
         </SheetHeader>
         <div className="py-4 space-y-6">
-          {submission ? (
+          {isLoading ? (
+            <div className="flex items-center justify-center py-20">
+              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+            </div>
+          ) : isError ? (
+            <div className="text-center py-20 text-destructive">
+              Failed to load submission details.
+            </div>
+          ) : submission ? (
             <div className="space-y-6">
               <section className="space-y-4">
                 <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
