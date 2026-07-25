@@ -39,6 +39,7 @@ import { Route as AppCourseBookingsIndexRouteImport } from './routes/_app/course
 import { Route as AppCouponsIndexRouteImport } from './routes/_app/coupons/index'
 import { Route as AppContactsIndexRouteImport } from './routes/_app/contacts/index'
 import { Route as AppConsultationsIndexRouteImport } from './routes/_app/consultations/index'
+import { Route as AppCareerIndexRouteImport } from './routes/_app/career/index'
 import { Route as AppDashboardIndexRouteImport } from './routes/_app/_dashboard/index'
 
 const AuthRouteRoute = AuthRouteRouteImport.update({
@@ -190,6 +191,11 @@ const AppConsultationsIndexRoute = AppConsultationsIndexRouteImport.update({
   path: '/consultations/',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppCareerIndexRoute = AppCareerIndexRouteImport.update({
+  id: '/career/',
+  path: '/career/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppDashboardIndexRoute = AppDashboardIndexRouteImport.update({
   id: '/_dashboard/',
   path: '/',
@@ -201,6 +207,7 @@ export interface FileRoutesByFullPath {
   '/route copy': typeof AuthRoutecopyRoute
   '/zoho-failed/': typeof ZohoFailedIndexRoute
   '/zoho-success/': typeof ZohoSuccessIndexRoute
+  '/career/': typeof AppCareerIndexRoute
   '/consultations/': typeof AppConsultationsIndexRoute
   '/contacts/': typeof AppContactsIndexRoute
   '/coupons/': typeof AppCouponsIndexRoute
@@ -232,6 +239,7 @@ export interface FileRoutesByTo {
   '/route copy': typeof AuthRoutecopyRoute
   '/zoho-failed': typeof ZohoFailedIndexRoute
   '/zoho-success': typeof ZohoSuccessIndexRoute
+  '/career': typeof AppCareerIndexRoute
   '/consultations': typeof AppConsultationsIndexRoute
   '/contacts': typeof AppContactsIndexRoute
   '/coupons': typeof AppCouponsIndexRoute
@@ -266,6 +274,7 @@ export interface FileRoutesById {
   '/zoho-failed/': typeof ZohoFailedIndexRoute
   '/zoho-success/': typeof ZohoSuccessIndexRoute
   '/_app/_dashboard/': typeof AppDashboardIndexRoute
+  '/_app/career/': typeof AppCareerIndexRoute
   '/_app/consultations/': typeof AppConsultationsIndexRoute
   '/_app/contacts/': typeof AppContactsIndexRoute
   '/_app/coupons/': typeof AppCouponsIndexRoute
@@ -299,6 +308,7 @@ export interface FileRouteTypes {
     | '/route copy'
     | '/zoho-failed/'
     | '/zoho-success/'
+    | '/career/'
     | '/consultations/'
     | '/contacts/'
     | '/coupons/'
@@ -330,6 +340,7 @@ export interface FileRouteTypes {
     | '/route copy'
     | '/zoho-failed'
     | '/zoho-success'
+    | '/career'
     | '/consultations'
     | '/contacts'
     | '/coupons'
@@ -363,6 +374,7 @@ export interface FileRouteTypes {
     | '/zoho-failed/'
     | '/zoho-success/'
     | '/_app/_dashboard/'
+    | '/_app/career/'
     | '/_app/consultations/'
     | '/_app/contacts/'
     | '/_app/coupons/'
@@ -609,6 +621,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppConsultationsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/career/': {
+      id: '/_app/career/'
+      path: '/career'
+      fullPath: '/career/'
+      preLoaderRoute: typeof AppCareerIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/_dashboard/': {
       id: '/_app/_dashboard/'
       path: '/'
@@ -621,6 +640,7 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteRouteChildren {
   AppDashboardIndexRoute: typeof AppDashboardIndexRoute
+  AppCareerIndexRoute: typeof AppCareerIndexRoute
   AppConsultationsIndexRoute: typeof AppConsultationsIndexRoute
   AppContactsIndexRoute: typeof AppContactsIndexRoute
   AppCouponsIndexRoute: typeof AppCouponsIndexRoute
@@ -647,6 +667,7 @@ interface AppRouteRouteChildren {
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppDashboardIndexRoute: AppDashboardIndexRoute,
+  AppCareerIndexRoute: AppCareerIndexRoute,
   AppConsultationsIndexRoute: AppConsultationsIndexRoute,
   AppContactsIndexRoute: AppContactsIndexRoute,
   AppCouponsIndexRoute: AppCouponsIndexRoute,

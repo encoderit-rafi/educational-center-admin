@@ -34,6 +34,7 @@ import {
   Phone,
   Ticket,
   FileText,
+  Briefcase,
 } from "lucide-react";
 
 export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
@@ -200,6 +201,12 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
       url: "/holidays",
       icon: CalendarClock,
       isActive: isActiveLink(["/holidays"]),
+    },
+    {
+      name: "Careers",
+      url: "/career",
+      icon: Briefcase,
+      isActive: isActiveLink(["/career"]),
     },
     {
       name: "Contacts",
