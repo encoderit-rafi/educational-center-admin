@@ -140,7 +140,21 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
       name: "Workshops",
       url: "/workshop",
       icon: Wrench,
-      isActive: isActiveLink(["/workshop"]),
+      isActive: isActiveLink(["/workshop", "/workshop-bookings"]),
+      children: [
+        {
+          name: "Workshops",
+          url: "/workshop",
+          icon: Wrench,
+          isActive: isActiveLink(["/workshop"]),
+        },
+        {
+          name: "Workshop Bookings",
+          url: "/workshop-bookings",
+          icon: CalendarCheck,
+          isActive: isActiveLink(["/workshop-bookings"]),
+        },
+      ],
     },
     {
       name: "Events",
@@ -227,12 +241,17 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <div className="flex justify-between items-center px-2 py-3">
           {open ? (
-            <IconLogo />
+            <>
+              <IconLogo />
+              <SidebarTrigger className="rounded-md text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent" />
+            </>
           ) : (
-            <IconLogo withWordmark={false} className="mx-auto" />
-          )}
-          {open && (
-            <SidebarTrigger className="rounded-md text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent" />
+            <SidebarTrigger
+              className="mx-auto h-auto w-auto p-1.5 rounded-md hover:bg-sidebar-accent cursor-pointer"
+              title="Expand Sidebar"
+            >
+              <IconLogo withWordmark={false} />
+            </SidebarTrigger>
           )}
         </div>
       </SidebarHeader>

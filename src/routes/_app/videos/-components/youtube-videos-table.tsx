@@ -108,7 +108,7 @@ export function YoutubeVideosTable({
                 {video.youtubeVideoId ?? '-'}
               </TableCell>
               <TableCell>
-                <Badge variant={video.isActive ? 'default' : 'destructive'}>
+                <Badge variant={video.isActive ? 'success' : 'destructive'}>
                   {video.isActive ? 'Active' : 'Inactive'}
                 </Badge>
               </TableCell>

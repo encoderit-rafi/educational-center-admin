@@ -29,12 +29,12 @@ function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString()
 }
 
-const statusVariant: Record<string, 'default' | 'secondary' | 'destructive' | 'outline'> = {
-  PENDING: 'secondary',
-  PAYMENT_PENDING: 'outline',
-  CONFIRMED: 'default',
+const statusVariant: Record<string, 'default' | 'secondary' | 'destructive' | 'outline' | 'success' | 'warning'> = {
+  PENDING: 'warning',
+  PAYMENT_PENDING: 'warning',
+  CONFIRMED: 'success',
   CANCELLED: 'destructive',
-  REFUNDED: 'outline',
+  REFUNDED: 'destructive',
 }
 
 function formatAmount(val: string | null | undefined) {

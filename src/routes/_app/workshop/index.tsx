@@ -162,7 +162,8 @@ function WorkshopsTab() {
   const arrangeMutation = useArrangeWorkshops()
 
   const handleView = (workshop: Workshop) => {
-    setSelectedId(workshop.id)
+    setSelectedId(workshop.slug || workshop.id)
+    setSelectedWorkshop(workshop)
     setIsViewOpen(true)
   }
 
@@ -345,6 +346,7 @@ function WorkshopsTab() {
         isOpen={isViewOpen}
         onOpenChange={setIsViewOpen}
         workshopId={selectedId}
+        workshopData={selectedWorkshop}
       />
       <WorkshopFormDialog
         isOpen={isFormOpen}

@@ -248,7 +248,7 @@ export function CouponsTable({
                   </div>
                 </TableCell>
                 <TableCell>
-                  <Badge variant={coupon.isActive ? 'default' : 'destructive'}>
+                  <Badge variant={coupon.isActive ? 'success' : 'destructive'}>
                     {coupon.isActive ? 'Active' : 'Inactive'}
                   </Badge>
                 </TableCell>

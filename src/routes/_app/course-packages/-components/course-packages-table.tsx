@@ -158,7 +158,7 @@ function SortablePackageRow({
         {pkg.duration ? `${pkg.duration} hrs` : '-'}
       </TableCell>
       <TableCell>
-        <Badge variant={pkg.isActive ? 'default' : 'destructive'}>
+        <Badge variant={pkg.isActive ? 'success' : 'destructive'}>
           {pkg.isActive ? 'Active' : 'Inactive'}
         </Badge>
       </TableCell>

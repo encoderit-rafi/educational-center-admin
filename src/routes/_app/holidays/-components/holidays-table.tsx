@@ -126,7 +126,7 @@ export function HolidaysTable({
                 </Badge>
               </TableCell>
               <TableCell>
-                <Badge variant={holiday.isActive ? 'default' : 'destructive'}>
+                <Badge variant={holiday.isActive ? 'success' : 'destructive'}>
                   {holiday.isActive ? 'Active' : 'Inactive'}
                 </Badge>
               </TableCell>

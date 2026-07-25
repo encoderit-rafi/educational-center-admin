@@ -147,7 +147,7 @@ export function RoutinesTable({
                 {routine.location ?? '-'}
               </TableCell>
               <TableCell>
-                <Badge variant={routine.isActive ? 'default' : 'destructive'}>
+                <Badge variant={routine.isActive ? 'success' : 'destructive'}>
                   {routine.isActive ? 'Active' : 'Inactive'}
                 </Badge>
               </TableCell>

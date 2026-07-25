@@ -33,13 +33,13 @@ function formatAmount(amount: number | null | undefined) {
   return (amount / 100).toFixed(2)
 }
 
-const statusVariant: Record<string, 'default' | 'secondary' | 'destructive' | 'outline'> = {
-  COMPLETED: 'default',
-  PENDING: 'secondary',
-  INITIATED: 'outline',
+const statusVariant: Record<string, 'default' | 'secondary' | 'destructive' | 'outline' | 'success' | 'warning'> = {
+  COMPLETED: 'success',
+  PENDING: 'warning',
+  INITIATED: 'warning',
   FAILED: 'destructive',
-  REFUNDED: 'outline',
-  PARTIALLY_REFUNDED: 'secondary',
+  REFUNDED: 'destructive',
+  PARTIALLY_REFUNDED: 'warning',
 }
 
 interface PaymentsTableProps {

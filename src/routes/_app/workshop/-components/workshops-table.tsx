@@ -145,7 +145,7 @@ function SortableWorkshopRow({
         {workshop.duration != null ? `${workshop.duration}h` : '-'}
       </TableCell>
       <TableCell>
-        <Badge variant={workshop.isActive ? 'default' : 'destructive'}>
+        <Badge variant={workshop.isActive ? 'success' : 'destructive'}>
           {workshop.isActive ? 'Active' : 'Inactive'}
         </Badge>
       </TableCell>

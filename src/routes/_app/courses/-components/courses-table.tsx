@@ -143,7 +143,7 @@ function SortableCourseRow({
         {course.slug ?? '-'}
       </TableCell>
       <TableCell>
-        <Badge variant={course.isActive ? 'default' : 'destructive'}>
+        <Badge variant={course.isActive ? 'success' : 'destructive'}>
           {course.isActive ? 'Active' : 'Inactive'}
         </Badge>
       </TableCell>

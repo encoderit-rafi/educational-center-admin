@@ -138,7 +138,7 @@ export function MockTestsTable({
                   : '-'}
               </TableCell>
               <TableCell>
-                <Badge variant={mt.isActive ? 'default' : 'destructive'}>
+                <Badge variant={mt.isActive ? 'success' : 'destructive'}>
                   {mt.isActive ? 'Active' : 'Inactive'}
                 </Badge>
               </TableCell>

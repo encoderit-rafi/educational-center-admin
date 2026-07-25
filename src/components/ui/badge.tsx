@@ -22,8 +22,17 @@ const badgeVariants = cva(
 
         /* ---- STATUS VARIANTS ---- */
 
+        success:
+          "border-transparent bg-emerald-600 text-white hover:bg-emerald-700 dark:bg-emerald-600 dark:text-white",
+
+        warning:
+          "border-transparent bg-amber-500 text-white hover:bg-amber-600 dark:bg-amber-600 dark:text-white",
+
+        info:
+          "border-transparent bg-sky-600 text-white hover:bg-sky-700 dark:bg-sky-600 dark:text-white",
+
         pending:
-          "border-transparent bg-yellow-100 text-yellow-800 hover:bg-yellow-200 dark:bg-yellow-900/40 dark:text-yellow-300",
+          "border-transparent bg-amber-100 text-amber-800 hover:bg-amber-200 dark:bg-amber-900/40 dark:text-amber-300",
 
         assigned:
           "border-transparent bg-blue-600 text-white hover:bg-blue-700",
@@ -32,7 +41,7 @@ const badgeVariants = cva(
           "border-transparent bg-purple-600 text-white hover:bg-purple-700",
 
         complete:
-          "border-transparent bg-green-600 text-white hover:bg-green-700",
+          "border-transparent bg-emerald-600 text-white hover:bg-emerald-700",
 
         incomplete:
           "border-transparent bg-red-600 text-white hover:bg-red-700",

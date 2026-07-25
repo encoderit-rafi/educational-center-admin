@@ -31,13 +31,13 @@ function formatDate(dateStr: string) {
 
 const statusVariants: Record<
   CourseBookingStatus,
-  'default' | 'secondary' | 'destructive' | 'outline'
+  'default' | 'secondary' | 'destructive' | 'outline' | 'success' | 'warning'
 > = {
-  PENDING: 'secondary',
-  PAYMENT_PENDING: 'outline',
-  CONFIRMED: 'default',
+  PENDING: 'warning',
+  PAYMENT_PENDING: 'warning',
+  CONFIRMED: 'success',
   CANCELLED: 'destructive',
-  REFUNDED: 'outline',
+  REFUNDED: 'destructive',
 }
 
 interface CourseBookingsTableProps {

@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { useQuery } from '@tanstack/react-query'
 import { useGetCareer } from '../-api'
 import type { CareerApplication } from '../-types'
-import { Loader2, FileText, Download } from 'lucide-react'
+import { Loader2, FileText, Download, User, Mail, Phone, MapPin } from 'lucide-react'
 
 interface CareerDetailsSheetProps {
   isOpen: boolean
@@ -52,17 +52,19 @@ export function CareerDetailsSheet({
 
   return (
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
-      <SheetContent className="sm:max-w-lg dark:bg-card overflow-y-auto">
-        <SheetHeader className="p-0 pb-4 border-b border-muted">
-          <SheetTitle>Applicant Details</SheetTitle>
+      <SheetContent className="sm:max-w-lg dark:bg-card p-6 overflow-y-auto">
+        <SheetHeader className="pb-4 border-b border-border">
+          <SheetTitle className="text-xl font-bold">Applicant Details</SheetTitle>
           <SheetDescription>
             View full details of the career application.
           </SheetDescription>
         </SheetHeader>
+
         <div className="py-4 space-y-6">
           {isLoading && !careerData ? (
-            <div className="flex items-center justify-center py-20">
-              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+            <div className="flex flex-col items-center justify-center py-20 gap-3">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              <p className="text-sm text-muted-foreground">Loading applicant details...</p>
             </div>
           ) : isError && !careerData ? (
             <div className="text-center py-20 text-destructive">
@@ -72,42 +74,44 @@ export function CareerDetailsSheet({
             <div className="space-y-6">
               {/* Personal Information */}
               <section className="space-y-3">
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  <User className="h-4 w-4 text-primary" />
                   Personal Details
-                </h3>
-                <div className="grid grid-cols-2 gap-4 text-sm bg-muted/40 p-3 rounded-lg">
+                </div>
+                <div className="grid grid-cols-2 gap-4 text-sm bg-muted/30 p-4 rounded-xl border border-border/40">
                   <div className="col-span-2">
                     <div className="text-xs text-muted-foreground">Full Name</div>
-                    <div className="font-semibold text-base">{fullName}</div>
+                    <div className="font-semibold text-foreground text-base">{fullName}</div>
                   </div>
                   <div>
                     <div className="text-xs text-muted-foreground">Gender</div>
-                    <div className="font-medium capitalize">{career.gender || '-'}</div>
+                    <div className="font-medium text-foreground capitalize">{career.gender || '-'}</div>
                   </div>
                   <div>
                     <div className="text-xs text-muted-foreground">Date of Birth</div>
-                    <div className="font-medium">{formatDate(career.dob)}</div>
+                    <div className="font-medium text-foreground">{formatDate(career.dob)}</div>
                   </div>
                   <div>
                     <div className="text-xs text-muted-foreground">Nationality</div>
-                    <div className="font-medium uppercase">{career.nationality || '-'}</div>
+                    <div className="font-medium text-foreground uppercase">{career.nationality || '-'}</div>
                   </div>
                   <div>
                     <div className="text-xs text-muted-foreground">Applied Date</div>
-                    <div className="font-medium">{formatDate(career.createdAt)}</div>
+                    <div className="font-medium text-foreground">{formatDate(career.createdAt)}</div>
                   </div>
                 </div>
               </section>
 
               {/* Contact Information */}
               <section className="space-y-3">
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  <Mail className="h-4 w-4 text-primary" />
                   Contact Details
-                </h3>
-                <div className="grid grid-cols-2 gap-4 text-sm bg-muted/40 p-3 rounded-lg">
+                </div>
+                <div className="grid grid-cols-2 gap-4 text-sm bg-muted/30 p-4 rounded-xl border border-border/40">
                   <div>
                     <div className="text-xs text-muted-foreground">Email</div>
-                    <div className="font-medium truncate" title={career.email || ''}>
+                    <div className="font-medium text-foreground truncate" title={career.email || ''}>
                       {career.email ? (
                         <a
                           href={`mailto:${career.email}`}
@@ -121,41 +125,45 @@ export function CareerDetailsSheet({
                     </div>
                   </div>
                   <div>
-                    <div className="text-xs text-muted-foreground">Mobile Phone</div>
-                    <div className="font-medium">{career.mobile || '-'}</div>
+                    <div className="text-xs text-muted-foreground flex items-center gap-1">
+                      <Phone className="h-3 w-3" /> Mobile Phone
+                    </div>
+                    <div className="font-medium text-foreground">{career.mobile || '-'}</div>
                   </div>
                 </div>
               </section>
 
               {/* Address Details */}
               <section className="space-y-3">
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  <MapPin className="h-4 w-4 text-primary" />
                   Address Information
-                </h3>
-                <div className="grid grid-cols-2 gap-4 text-sm bg-muted/40 p-3 rounded-lg">
+                </div>
+                <div className="grid grid-cols-2 gap-4 text-sm bg-muted/30 p-4 rounded-xl border border-border/40">
                   <div className="col-span-2">
                     <div className="text-xs text-muted-foreground">Address</div>
-                    <div className="font-medium">{career.address || '-'}</div>
+                    <div className="font-medium text-foreground">{career.address || '-'}</div>
                   </div>
                   <div>
                     <div className="text-xs text-muted-foreground">City</div>
-                    <div className="font-medium">{career.city || '-'}</div>
+                    <div className="font-medium text-foreground">{career.city || '-'}</div>
                   </div>
                   <div>
                     <div className="text-xs text-muted-foreground">PO Box</div>
-                    <div className="font-medium">{career.pobox || '-'}</div>
+                    <div className="font-medium text-foreground">{career.pobox || '-'}</div>
                   </div>
                 </div>
               </section>
 
               {/* Resume / Document */}
               <section className="space-y-3">
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  <FileText className="h-4 w-4 text-primary" />
                   Resume / CV Document
-                </h3>
-                <div className="bg-muted/40 p-4 rounded-lg flex items-center justify-between gap-4">
+                </div>
+                <div className="bg-muted/30 p-4 rounded-xl border border-border/40 flex items-center justify-between gap-4">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-md bg-primary/10 text-primary">
+                    <div className="p-2 rounded-lg bg-primary/10 text-primary">
                       <FileText className="h-5 w-5" />
                     </div>
                     <div>
