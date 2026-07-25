@@ -16,8 +16,17 @@ import {
 } from "@/components/ui/pagination";
 
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 import { usePagination } from "@/hooks/use-pagination";
+import { useDebounce } from "@/hooks/use-debounce";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { EnglishTestAttemptsTable } from "./-components/english-test-attempts-table";
 import { EnglishTestAttemptDeleteDialog } from "./-components/english-test-attempt-delete-dialog";
@@ -26,6 +35,7 @@ import { EnglishTestAttemptDetailsSheet } from "./-components/english-test-attem
 import { useGetAttempts, useDeleteAttempt } from "./-api";
 import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "sonner";
+import { Search, X } from "lucide-react";
 import type { EnglishTestAttempt } from "./-types";
 
 export const Route = createFileRoute("/_app/english-test/")({
@@ -36,15 +46,9 @@ function EnglishTestPage() {
   return (
     <PageContainer>
       <PageHeader>
-        <PageTitle>English Test</PageTitle>
+        <PageTitle>English Test Attempts</PageTitle>
       </PageHeader>
       <PageBody>
-        {/*  <AppTabs
-          tabs={[
-            { value: 'attempts', label: 'Attempts', content: <AttemptsTab /> },
-            { value: 'levels', label: 'Level Definitions', content: <LevelsTab /> },
-          ]}
-        /> */}
         <AttemptsTab />
       </PageBody>
     </PageContainer>
@@ -53,21 +57,11 @@ function EnglishTestPage() {
 
 function AttemptsTab() {
   const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 300);
   const [sortBy] = useState("createdAt");
   const [sortOrder] = useState("desc");
-  // const [searchQuery, setSearchQuery] = useState("");
-  // const [levelFilter, setLevelFilter] = useState("");
-  // const debouncedSearch = useDebounce(searchQuery, 300);
-  // const isFirstRender = useRef(true);
-  const limit = 20;
-
-  // useEffect(() => {
-  //   if (isFirstRender.current) {
-  //     isFirstRender.current = false;
-  //     return;
-  //   }
-  //   setPage(1);
-  // }, [debouncedSearch, levelFilter]);
 
   const { data, isLoading, isFetching, isError } = useQuery({
     ...useGetAttempts({
@@ -75,24 +69,25 @@ function AttemptsTab() {
       limit,
       sortBy,
       sortOrder,
-      // keyword: debouncedSearch || undefined,
-      // level: levelFilter || undefined,
+      keyword: debouncedSearch || undefined,
+      search: debouncedSearch || undefined,
     }),
     placeholderData: keepPreviousData,
   });
 
-  // const handleClearSearch = () => {
-  //   setSearchQuery("");
-  // };
-
   const attempts = data?.data ?? [];
-  const totalPages = data?.totalPages ?? 1;
+  const total = data?.total ?? attempts.length;
+  const totalPages = data?.totalPages ?? Math.max(1, Math.ceil(total / limit));
 
   useEffect(() => {
-    if (data && page > data.totalPages && data.totalPages > 0) {
-      setPage(data.totalPages);
+    if (page > totalPages) {
+      setPage(totalPages);
     }
-  }, [data?.totalPages]);
+  }, [totalPages, page]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [debouncedSearch, limit]);
 
   const { pages, showLeftEllipsis, showRightEllipsis } = usePagination({
     currentPage: page,
@@ -138,44 +133,55 @@ function AttemptsTab() {
   };
 
   return (
-    <>
-      {/* <div className="flex items-center gap-2 pb-4">
-        <InputGroup className="w-full max-w-[300px]">
-          <InputGroupAddon align="inline-start">
-            <Search className="h-4 w-4" />
-          </InputGroupAddon>
-          <InputGroupInput
-            placeholder="Search attempts..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+    <div className="space-y-4 flex-1 flex flex-col min-h-0">
+      <div className="flex items-center justify-between gap-4 flex-wrap">
+        <div className="relative flex-1 max-w-sm">
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search by name, email, country..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-9 pr-8"
           />
-          {searchQuery && (
-            <InputGroupAddon align="inline-end">
-              <InputGroupButton
-                size="icon-xs"
-                onClick={handleClearSearch}
-                aria-label="Clear search"
-              >
-                <X className="h-3.5 w-3.5" />
-              </InputGroupButton>
-            </InputGroupAddon>
+          {search && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute right-0 top-0 h-9 w-9 text-muted-foreground hover:text-foreground"
+              onClick={() => setSearch("")}
+            >
+              <X className="h-4 w-4" />
+            </Button>
           )}
-        </InputGroup>
-        <Select value={levelFilter} onValueChange={setLevelFilter}>
-          <SelectTrigger className="w-[160px]">
-            <SelectValue placeholder="All levels" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All levels</SelectItem>
-            <SelectItem value="A1">A1</SelectItem>
-            <SelectItem value="A2">A2</SelectItem>
-            <SelectItem value="B1">B1</SelectItem>
-            <SelectItem value="B2">B2</SelectItem>
-            <SelectItem value="C1">C1</SelectItem>
-            <SelectItem value="C2">C2</SelectItem>
-          </SelectContent>
-        </Select>
-      </div> */}
+        </div>
+
+        <div className="flex items-center gap-4 text-xs text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <span>Rows per page:</span>
+            <Select
+              value={limit.toString()}
+              onValueChange={(val) => {
+                setLimit(Number(val));
+                setPage(1);
+              }}
+            >
+              <SelectTrigger className="h-8 w-[70px]">
+                <SelectValue placeholder={limit.toString()} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="5">5</SelectItem>
+                <SelectItem value="10">10</SelectItem>
+                <SelectItem value="20">20</SelectItem>
+                <SelectItem value="50">50</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            Total: <span className="font-semibold text-foreground">{total}</span> attempts
+          </div>
+        </div>
+      </div>
+
       {isLoading ? (
         <div className="flex items-center justify-center py-20">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
@@ -205,16 +211,17 @@ function AttemptsTab() {
             onView={handleView}
             onDelete={handleDelete}
           />
-          {totalPages > 1 && (
-            <div className="flex items-center justify-between pt-4">
+          {total > 0 && (
+            <div className="flex items-center justify-between pt-4 border-t border-border/40">
               <p className="text-sm text-muted-foreground">
-                Page {page} of {totalPages}
+                Page {page} of {totalPages} ({total} total items)
               </p>
-              <Pagination>
+              <Pagination className="w-auto mx-0">
                 <PaginationContent>
                   <PaginationItem>
                     <PaginationPrevious
                       onClick={() => setPage(Math.max(1, page - 1))}
+                      className={page === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
                     />
                   </PaginationItem>
                   {showLeftEllipsis && (
@@ -227,6 +234,7 @@ function AttemptsTab() {
                       <PaginationLink
                         isActive={p === page}
                         onClick={() => setPage(p)}
+                        className="cursor-pointer"
                       >
                         {p}
                       </PaginationLink>
@@ -240,6 +248,7 @@ function AttemptsTab() {
                   <PaginationItem>
                     <PaginationNext
                       onClick={() => setPage(Math.min(totalPages, page + 1))}
+                      className={page >= totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
                     />
                   </PaginationItem>
                 </PaginationContent>
@@ -259,8 +268,9 @@ function AttemptsTab() {
         isOpen={isDetailsOpen}
         onOpenChange={setIsDetailsOpen}
         attemptId={detailsTarget?.id}
+        attemptData={detailsTarget}
       />
-    </>
+    </div>
   );
 }
 

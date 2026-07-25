@@ -1,29 +1,58 @@
+export interface EnglishTestAnswer {
+  id: string
+  attemptId?: string | null
+  questionId?: string | null
+  answer?: string | null
+  selectedOption?: string | null
+  isCorrect?: boolean | null
+  createdAt?: string | null
+}
+
 export interface EnglishTestAttempt {
   id: string
   email: string | null
-  userId: string | null
-  fullName: string | null
-  firstName: string | null
-  middleName: string | null
-  lastName: string | null
+  userId?: string | null
+  user_id?: string | null
+  fullName?: string | null
+  full_name?: string | null
+  firstName?: string | null
+  first_name?: string | null
+  middleName?: string | null
+  middle_name?: string | null
+  lastName?: string | null
+  last_name?: string | null
   phone: string | null
   address: string | null
   country: string | null
   city: string | null
-  preferredContactMethod: string | null
-  preferredTimeToContactYou: string | null
-  totalScore: number | null
-  englishLevelId: string | null
-  scoresBySkill: Record<string, number> | null
-  startedAt: string | null
-  completedAt: string | null
-  submittedAt: string | null
-  pdfUrl: string | null
-  emailSentAt: string | null
+  preferredContactMethod?: string | null
+  preferred_contact_method?: string | null
+  preferredTimeToContactYou?: string | null
+  preferred_time_to_contact_you?: string | null
+  totalScore?: number | null
+  total_score?: number | null
+  score?: number | null
+  englishLevelId?: string | null
+  english_level_id?: string | null
+  englishLevel?: { id?: string; levelCode?: string; label?: string } | string | null
+  level?: string | null
+  scoresBySkill?: Record<string, number> | null
+  scores_by_skill?: Record<string, number> | null
+  startedAt?: string | null
+  started_at?: string | null
+  completedAt?: string | null
+  completed_at?: string | null
+  submittedAt?: string | null
+  submitted_at?: string | null
+  pdfUrl?: string | null
+  pdf_url?: string | null
+  emailSentAt?: string | null
+  email_sent_at?: string | null
   createdAt: string
+  created_at?: string
   updatedAt: string
-  level: string | null
-  score: number | null
+  updated_at?: string
+  answers?: EnglishTestAnswer[]
 }
 
 export interface EnglishTestAttemptsResponse {
@@ -83,7 +112,9 @@ export interface EnglishTestAttemptDetailResponse {
   questions_and_answers: Array<{
     question_id: string
     question_text: string
+    question?: string | null
     answer_text: string | null
+    answer?: string | null
     correct_answer: string
     is_correct: boolean
     score: number
