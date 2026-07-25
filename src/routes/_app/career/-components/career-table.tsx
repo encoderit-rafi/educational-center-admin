@@ -132,7 +132,7 @@ export function CareerTable({
                     {career.email ? (
                       <a
                         href={`mailto:${career.email}`}
-                        className="text-primary hover:underline block truncate max-w-[200px]"
+                        className="text-primary hover:underline block truncate max-w-50"
                         title={career.email}
                       >
                         {career.email}

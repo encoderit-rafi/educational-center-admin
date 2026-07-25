@@ -106,7 +106,7 @@ export function HolidaysTable({
         <TableBody>
           {holidays.map((holiday) => (
             <TableRow key={holiday.id}>
-              <TableCell className="font-medium max-w-[200px] truncate">
+              <TableCell className="font-medium max-w-50 truncate">
                 {holiday.title}
               </TableCell>
               <TableCell>

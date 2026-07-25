@@ -113,13 +113,13 @@ export function CourseBookingsTable({
         <TableBody>
           {bookings.map((booking) => (
             <TableRow key={booking.id}>
-              <TableCell className="font-medium max-w-[180px] truncate">
+              <TableCell className="font-medium max-w-45 truncate">
                 {booking.firstName} {booking.lastName ?? ''}
               </TableCell>
               <TableCell className="text-muted-foreground">
                 {booking.email}
               </TableCell>
-              <TableCell className="max-w-[150px] truncate text-muted-foreground">
+              <TableCell className="max-w-37.5 truncate text-muted-foreground">
                 {booking.courseId ?? '-'}
               </TableCell>
               <TableCell>

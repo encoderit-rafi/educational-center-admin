@@ -132,10 +132,10 @@ function SortableWorkshopRow({
           </span>
         )}
       </TableCell>
-      <TableCell className="font-medium max-w-[200px] truncate">
+      <TableCell className="font-medium max-w-50 truncate">
         {workshop.title ?? '-'}
       </TableCell>
-      <TableCell className="max-w-[200px] truncate text-muted-foreground">
+      <TableCell className="max-w-50 truncate text-muted-foreground">
         {workshop.subTitle ?? '-'}
       </TableCell>
       <TableCell>

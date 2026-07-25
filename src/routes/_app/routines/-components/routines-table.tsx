@@ -131,7 +131,7 @@ export function RoutinesTable({
                   {formatDayOfWeek(routine.dayOfWeek)}
                 </Badge>
               </TableCell>
-              <TableCell className="font-medium max-w-[200px] truncate">
+              <TableCell className="font-medium max-w-50 truncate">
                 {routine.title ?? '-'}
               </TableCell>
               <TableCell className="text-xs text-muted-foreground">
@@ -143,7 +143,7 @@ export function RoutinesTable({
               <TableCell className="text-xs text-muted-foreground">
                 {formatTime(routine.endTime)}
               </TableCell>
-              <TableCell className="text-xs text-muted-foreground max-w-[150px] truncate">
+              <TableCell className="text-xs text-muted-foreground max-w-37.5 truncate">
                 {routine.location ?? '-'}
               </TableCell>
               <TableCell>

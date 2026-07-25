@@ -133,7 +133,7 @@ function SortableExamRow({
           </span>
         )}
       </TableCell>
-      <TableCell className="font-medium max-w-[200px] truncate">
+      <TableCell className="font-medium max-w-50 truncate">
         {exam.name ?? '-'}
       </TableCell>
       <TableCell>

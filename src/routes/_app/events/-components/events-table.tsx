@@ -104,7 +104,7 @@ export function EventsTable({
         <TableBody>
           {events.map((event) => (
             <TableRow key={event.id}>
-              <TableCell className="font-medium max-w-[200px] truncate">
+              <TableCell className="font-medium max-w-50 truncate">
                 {event.title ?? '-'}
               </TableCell>
               <TableCell>

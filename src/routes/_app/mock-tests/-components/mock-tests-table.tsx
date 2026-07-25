@@ -124,7 +124,7 @@ export function MockTestsTable({
         <TableBody>
           {mockTests.map((mt) => (
             <TableRow key={mt.id}>
-              <TableCell className="font-medium max-w-[200px] truncate">
+              <TableCell className="font-medium max-w-50 truncate">
                 {mt.name ?? '-'}
               </TableCell>
               <TableCell className="text-muted-foreground">

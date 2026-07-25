@@ -133,10 +133,10 @@ function SortableCourseRow({
           </span>
         )}
       </TableCell>
-      <TableCell className="font-medium max-w-[200px] truncate">
+      <TableCell className="font-medium max-w-50 truncate">
         {course.title ?? '-'}
       </TableCell>
-      <TableCell className="max-w-[200px] truncate text-muted-foreground">
+      <TableCell className="max-w-50 truncate text-muted-foreground">
         {course.subTitle ?? '-'}
       </TableCell>
       <TableCell className="font-mono text-xs text-muted-foreground">

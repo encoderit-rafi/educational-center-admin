@@ -135,7 +135,7 @@ function CareerPage() {
       </PageHeader>
       <PageBody>
         <div className="flex flex-wrap items-center gap-2 pb-4">
-          <InputGroup className="w-full max-w-[300px]">
+          <InputGroup className="w-full max-w-75">
             <InputGroupAddon align="inline-start">
               <Search className="h-4 w-4" />
             </InputGroupAddon>

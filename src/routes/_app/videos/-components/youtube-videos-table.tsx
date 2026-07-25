@@ -98,10 +98,10 @@ export function YoutubeVideosTable({
         <TableBody>
           {videos.map((video) => (
             <TableRow key={video.id}>
-              <TableCell className="font-medium max-w-[200px] truncate">
+              <TableCell className="font-medium max-w-50 truncate">
                 {video.title ?? '-'}
               </TableCell>
-              <TableCell className="max-w-[250px] truncate text-muted-foreground">
+              <TableCell className="max-w-62.5 truncate text-muted-foreground">
                 {video.youtubeUrl ?? '-'}
               </TableCell>
               <TableCell className="font-mono text-xs text-muted-foreground">

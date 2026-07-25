@@ -120,7 +120,7 @@ export function PaymentsTable({
               <TableCell className="font-mono text-xs">
                 {payment.paymentRef ?? '-'}
               </TableCell>
-              <TableCell className="max-w-[180px] truncate">
+              <TableCell className="max-w-45 truncate">
                 {payment.payerEmail ?? '-'}
               </TableCell>
               <TableCell>
