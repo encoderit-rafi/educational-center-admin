@@ -225,7 +225,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
             <IconLogo withWordmark={false} className="mx-auto" />
           )}
           {open && (
-            <SidebarTrigger className="rounded-md text-white/60 hover:text-white hover:bg-white/10" />
+            <SidebarTrigger className="rounded-md text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent" />
           )}
         </div>
       </SidebarHeader>
@@ -238,7 +238,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
 
       {open && (
         <SidebarFooter>
-          <p className="text-[12px] text-white/60 px-2 pb-3">
+          <p className="text-[12px] text-sidebar-foreground/70 px-2 pb-3">
             © <span className="font-semibold">Admin Panel</span>. All rights reserved.
           </p>
         </SidebarFooter>

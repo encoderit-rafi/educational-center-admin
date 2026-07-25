@@ -31,7 +31,7 @@ export function NavMain({ routes }: TProps) {
       <SidebarMenu>
         {routes.map((route) =>
             !route.children ? (
-              <SidebarMenuItem key={route.name} className="text-gray-400">
+              <SidebarMenuItem key={route.name} className="text-sidebar-foreground">
                 <Link to={route.url} className={`${route.isActive && "pointer-events-none" }`}>
                   <SidebarMenuButton
                     tooltip={route.name}
@@ -50,7 +50,7 @@ export function NavMain({ routes }: TProps) {
                 defaultOpen={route.isActive}
                 className="group/collapsible"
               >
-                <SidebarMenuItem className="text-gray-400">
+                <SidebarMenuItem className="text-sidebar-foreground">
                   <CollapsibleTrigger asChild>
                     <SidebarMenuButton
                       tooltip={route.name}
