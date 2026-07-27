@@ -80,8 +80,6 @@ function buildWorkshopPayload(data: CreateWorkshopInput) {
   if (data.logo) payload.logo = data.logo
   if (data.banner_image) payload.banner_image = data.banner_image
   if (data.description) payload.description = data.description
-  if (data.start_time) payload.start_time = data.start_time
-  if (data.end_time) payload.end_time = data.end_time
   if (data.is_active !== undefined) payload.is_active = data.is_active
   if (data.translations) payload.translations = data.translations
 

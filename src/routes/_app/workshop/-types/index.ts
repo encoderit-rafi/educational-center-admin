@@ -16,8 +16,6 @@ export interface Workshop {
   description: string | null
   logo: string | null
   bannerImage: string | null
-  startTime: string | null
-  endTime: string | null
   type: string | null
   isActive: boolean
   duration: number | null
@@ -52,8 +50,6 @@ export interface CreateWorkshopInput {
   banner_image?: string
   price: number
   duration: number
-  start_time?: string
-  end_time?: string
   is_active?: boolean
   translations?: {
     ar?: {

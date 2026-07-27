@@ -35,8 +35,6 @@ export interface WorkshopFormData {
   banner_image: string
   price: number
   duration: number
-  start_time: string
-  end_time: string
   is_active: boolean
   translations: {
     ar: {
@@ -67,8 +65,6 @@ const emptyForm: WorkshopFormData = {
   banner_image: '',
   price: 0,
   duration: 0,
-  start_time: '',
-  end_time: '',
   is_active: true,
   translations: {
     ar: {
@@ -135,8 +131,6 @@ export function WorkshopFormDialog({
         banner_image: workshop.bannerImage ?? '',
         price: workshop.price ?? 0,
         duration: workshop.duration ?? 0,
-        start_time: workshop.startTime ?? '',
-        end_time: workshop.endTime ?? '',
         is_active: workshop.isActive,
         translations: {
           ar: {
@@ -399,37 +393,6 @@ export function WorkshopFormDialog({
                   }))
                 }
                 placeholder="0"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="start_time">Start Time</Label>
-              <Input
-                id="start_time"
-                type="time"
-                value={form.start_time}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    start_time: e.target.value,
-                  }))
-                }
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="end_time">End Time</Label>
-              <Input
-                id="end_time"
-                type="time"
-                value={form.end_time}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    end_time: e.target.value,
-                  }))
-                }
               />
             </div>
           </div>
