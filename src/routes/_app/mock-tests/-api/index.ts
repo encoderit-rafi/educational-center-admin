@@ -68,6 +68,7 @@ function buildMockTestPayload(data: CreateMockTestInput) {
   if (data.vatRate !== undefined) payload.vat_rate = Number(data.vatRate)
   if (data.description) payload.description = data.description
   if (data.details !== undefined) payload.details = data.details
+  if (data.translations) payload.translations = data.translations
   return payload
 }
 

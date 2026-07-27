@@ -180,6 +180,12 @@ function MockTestsTab() {
       vatRate: formData.vatRate ? Number(formData.vatRate) : undefined,
       description: formData.description || undefined,
       isActive: formData.isActive,
+      translations: {
+        ar: {
+          name: formData.translations?.ar?.name ?? '',
+          description: formData.translations?.ar?.description ?? '',
+        },
+      },
       details: {
         ...selectedMockTest?.details,
         center_price: formData.centerPrice

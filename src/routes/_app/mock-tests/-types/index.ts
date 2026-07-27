@@ -18,6 +18,7 @@ export interface MockTest {
   createdAt: string
   updatedAt: string
   deletedAt: string | null
+  translations?: Record<string, { name?: string; description?: string }> | null
 }
 
 export interface MockTestsResponse {
@@ -41,5 +42,6 @@ export interface CreateMockTestInput {
     center_price?: number
     [key: string]: any
   }
+  translations?: Record<string, { name?: string; description?: string }>
 }
 

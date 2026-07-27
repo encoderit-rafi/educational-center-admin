@@ -34,6 +34,12 @@ export interface MockTestFormData {
   vatRate: string
   description: string
   isActive: boolean
+  translations: {
+    ar: {
+      name: string
+      description: string
+    }
+  }
 }
 
 interface MockTestFormDialogProps {
@@ -55,6 +61,12 @@ const emptyForm: MockTestFormData = {
   vatRate: '0',
   description: '',
   isActive: true,
+  translations: {
+    ar: {
+      name: '',
+      description: '',
+    },
+  },
 }
 
 function CourseSelect({
@@ -112,6 +124,12 @@ export function MockTestFormDialog({
         vatRate: mockTest.vatRate ?? '',
         description: mockTest.description ?? '',
         isActive: mockTest.isActive,
+        translations: {
+          ar: {
+            name: mockTest.translations?.ar?.name ?? '',
+            description: mockTest.translations?.ar?.description ?? '',
+          },
+        },
       })
     } else {
       setForm(emptyForm)
@@ -157,6 +175,28 @@ export function MockTestFormDialog({
                 setForm((prev) => ({ ...prev, name: e.target.value }))
               }
               placeholder="Mock test name"
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="ar_name">Arabic Name</Label>
+            <Input
+              id="ar_name"
+              value={form.translations.ar.name}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  translations: {
+                    ...prev.translations,
+                    ar: {
+                      ...prev.translations.ar,
+                      name: e.target.value,
+                    },
+                  },
+                }))
+              }
+              placeholder="اسم الاختبار التجريبي"
+              dir="rtl"
             />
           </div>
 
@@ -264,6 +304,29 @@ export function MockTestFormDialog({
               }
               placeholder="Mock test description"
               rows={3}
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="ar_description">Arabic Description</Label>
+            <Textarea
+              id="ar_description"
+              value={form.translations.ar.description}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  translations: {
+                    ...prev.translations,
+                    ar: {
+                      ...prev.translations.ar,
+                      description: e.target.value,
+                    },
+                  },
+                }))
+              }
+              placeholder="وصف الاختبار التجريبي"
+              rows={3}
+              dir="rtl"
             />
           </div>
 
