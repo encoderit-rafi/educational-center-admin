@@ -37,6 +37,7 @@ export function useCreateEvent() {
       if (!payload.is_online || !payload.meeting_link) {
         delete payload.meeting_link
       }
+      if (data.translations) payload.translations = data.translations
       const res = await api.post('/admin/events', payload)
       return res.data
     },
@@ -57,6 +58,7 @@ export function useUpdateEvent() {
       if (!payload.is_online || !payload.meeting_link) {
         delete payload.meeting_link
       }
+      if (data.translations) payload.translations = data.translations
       const res = await api.put(`/admin/events/${id}`, payload)
       return res.data
     },

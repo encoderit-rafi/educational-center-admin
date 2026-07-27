@@ -40,6 +40,12 @@ interface EventFormData {
   vat_rate: number | null
   is_active: boolean
   banner_image: string
+  translations: {
+    ar: {
+      title: string
+      description: string
+    }
+  }
 }
 
 interface EventFormDialogProps {
@@ -66,6 +72,12 @@ const emptyForm: EventFormData = {
   vat_rate: 0,
   is_active: true,
   banner_image: '',
+  translations: {
+    ar: {
+      title: '',
+      description: '',
+    },
+  },
 }
 
 export function EventFormDialog({
@@ -100,6 +112,12 @@ export function EventFormDialog({
         vat_rate: event.vatRate ? Number(event.vatRate) : null,
         is_active: event.isActive ?? true,
         banner_image: event.bannerImage ?? '',
+        translations: {
+          ar: {
+            title: event.translations?.ar?.title ?? '',
+            description: event.translations?.ar?.description ?? '',
+          },
+        },
       })
     } else {
       setForm(emptyForm)
@@ -142,6 +160,28 @@ export function EventFormDialog({
           </div>
 
           <div className="grid gap-2">
+            <Label htmlFor="ar_title">Arabic Title</Label>
+            <Input
+              id="ar_title"
+              value={form.translations.ar.title}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  translations: {
+                    ...prev.translations,
+                    ar: {
+                      ...prev.translations.ar,
+                      title: e.target.value,
+                    },
+                  },
+                }))
+              }
+              placeholder="عنوان الحدث"
+              dir="rtl"
+            />
+          </div>
+
+          <div className="grid gap-2">
             <Label htmlFor="event_type">
               Event Type <span className="text-destructive">*</span>
             </Label>
@@ -173,6 +213,29 @@ export function EventFormDialog({
               }
               placeholder="Event description"
               rows={3}
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="ar_description">Arabic Description</Label>
+            <Textarea
+              id="ar_description"
+              value={form.translations.ar.description}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  translations: {
+                    ...prev.translations,
+                    ar: {
+                      ...prev.translations.ar,
+                      description: e.target.value,
+                    },
+                  },
+                }))
+              }
+              placeholder="وصف الحدث"
+              rows={3}
+              dir="rtl"
             />
           </div>
 

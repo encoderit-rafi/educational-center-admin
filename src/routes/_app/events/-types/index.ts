@@ -20,6 +20,7 @@ export interface Event {
   createdAt: string
   updatedAt: string
   deletedAt: string | null
+  translations?: Record<string, { title?: string; description?: string }> | null
 }
 
 export interface EventsResponse {
@@ -45,6 +46,7 @@ export interface CreateEventInput {
   vat_rate?: number | null
   is_active?: boolean
   banner_image?: string
+  translations?: Record<string, { title?: string; description?: string }>
 }
 
 export interface EventBooking {
