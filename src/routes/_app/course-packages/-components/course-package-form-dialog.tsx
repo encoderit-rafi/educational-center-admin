@@ -46,6 +46,7 @@ interface CoursePackageFormData {
   isActive: boolean
   translations: {
     ar: {
+      name: string
       description: string
       requirements: string
       best_for: string
@@ -83,6 +84,7 @@ const emptyForm: CoursePackageFormData = {
   isActive: true,
   translations: {
     ar: {
+      name: '',
       description: '',
       requirements: '',
       best_for: '',
@@ -192,6 +194,7 @@ export function CoursePackageFormDialog({
         isActive: pkg.isActive,
         translations: {
           ar: {
+            name: pkg.translations?.ar?.name ?? '',
             description: pkg.translations?.ar?.description ?? '',
             requirements: pkg.translations?.ar?.requirements ?? '',
             best_for: pkg.translations?.ar?.best_for ?? '',
@@ -235,6 +238,25 @@ export function CoursePackageFormDialog({
                 setForm((prev) => ({ ...prev, name: e.target.value }))
               }
               placeholder="Package name"
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="ar_name">Arabic Name</Label>
+            <Input
+              id="ar_name"
+              value={form.translations.ar.name}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  translations: {
+                    ...prev.translations,
+                    ar: { ...prev.translations.ar, name: e.target.value },
+                  },
+                }))
+              }
+              placeholder="اسم الباقة"
+              dir="rtl"
             />
           </div>
 

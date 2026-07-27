@@ -1,4 +1,5 @@
 export interface CoursePackageTranslations {
+  name?: string | null
   description?: string | null
   requirements?: string | null
   best_for?: string | null
@@ -62,6 +63,7 @@ export interface CreateCoursePackageInput {
   isActive?: boolean
   translations?: {
     ar?: {
+      name?: string
       description?: string
       requirements?: string
       best_for?: string
