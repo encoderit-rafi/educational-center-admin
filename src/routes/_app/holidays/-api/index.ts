@@ -38,6 +38,7 @@ function buildPayload(data: CreateHolidayInput) {
   }
   if (data.description) payload.description = data.description
   if (data.country) payload.country = data.country
+  if (data.translations) payload.translations = data.translations
   return payload
 }
 

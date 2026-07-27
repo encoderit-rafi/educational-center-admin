@@ -34,6 +34,12 @@ interface HolidayFormData {
   isRecurring: boolean
   country: string
   isActive: boolean
+  translations: {
+    ar: {
+      title: string
+      description: string
+    }
+  }
 }
 
 interface HolidayFormDialogProps {
@@ -53,6 +59,12 @@ const emptyForm: HolidayFormData = {
   isRecurring: false,
   country: '',
   isActive: true,
+  translations: {
+    ar: {
+      title: '',
+      description: '',
+    },
+  },
 }
 
 const HOLIDAY_TYPES = ['PUBLIC', 'NATIONAL', 'RELIGIOUS', 'CUSTOM'] as const
@@ -81,6 +93,12 @@ export function HolidayFormDialog({
         isRecurring: holiday.isRecurring,
         country: holiday.country ?? '',
         isActive: holiday.isActive,
+        translations: {
+          ar: {
+            title: holiday.translations?.ar?.title ?? '',
+            description: holiday.translations?.ar?.description ?? '',
+          },
+        },
       })
     } else {
       setForm(emptyForm)
@@ -123,6 +141,28 @@ export function HolidayFormDialog({
           </div>
 
           <div className="grid gap-2">
+            <Label htmlFor="ar_title">Arabic Title</Label>
+            <Input
+              id="ar_title"
+              value={form.translations.ar.title}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  translations: {
+                    ...prev.translations,
+                    ar: {
+                      ...prev.translations.ar,
+                      title: e.target.value,
+                    },
+                  },
+                }))
+              }
+              placeholder="عنوان العطلة"
+              dir="rtl"
+            />
+          </div>
+
+          <div className="grid gap-2">
             <Label htmlFor="description">Description</Label>
             <Textarea
               id="description"
@@ -135,6 +175,29 @@ export function HolidayFormDialog({
               }
               placeholder="Brief description"
               rows={2}
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="ar_description">Arabic Description</Label>
+            <Textarea
+              id="ar_description"
+              value={form.translations.ar.description}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  translations: {
+                    ...prev.translations,
+                    ar: {
+                      ...prev.translations.ar,
+                      description: e.target.value,
+                    },
+                  },
+                }))
+              }
+              placeholder="وصف العطلة"
+              rows={2}
+              dir="rtl"
             />
           </div>
 

@@ -10,6 +10,7 @@ export interface Holiday {
   isActive: boolean
   createdAt: string
   updatedAt: string
+  translations?: Record<string, { title?: string; description?: string }> | null
 }
 
 export interface HolidaysResponse {
@@ -28,4 +29,5 @@ export interface CreateHolidayInput {
   isRecurring?: boolean
   country?: string
   isActive?: boolean
+  translations?: Record<string, { title?: string; description?: string }>
 }
