@@ -67,6 +67,10 @@ export function EnglishTestAttemptDetailsSheet({
     ...useGetAttemptDetail(attemptId ?? ""),
     enabled: !!attemptId && isOpen,
   });
+  console.log(
+    "👉 ~ EnglishTestAttemptDetailsSheet ~ fetchedData:",
+    fetchedData,
+  );
 
   const apiAttempt = fetchedData?.attempt;
   const attempt = attemptData;
@@ -252,11 +256,13 @@ export function EnglishTestAttemptDetailsSheet({
                           <span className="text-primary font-semibold mr-1.5">
                             Q{index + 1}:
                           </span>
-                          {qa.question_text || `Question #${index + 1}`}
+                          {qa.question_text}
                         </div>
                         <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">
                           <span className="font-medium">{qa.skill_area}</span>
-                          <span>{qa.marks} {qa.marks === 1 ? 'mark' : 'marks'}</span>
+                          <span>
+                            {qa.marks} {qa.marks === 1 ? "mark" : "marks"}
+                          </span>
                         </div>
                         <div className="text-sm flex flex-wrap items-center gap-2 pt-2 border-t border-border/40">
                           <span className="text-xs text-muted-foreground font-medium">
@@ -264,26 +270,32 @@ export function EnglishTestAttemptDetailsSheet({
                           </span>
                           <Badge
                             variant="outline"
-                            className="font-semibold text-primary bg-primary/5"
+                            className={
+                              "font-semibold " +
+                              (qa.selected_option
+                                ? qa.is_correct === true
+                                  ? "bg-green-50 text-green-700 border-green-300 dark:bg-green-950 dark:text-green-400 dark:border-green-800"
+                                  : qa.is_correct === false
+                                    ? "bg-red-50 text-red-700 border-red-300 dark:bg-red-950 dark:text-red-400 dark:border-red-800"
+                                    : "text-primary bg-primary/5"
+                                : "text-muted-foreground bg-muted/50")
+                            }
                           >
-                            {qa.selected_option || "Not answered"}
+                            {qa.selected_option_text || "Not answered"}
                           </Badge>
-                          <span className="text-xs text-muted-foreground">
-                            (Correct:{" "}
+                          {/* <span className="text-xs text-muted-foreground">
+                            Correct:{" "}
                             <span className="font-medium text-foreground">
-                              {qa.correct_option}
+                              {qa.correct_option_text} ({qa.correct_option})
                             </span>
-                            )
-                          </span>
+                          </span> */}
                           {qa.is_correct === true && (
-                            <Badge variant="default" className="ml-auto">
+                            <Badge variant="success" className="ml-auto">
                               Correct
                             </Badge>
                           )}
                           {qa.is_correct === false && (
-                            <Badge variant="destructive" className="ml-auto">
-                              Incorrect
-                            </Badge>
+                            <Badge className="ml-auto">Incorrect</Badge>
                           )}
                           {qa.is_correct === null && (
                             <Badge variant="secondary" className="ml-auto">
@@ -291,6 +303,25 @@ export function EnglishTestAttemptDetailsSheet({
                             </Badge>
                           )}
                         </div>
+                        {qa.options && qa.options.length > 0 && (
+                          <div className="grid grid-cols-2 gap-1.5 pt-1">
+                            {qa.options.map((opt) => (
+                              <div
+                                key={opt.key}
+                                className={
+                                  "text-xs px-2 py-1 rounded border " +
+                                  (opt.key === qa.correct_option
+                                    ? "border-green-300 bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-400 dark:border-green-800 font-medium"
+                                    : opt.key === qa.selected_option
+                                      ? "border-red-300 bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-400 dark:border-red-800"
+                                      : "border-border/60 text-muted-foreground")
+                                }
+                              >
+                                {opt.key}. {opt.label}
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     ))
                   ) : directAnswers.length > 0 ? (
@@ -305,17 +336,23 @@ export function EnglishTestAttemptDetailsSheet({
                       const answerDisplay =
                         typeof ans === "string"
                           ? ans
-                          : ans.selected_option ??
+                          : (ans.selected_option_text ??
+                            ans.selected_option ??
                             ans.answer_text ??
                             ans.answerText ??
                             ans.text ??
                             (typeof ans.answer === "string"
                               ? ans.answer
-                              : ans.answer?.text ??
+                              : (ans.answer?.text ??
                                 ans.answer?.label ??
-                                (ans.answer !== undefined
-                                  ? `Option ${ans.answer}`
-                                  : "Not answered"));
+                                "Not answered")));
+
+                      const correctDisplay =
+                        ans.correct_option_text ??
+                        ans.correct_answer_text ??
+                        ans.correct_answer ??
+                        ans.correct_option ??
+                        "";
 
                       return (
                         <div
@@ -338,6 +375,14 @@ export function EnglishTestAttemptDetailsSheet({
                             >
                               {answerDisplay}
                             </Badge>
+                            {correctDisplay && (
+                              <span className="text-xs text-muted-foreground">
+                                Correct:{" "}
+                                <span className="font-medium text-foreground">
+                                  {correctDisplay}
+                                </span>
+                              </span>
+                            )}
                             {ans.isCorrect === true && (
                               <Badge variant="default" className="ml-auto">
                                 Correct
@@ -354,6 +399,28 @@ export function EnglishTestAttemptDetailsSheet({
                               </Badge>
                             )}
                           </div>
+                          {ans.options && ans.options.length > 0 && (
+                            <div className="grid grid-cols-2 gap-1.5 pt-1">
+                              {ans.options.map((opt: any) => (
+                                <div
+                                  key={opt.key}
+                                  className={
+                                    "text-xs px-2 py-1 rounded border " +
+                                    (opt.key ===
+                                    (ans.correct_option ?? ans.correctOption)
+                                      ? "border-green-300 bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-400 dark:border-green-800 font-medium"
+                                      : opt.key ===
+                                          (ans.selected_option ??
+                                            ans.selectedOption)
+                                        ? "border-red-300 bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-400 dark:border-red-800"
+                                        : "border-border/60 text-muted-foreground")
+                                  }
+                                >
+                                  {opt.key}. {opt.label}
+                                </div>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       );
                     })

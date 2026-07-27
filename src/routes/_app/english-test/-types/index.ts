@@ -116,8 +116,15 @@ export interface EnglishTestAttemptDetailResponse {
     skill_area: string
     marks: number
     correct_option: string
+    correct_option_text: string
     selected_option: string | null
+    selected_option_text: string | null
     is_correct: boolean | null
+    options: Array<{
+      key: string
+      label: string
+      marks: number
+    }>
   }>
 }
 
