@@ -34,6 +34,7 @@ import {
   Phone,
   Ticket,
   FileText,
+  Briefcase,
 } from "lucide-react";
 
 export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
@@ -139,7 +140,21 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
       name: "Workshops",
       url: "/workshop",
       icon: Wrench,
-      isActive: isActiveLink(["/workshop"]),
+      isActive: isActiveLink(["/workshop", "/workshop-bookings"]),
+      children: [
+        {
+          name: "Workshops",
+          url: "/workshop",
+          icon: Wrench,
+          isActive: isActiveLink(["/workshop"]),
+        },
+        {
+          name: "Workshop Bookings",
+          url: "/workshop-bookings",
+          icon: CalendarCheck,
+          isActive: isActiveLink(["/workshop-bookings"]),
+        },
+      ],
     },
     {
       name: "Events",
@@ -202,6 +217,12 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
       isActive: isActiveLink(["/holidays"]),
     },
     {
+      name: "Careers",
+      url: "/career",
+      icon: Briefcase,
+      isActive: isActiveLink(["/career"]),
+    },
+    {
       name: "Contacts",
       url: "/contacts",
       icon: Phone,
@@ -220,12 +241,17 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <div className="flex justify-between items-center px-2 py-3">
           {open ? (
-            <IconLogo />
+            <>
+              <IconLogo />
+              <SidebarTrigger className="rounded-md text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent" />
+            </>
           ) : (
-            <IconLogo withWordmark={false} className="mx-auto" />
-          )}
-          {open && (
-            <SidebarTrigger className="rounded-md text-white/60 hover:text-white hover:bg-white/10" />
+            <SidebarTrigger
+              className="mx-auto h-auto w-auto p-1.5 rounded-md hover:bg-sidebar-accent cursor-pointer"
+              title="Expand Sidebar"
+            >
+              <IconLogo withWordmark={false} />
+            </SidebarTrigger>
           )}
         </div>
       </SidebarHeader>
@@ -238,7 +264,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
 
       {open && (
         <SidebarFooter>
-          <p className="text-[12px] text-white/60 px-2 pb-3">
+          <p className="text-[12px] text-sidebar-foreground/70 px-2 pb-3">
             © <span className="font-semibold">Admin Panel</span>. All rights reserved.
           </p>
         </SidebarFooter>

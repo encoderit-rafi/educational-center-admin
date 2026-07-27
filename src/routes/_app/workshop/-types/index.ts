@@ -25,10 +25,13 @@ export interface Workshop {
   discountValue: number | null
   discountType: string | null
   vatRate: number | null
+  orderIndex?: number | null
   translations?: Record<string, WorkshopTranslations> | null
   createdAt: string
   updatedAt: string
   deletedAt: string | null
+  sub_courses?: Array<Record<string, unknown>>
+  packages?: Array<Record<string, unknown>>
 }
 
 export interface WorkshopsResponse {
@@ -80,6 +83,7 @@ export interface WorkshopBooking {
   phone: string | null
   address: string | null
   country: string | null
+  city: string | null
   courseId: string | null
   subCourseId: string | null
   workshopId: string | null
@@ -93,10 +97,24 @@ export interface WorkshopBooking {
   paymentId: string | null
   pdfUrl: string | null
   emailSentAt: string | null
+  workshopType: string | null
   notes: string | null
   createdAt: string
   updatedAt: string
   deletedAt: string | null
+  course?: {
+    id: string
+    name?: string | null
+    title?: string | null
+    slug?: string | null
+  } | null
+  workshop?: {
+    id: string
+    name?: string | null
+    title?: string | null
+    slug?: string | null
+  } | null
+  package?: WorkshopPackage | null
 }
 
 export interface WorkshopBookingsResponse {

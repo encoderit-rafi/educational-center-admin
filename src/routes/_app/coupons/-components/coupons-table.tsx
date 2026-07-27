@@ -135,7 +135,7 @@ export function CouponsTable({
 
             return (
               <TableRow key={coupon.id}>
-                <TableCell className="font-semibold max-w-[150px] truncate">
+                <TableCell className="font-semibold max-w-37.5 truncate">
                   <div className="flex items-center gap-2">
                     <span className="font-mono bg-muted px-1.5 py-0.5 rounded text-sm select-all">
                       {coupon.code}
@@ -153,7 +153,7 @@ export function CouponsTable({
                     </button>
                   </div>
                 </TableCell>
-                <TableCell className="max-w-[200px] truncate" title={coupon.description ?? ''}>
+                <TableCell className="max-w-50 truncate" title={coupon.description ?? ''}>
                   {coupon.description ?? '-'}
                 </TableCell>
                 <TableCell className="font-medium">
@@ -186,7 +186,7 @@ export function CouponsTable({
                   )}
                 </TableCell>
                 <TableCell>
-                  <div className="flex flex-col gap-1 max-w-[220px]">
+                  <div className="flex flex-col gap-1 max-w-55">
                     <div className="flex flex-wrap gap-1">
                       {applicableTypes.map((type) => (
                         <Badge key={type} variant="secondary" className="text-[10px] py-0 px-1 capitalize">
@@ -203,7 +203,7 @@ export function CouponsTable({
                           const course = courses.find((c) => c.id === id)
                           if (course) {
                             return (
-                              <div key={id} className="line-clamp-2 break-words whitespace-normal" title={course.title ?? course.name ?? ''}>
+                              <div key={id} className="line-clamp-2 wrap-break-word whitespace-normal" title={course.title ?? course.name ?? ''}>
                                 • {course.title ?? course.name}
                               </div>
                             )
@@ -212,7 +212,7 @@ export function CouponsTable({
                           if (pkg) {
                             const pkgName = pkg.course?.title ? `${pkg.course.title} - ${pkg.name}` : pkg.name
                             return (
-                              <div key={id} className="line-clamp-2 break-words whitespace-normal" title={pkgName}>
+                              <div key={id} className="line-clamp-2 wrap-break-word whitespace-normal" title={pkgName}>
                                 • {pkgName}
                               </div>
                             )
@@ -220,7 +220,7 @@ export function CouponsTable({
                           const exam = exams.find((e) => e.id === id)
                           if (exam) {
                             return (
-                              <div key={id} className="line-clamp-2 break-words whitespace-normal" title={exam.name ?? ''}>
+                              <div key={id} className="line-clamp-2 wrap-break-word whitespace-normal" title={exam.name ?? ''}>
                                 • {exam.name}
                               </div>
                             )
@@ -228,7 +228,7 @@ export function CouponsTable({
                           const mockTest = mockTests.find((m) => m.id === id)
                           if (mockTest) {
                             return (
-                              <div key={id} className="line-clamp-2 break-words whitespace-normal" title={mockTest.name ?? ''}>
+                              <div key={id} className="line-clamp-2 wrap-break-word whitespace-normal" title={mockTest.name ?? ''}>
                                 • {mockTest.name}
                               </div>
                             )
@@ -236,7 +236,7 @@ export function CouponsTable({
                           const ws = workshops.find((w) => w.id === id)
                           if (ws) {
                             return (
-                              <div key={id} className="line-clamp-2 break-words whitespace-normal" title={ws.title ?? ws.name ?? ''}>
+                              <div key={id} className="line-clamp-2 wrap-break-word whitespace-normal" title={ws.title ?? ws.name ?? ''}>
                                 • {ws.title ?? ws.name}
                               </div>
                             )
@@ -248,7 +248,7 @@ export function CouponsTable({
                   </div>
                 </TableCell>
                 <TableCell>
-                  <Badge variant={coupon.isActive ? 'default' : 'destructive'}>
+                  <Badge variant={coupon.isActive ? 'success' : 'destructive'}>
                     {coupon.isActive ? 'Active' : 'Inactive'}
                   </Badge>
                 </TableCell>

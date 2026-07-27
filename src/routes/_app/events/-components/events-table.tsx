@@ -104,7 +104,7 @@ export function EventsTable({
         <TableBody>
           {events.map((event) => (
             <TableRow key={event.id}>
-              <TableCell className="font-medium max-w-[200px] truncate">
+              <TableCell className="font-medium max-w-50 truncate">
                 {event.title ?? '-'}
               </TableCell>
               <TableCell>
@@ -120,7 +120,7 @@ export function EventsTable({
               </TableCell>
               <TableCell>{event.price ? `$${event.price}` : '-'}</TableCell>
               <TableCell>
-                <Badge variant={event.isActive ? 'default' : 'destructive'}>
+                <Badge variant={event.isActive ? 'success' : 'destructive'}>
                   {event.isActive ? 'Active' : 'Inactive'}
                 </Badge>
               </TableCell>

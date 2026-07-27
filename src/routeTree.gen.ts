@@ -19,6 +19,7 @@ import { Route as AuthLoginIndexRouteImport } from './routes/_auth/login/index'
 import { Route as AuthForgotPasswordIndexRouteImport } from './routes/_auth/forgot-password/index'
 import { Route as AppZohoIndexRouteImport } from './routes/_app/zoho/index'
 import { Route as AppWorkshopIndexRouteImport } from './routes/_app/workshop/index'
+import { Route as AppWorkshopBookingsIndexRouteImport } from './routes/_app/workshop-bookings/index'
 import { Route as AppVideosIndexRouteImport } from './routes/_app/videos/index'
 import { Route as AppUsersIndexRouteImport } from './routes/_app/users/index'
 import { Route as AppSubCoursesIndexRouteImport } from './routes/_app/sub-courses/index'
@@ -39,6 +40,7 @@ import { Route as AppCourseBookingsIndexRouteImport } from './routes/_app/course
 import { Route as AppCouponsIndexRouteImport } from './routes/_app/coupons/index'
 import { Route as AppContactsIndexRouteImport } from './routes/_app/contacts/index'
 import { Route as AppConsultationsIndexRouteImport } from './routes/_app/consultations/index'
+import { Route as AppCareerIndexRouteImport } from './routes/_app/career/index'
 import { Route as AppDashboardIndexRouteImport } from './routes/_app/_dashboard/index'
 
 const AuthRouteRoute = AuthRouteRouteImport.update({
@@ -89,6 +91,12 @@ const AppWorkshopIndexRoute = AppWorkshopIndexRouteImport.update({
   path: '/workshop/',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppWorkshopBookingsIndexRoute =
+  AppWorkshopBookingsIndexRouteImport.update({
+    id: '/workshop-bookings/',
+    path: '/workshop-bookings/',
+    getParentRoute: () => AppRouteRoute,
+  } as any)
 const AppVideosIndexRoute = AppVideosIndexRouteImport.update({
   id: '/videos/',
   path: '/videos/',
@@ -190,6 +198,11 @@ const AppConsultationsIndexRoute = AppConsultationsIndexRouteImport.update({
   path: '/consultations/',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppCareerIndexRoute = AppCareerIndexRouteImport.update({
+  id: '/career/',
+  path: '/career/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppDashboardIndexRoute = AppDashboardIndexRouteImport.update({
   id: '/_dashboard/',
   path: '/',
@@ -201,6 +214,7 @@ export interface FileRoutesByFullPath {
   '/route copy': typeof AuthRoutecopyRoute
   '/zoho-failed/': typeof ZohoFailedIndexRoute
   '/zoho-success/': typeof ZohoSuccessIndexRoute
+  '/career/': typeof AppCareerIndexRoute
   '/consultations/': typeof AppConsultationsIndexRoute
   '/contacts/': typeof AppContactsIndexRoute
   '/coupons/': typeof AppCouponsIndexRoute
@@ -221,6 +235,7 @@ export interface FileRoutesByFullPath {
   '/sub-courses/': typeof AppSubCoursesIndexRoute
   '/users/': typeof AppUsersIndexRoute
   '/videos/': typeof AppVideosIndexRoute
+  '/workshop-bookings/': typeof AppWorkshopBookingsIndexRoute
   '/workshop/': typeof AppWorkshopIndexRoute
   '/zoho/': typeof AppZohoIndexRoute
   '/forgot-password/': typeof AuthForgotPasswordIndexRoute
@@ -232,6 +247,7 @@ export interface FileRoutesByTo {
   '/route copy': typeof AuthRoutecopyRoute
   '/zoho-failed': typeof ZohoFailedIndexRoute
   '/zoho-success': typeof ZohoSuccessIndexRoute
+  '/career': typeof AppCareerIndexRoute
   '/consultations': typeof AppConsultationsIndexRoute
   '/contacts': typeof AppContactsIndexRoute
   '/coupons': typeof AppCouponsIndexRoute
@@ -252,6 +268,7 @@ export interface FileRoutesByTo {
   '/sub-courses': typeof AppSubCoursesIndexRoute
   '/users': typeof AppUsersIndexRoute
   '/videos': typeof AppVideosIndexRoute
+  '/workshop-bookings': typeof AppWorkshopBookingsIndexRoute
   '/workshop': typeof AppWorkshopIndexRoute
   '/zoho': typeof AppZohoIndexRoute
   '/forgot-password': typeof AuthForgotPasswordIndexRoute
@@ -266,6 +283,7 @@ export interface FileRoutesById {
   '/zoho-failed/': typeof ZohoFailedIndexRoute
   '/zoho-success/': typeof ZohoSuccessIndexRoute
   '/_app/_dashboard/': typeof AppDashboardIndexRoute
+  '/_app/career/': typeof AppCareerIndexRoute
   '/_app/consultations/': typeof AppConsultationsIndexRoute
   '/_app/contacts/': typeof AppContactsIndexRoute
   '/_app/coupons/': typeof AppCouponsIndexRoute
@@ -286,6 +304,7 @@ export interface FileRoutesById {
   '/_app/sub-courses/': typeof AppSubCoursesIndexRoute
   '/_app/users/': typeof AppUsersIndexRoute
   '/_app/videos/': typeof AppVideosIndexRoute
+  '/_app/workshop-bookings/': typeof AppWorkshopBookingsIndexRoute
   '/_app/workshop/': typeof AppWorkshopIndexRoute
   '/_app/zoho/': typeof AppZohoIndexRoute
   '/_auth/forgot-password/': typeof AuthForgotPasswordIndexRoute
@@ -299,6 +318,7 @@ export interface FileRouteTypes {
     | '/route copy'
     | '/zoho-failed/'
     | '/zoho-success/'
+    | '/career/'
     | '/consultations/'
     | '/contacts/'
     | '/coupons/'
@@ -319,6 +339,7 @@ export interface FileRouteTypes {
     | '/sub-courses/'
     | '/users/'
     | '/videos/'
+    | '/workshop-bookings/'
     | '/workshop/'
     | '/zoho/'
     | '/forgot-password/'
@@ -330,6 +351,7 @@ export interface FileRouteTypes {
     | '/route copy'
     | '/zoho-failed'
     | '/zoho-success'
+    | '/career'
     | '/consultations'
     | '/contacts'
     | '/coupons'
@@ -350,6 +372,7 @@ export interface FileRouteTypes {
     | '/sub-courses'
     | '/users'
     | '/videos'
+    | '/workshop-bookings'
     | '/workshop'
     | '/zoho'
     | '/forgot-password'
@@ -363,6 +386,7 @@ export interface FileRouteTypes {
     | '/zoho-failed/'
     | '/zoho-success/'
     | '/_app/_dashboard/'
+    | '/_app/career/'
     | '/_app/consultations/'
     | '/_app/contacts/'
     | '/_app/coupons/'
@@ -383,6 +407,7 @@ export interface FileRouteTypes {
     | '/_app/sub-courses/'
     | '/_app/users/'
     | '/_app/videos/'
+    | '/_app/workshop-bookings/'
     | '/_app/workshop/'
     | '/_app/zoho/'
     | '/_auth/forgot-password/'
@@ -467,6 +492,13 @@ declare module '@tanstack/react-router' {
       path: '/workshop'
       fullPath: '/workshop/'
       preLoaderRoute: typeof AppWorkshopIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/workshop-bookings/': {
+      id: '/_app/workshop-bookings/'
+      path: '/workshop-bookings'
+      fullPath: '/workshop-bookings/'
+      preLoaderRoute: typeof AppWorkshopBookingsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/videos/': {
@@ -609,6 +641,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppConsultationsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/career/': {
+      id: '/_app/career/'
+      path: '/career'
+      fullPath: '/career/'
+      preLoaderRoute: typeof AppCareerIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/_dashboard/': {
       id: '/_app/_dashboard/'
       path: '/'
@@ -621,6 +660,7 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteRouteChildren {
   AppDashboardIndexRoute: typeof AppDashboardIndexRoute
+  AppCareerIndexRoute: typeof AppCareerIndexRoute
   AppConsultationsIndexRoute: typeof AppConsultationsIndexRoute
   AppContactsIndexRoute: typeof AppContactsIndexRoute
   AppCouponsIndexRoute: typeof AppCouponsIndexRoute
@@ -641,12 +681,14 @@ interface AppRouteRouteChildren {
   AppSubCoursesIndexRoute: typeof AppSubCoursesIndexRoute
   AppUsersIndexRoute: typeof AppUsersIndexRoute
   AppVideosIndexRoute: typeof AppVideosIndexRoute
+  AppWorkshopBookingsIndexRoute: typeof AppWorkshopBookingsIndexRoute
   AppWorkshopIndexRoute: typeof AppWorkshopIndexRoute
   AppZohoIndexRoute: typeof AppZohoIndexRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppDashboardIndexRoute: AppDashboardIndexRoute,
+  AppCareerIndexRoute: AppCareerIndexRoute,
   AppConsultationsIndexRoute: AppConsultationsIndexRoute,
   AppContactsIndexRoute: AppContactsIndexRoute,
   AppCouponsIndexRoute: AppCouponsIndexRoute,
@@ -667,6 +709,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppSubCoursesIndexRoute: AppSubCoursesIndexRoute,
   AppUsersIndexRoute: AppUsersIndexRoute,
   AppVideosIndexRoute: AppVideosIndexRoute,
+  AppWorkshopBookingsIndexRoute: AppWorkshopBookingsIndexRoute,
   AppWorkshopIndexRoute: AppWorkshopIndexRoute,
   AppZohoIndexRoute: AppZohoIndexRoute,
 }

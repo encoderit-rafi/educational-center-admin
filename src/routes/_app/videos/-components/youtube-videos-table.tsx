@@ -98,17 +98,17 @@ export function YoutubeVideosTable({
         <TableBody>
           {videos.map((video) => (
             <TableRow key={video.id}>
-              <TableCell className="font-medium max-w-[200px] truncate">
+              <TableCell className="font-medium max-w-50 truncate">
                 {video.title ?? '-'}
               </TableCell>
-              <TableCell className="max-w-[250px] truncate text-muted-foreground">
+              <TableCell className="max-w-62.5 truncate text-muted-foreground">
                 {video.youtubeUrl ?? '-'}
               </TableCell>
               <TableCell className="font-mono text-xs text-muted-foreground">
                 {video.youtubeVideoId ?? '-'}
               </TableCell>
               <TableCell>
-                <Badge variant={video.isActive ? 'default' : 'destructive'}>
+                <Badge variant={video.isActive ? 'success' : 'destructive'}>
                   {video.isActive ? 'Active' : 'Inactive'}
                 </Badge>
               </TableCell>

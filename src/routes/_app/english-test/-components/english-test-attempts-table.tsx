@@ -21,9 +21,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-function formatDate(dateStr: string | null) {
+function formatDate(dateStr: string | null | undefined) {
   if (!dateStr) return '-'
-  return new Date(dateStr).toLocaleDateString()
+  return new Date(dateStr).toLocaleString()
 }
 
 interface EnglishTestAttemptsTableProps {
@@ -38,79 +38,106 @@ export function EnglishTestAttemptsTable({
   onDelete,
 }: EnglishTestAttemptsTableProps) {
   return (
-    <div className="flex-1 flex flex-col min-h-0">
+    <div className="flex-1 flex flex-col min-h-0 border rounded-lg overflow-hidden bg-card">
       <Table containerClassName="flex-1">
-        <TableHeader className="sticky top-0 z-10">
+        <TableHeader className="sticky top-0 z-10 bg-muted/60">
           <TableRow className="hover:bg-transparent">
-            <TableHead>Name</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Phone</TableHead>
-            <TableHead>Country</TableHead>
-            <TableHead>City</TableHead>
-            <TableHead>Score</TableHead>
-            <TableHead>Level</TableHead>
-            <TableHead>Started At</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            <TableHead className="font-semibold">Full Name</TableHead>
+            <TableHead className="font-semibold">Email</TableHead>
+            <TableHead className="font-semibold">Phone</TableHead>
+            <TableHead className="font-semibold">Country</TableHead>
+            <TableHead className="font-semibold">City</TableHead>
+            <TableHead className="font-semibold">Score</TableHead>
+            <TableHead className="font-semibold">Level</TableHead>
+            <TableHead className="font-semibold">Submitted At</TableHead>
+            <TableHead className="text-right font-semibold">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {attempts.map((attempt) => (
-            <TableRow key={attempt.id}>
-              <TableCell className="font-medium">
-                {[attempt.firstName, attempt.lastName]
-                  .filter(Boolean)
-                  .join(' ') || '-'}
-              </TableCell>
-              <TableCell className="text-xs">
-                {attempt.email ?? '-'}
-              </TableCell>
-              <TableCell className="text-xs">
-                {attempt.phone ?? '-'}
-              </TableCell>
-              <TableCell className="text-xs">
-                {attempt.country ?? '-'}
-              </TableCell>
-              <TableCell className="text-xs">
-                {attempt.city ?? '-'}
-              </TableCell>
-              <TableCell>{attempt.score ?? '-'}</TableCell>
-              <TableCell>
-                <Badge variant="outline">{attempt.level ?? '-'}</Badge>
-              </TableCell>
-              <TableCell className="text-xs text-muted-foreground">
-                {formatDate(attempt.startedAt)}
-              </TableCell>
-              <TableCell className="text-right">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => onView(attempt)}>
-                      <Eye className="mr-2 h-4 w-4" />
-                      View
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => onDelete(attempt)}
-                      className="text-destructive"
-                    >
-                      <Trash2 className="mr-2 h-4 w-4" />
-                      Delete
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-          ))}
+          {attempts.map((attempt) => {
+            const fullName =
+              attempt.fullName ||
+              attempt.full_name ||
+              [attempt.firstName || attempt.first_name, attempt.middleName || attempt.middle_name, attempt.lastName || attempt.last_name]
+                .filter(Boolean)
+                .join(' ') ||
+              '-'
+            
+            const scoreVal = attempt.totalScore ?? attempt.total_score ?? attempt.score ?? 0
+            
+            const levelLabel =
+              typeof attempt.englishLevel === 'object' && attempt.englishLevel !== null
+                ? attempt.englishLevel.label || attempt.englishLevel.levelCode
+                : typeof attempt.englishLevel === 'string'
+                ? attempt.englishLevel
+                : attempt.level || '-'
+
+            return (
+              <TableRow key={attempt.id} className="hover:bg-muted/30 transition-colors">
+                <TableCell className="font-medium text-foreground">
+                  {fullName}
+                </TableCell>
+                <TableCell className="text-sm">
+                  {attempt.email || '-'}
+                </TableCell>
+                <TableCell className="text-sm">
+                  {attempt.phone || '-'}
+                </TableCell>
+                <TableCell className="text-sm">
+                  {attempt.country || '-'}
+                </TableCell>
+                <TableCell className="text-sm">
+                  {attempt.city || '-'}
+                </TableCell>
+                <TableCell className="text-sm font-semibold">
+                  <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20">
+                    {scoreVal} pts
+                  </Badge>
+                </TableCell>
+                <TableCell className="text-sm">
+                  {levelLabel !== '-' ? (
+                    <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20">
+                      {levelLabel}
+                    </Badge>
+                  ) : (
+                    '-'
+                  )}
+                </TableCell>
+                <TableCell className="text-xs text-muted-foreground">
+                  {formatDate(attempt.submittedAt || attempt.submitted_at || attempt.createdAt || attempt.created_at || attempt.startedAt || attempt.started_at)}
+                </TableCell>
+                <TableCell className="text-right">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem onClick={() => onView(attempt)}>
+                        <Eye className="mr-2 h-4 w-4 text-primary" />
+                        View Answers
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => onDelete(attempt)}
+                        className="text-destructive focus:text-destructive"
+                      >
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        Delete
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
+              </TableRow>
+            )
+          })}
           {attempts.length === 0 && (
             <TableRow>
               <TableCell
                 colSpan={9}
-                className="text-center py-8 text-muted-foreground"
+                className="text-center py-12 text-muted-foreground"
               >
-                No attempts found.
+                No test attempts found.
               </TableCell>
             </TableRow>
           )}

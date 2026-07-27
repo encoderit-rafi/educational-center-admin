@@ -133,7 +133,7 @@ function SortableExamRow({
           </span>
         )}
       </TableCell>
-      <TableCell className="font-medium max-w-[200px] truncate">
+      <TableCell className="font-medium max-w-50 truncate">
         {exam.name ?? '-'}
       </TableCell>
       <TableCell>
@@ -147,7 +147,7 @@ function SortableExamRow({
         {exam.totalFee ? `$${exam.totalFee}` : '-'}
       </TableCell>
       <TableCell>
-        <Badge variant={exam.isActive ? 'default' : 'destructive'}>
+        <Badge variant={exam.isActive ? 'success' : 'destructive'}>
           {exam.isActive ? 'Active' : 'Inactive'}
         </Badge>
       </TableCell>

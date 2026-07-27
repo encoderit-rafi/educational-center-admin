@@ -49,12 +49,17 @@ export function useGetWorkshops(params?: WorkshopListParams) {
   })
 }
 
-export function useGetWorkshop(id: string) {
+export function useGetWorkshop(idOrSlug: string) {
   return queryOptions({
-    queryKey: ['workshop', id],
+    queryKey: ['workshop', idOrSlug],
     queryFn: async (): Promise<Workshop> => {
-      const res = await api.get(`/admin/workshops/${id}`)
-      return res.data.data
+      try {
+        const res = await api.get(`/workshops/${idOrSlug}`)
+        return res.data.data
+      } catch {
+        const res = await api.get(`/admin/workshops/${idOrSlug}`)
+        return res.data.data
+      }
     },
     staleTime: 15 * 60 * 1000,
     gcTime: 20 * 60 * 1000,

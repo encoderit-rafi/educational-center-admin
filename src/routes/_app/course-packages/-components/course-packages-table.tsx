@@ -135,10 +135,10 @@ function SortablePackageRow({
           </span>
         )}
       </TableCell>
-      <TableCell className="font-medium max-w-[200px] truncate">
+      <TableCell className="font-medium max-w-50 truncate">
         {pkg.name}
       </TableCell>
-      <TableCell className="text-xs text-muted-foreground max-w-[160px] truncate">
+      <TableCell className="text-xs text-muted-foreground max-w-40 truncate">
         {pkg.course?.title ?? '-'}
       </TableCell>
       <TableCell className="text-xs text-muted-foreground">
@@ -158,7 +158,7 @@ function SortablePackageRow({
         {pkg.duration ? `${pkg.duration} hrs` : '-'}
       </TableCell>
       <TableCell>
-        <Badge variant={pkg.isActive ? 'default' : 'destructive'}>
+        <Badge variant={pkg.isActive ? 'success' : 'destructive'}>
           {pkg.isActive ? 'Active' : 'Inactive'}
         </Badge>
       </TableCell>

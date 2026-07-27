@@ -31,13 +31,13 @@ function formatDate(dateStr: string) {
 
 const statusVariants: Record<
   WorkshopBookingStatus,
-  'default' | 'secondary' | 'destructive' | 'outline'
+  'default' | 'secondary' | 'destructive' | 'outline' | 'success' | 'warning'
 > = {
-  PENDING: 'secondary',
-  PAYMENT_PENDING: 'outline',
-  CONFIRMED: 'default',
+  PENDING: 'warning',
+  PAYMENT_PENDING: 'warning',
+  CONFIRMED: 'success',
   CANCELLED: 'destructive',
-  REFUNDED: 'outline',
+  REFUNDED: 'destructive',
 }
 
 interface WorkshopBookingsTableProps {
@@ -78,8 +78,9 @@ function SortHeader({
       <div className="flex items-center gap-1">
         {label}
         <Icon
-          className={`h-3 w-3 transition-opacity ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-50'
-            }`}
+          className={`h-3 w-3 transition-opacity ${
+            isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-50'
+          }`}
         />
       </div>
     </TableHead>
@@ -100,9 +101,10 @@ export function WorkshopBookingsTable({
       <Table containerClassName="flex-1">
         <TableHeader className="sticky top-0 z-10">
           <TableRow className="hover:bg-transparent">
-            <TableHead>Name</TableHead>
-            <SortHeader column="email" label="Email" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
-            <TableHead>Workshop ID</TableHead>
+            <SortHeader column="firstName" label="Name" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
+            <SortHeader column="email" label="Contact" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
+            <TableHead>Workshop / Course</TableHead>
+            <TableHead>Type</TableHead>
             <SortHeader column="status" label="Status" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
             <SortHeader column="totalAmount" label="Total" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
             <SortHeader column="createdAt" label="Created At" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
@@ -110,68 +112,108 @@ export function WorkshopBookingsTable({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {bookings.map((booking) => (
-            <TableRow key={booking.id}>
-              <TableCell className="font-medium max-w-[180px] truncate">
-                {booking.firstName} {booking.lastName ?? ''}
-              </TableCell>
-              <TableCell className="text-muted-foreground">
-                {booking.email}
-              </TableCell>
-              <TableCell className="max-w-[150px] truncate text-muted-foreground font-mono text-xs">
-                {booking.workshopId ?? '-'}
-              </TableCell>
-              <TableCell>
-                <Badge
-                  variant={
-                    booking.status
-                      ? statusVariants[booking.status]
-                      : 'secondary'
-                  }
-                >
-                  {booking.status ?? 'UNKNOWN'}
-                </Badge>
-              </TableCell>
-              <TableCell className="text-xs text-muted-foreground">
-                {booking.totalAmount != null
-                  ? `$${booking.totalAmount.toLocaleString()}`
-                  : '-'}
-              </TableCell>
-              <TableCell className="text-xs text-muted-foreground">
-                {formatDate(booking.createdAt)}
-              </TableCell>
-              <TableCell className="text-right">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => onView(booking)}>
-                      <Eye className="mr-2 h-4 w-4" />
-                      View Details
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => onUpdateStatus(booking)}>
-                      <CheckCircle className="mr-2 h-4 w-4" />
-                      Update Status
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => onDelete(booking)}
-                      className="text-destructive"
-                    >
-                      <Trash2 className="mr-2 h-4 w-4" />
-                      Delete
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-          ))}
+          {bookings.map((booking) => {
+            const fullName = [booking.firstName, booking.middleName, booking.lastName]
+              .filter(Boolean)
+              .join(' ') || booking.name || 'N/A'
+            const workshopTitle = booking.workshop?.title || booking.workshop?.name || 'Workshop'
+            const courseTitle = booking.course?.title || booking.course?.name
+
+            return (
+              <TableRow key={booking.id}>
+                <TableCell className="font-medium">
+                  <div>
+                    <span className="font-semibold text-foreground">{fullName}</span>
+                    {booking.city && (
+                      <span className="block text-xs text-muted-foreground">
+                        {booking.city}{booking.country ? `, ${booking.country}` : ''}
+                      </span>
+                    )}
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="text-sm">
+                    <span className="text-foreground block">{booking.email}</span>
+                    {booking.phone && (
+                      <span className="text-xs text-muted-foreground block">
+                        {booking.phone}
+                      </span>
+                    )}
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div>
+                    <span className="font-medium text-foreground text-sm block">
+                      {workshopTitle}
+                    </span>
+                    {courseTitle && (
+                      <span className="text-xs text-muted-foreground block">
+                        Course: {courseTitle}
+                      </span>
+                    )}
+                  </div>
+                </TableCell>
+                <TableCell className="text-xs">
+                  {booking.workshopType ? (
+                    <Badge variant="outline" className="font-medium">
+                      {booking.workshopType}
+                    </Badge>
+                  ) : (
+                    '-'
+                  )}
+                </TableCell>
+                <TableCell>
+                  <Badge
+                    variant={
+                      booking.status
+                        ? statusVariants[booking.status]
+                        : 'secondary'
+                    }
+                  >
+                    {booking.status ?? 'UNKNOWN'}
+                  </Badge>
+                </TableCell>
+                <TableCell className="text-sm font-semibold">
+                  {booking.totalAmount != null
+                    ? `$${booking.totalAmount.toLocaleString()}`
+                    : '-'}
+                </TableCell>
+                <TableCell className="text-xs text-muted-foreground">
+                  {formatDate(booking.createdAt)}
+                </TableCell>
+                <TableCell className="text-right">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="icon">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem onClick={() => onView(booking)}>
+                        <Eye className="mr-2 h-4 w-4" />
+                        View Details
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => onUpdateStatus(booking)}>
+                        <CheckCircle className="mr-2 h-4 w-4" />
+                        Update Status
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => onDelete(booking)}
+                        className="text-destructive"
+                      >
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        Delete
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
+              </TableRow>
+            )
+          })}
           {bookings.length === 0 && (
             <TableRow>
               <TableCell
-                colSpan={7}
+                colSpan={8}
                 className="text-center py-8 text-muted-foreground"
               >
                 No workshop bookings found.
