@@ -110,15 +110,14 @@ export interface EnglishTestAttemptDetailResponse {
   english_level: { id: string; level_code: string; label: string } | null
   linked_user: { id: string; full_name: string; email: string } | null
   questions_and_answers: Array<{
+    answer_id: string
     question_id: string
     question_text: string
-    question?: string | null
-    answer_text: string | null
-    answer?: string | null
-    correct_answer: string
-    is_correct: boolean
-    score: number
-    max_score: number
+    skill_area: string
+    marks: number
+    correct_option: string
+    selected_option: string | null
+    is_correct: boolean | null
   }>
 }
 
