@@ -3,11 +3,11 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 
 import en from "@/locales/en/common.json";
-import it from "@/locales/it/common.json";
+import ar from "@/locales/ar/common.json";
 
 export const SUPPORTED_LANGUAGES = [
   { code: "en", label: "English" },
-  { code: "it", label: "Italiano" },
+  { code: "ar", label: "Arabic" },
 ] as const;
 
 export type LanguageCode = (typeof SUPPORTED_LANGUAGES)[number]["code"];
@@ -33,7 +33,7 @@ i18n
     supportedLngs: SUPPORTED_LANGUAGES.map((l) => l.code),
     resources: {
       en: buildResources(en),
-      it: buildResources(it),
+      ar: buildResources(ar),
     },
     defaultNS: "common",
     fallbackNS: "common",
