@@ -26,6 +26,11 @@ function formatDate(dateStr: string | null) {
   return new Date(dateStr).toLocaleString()
 }
 
+function formatScore(scoreStr: string | null | undefined) {
+  if (!scoreStr) return '-'
+  return scoreStr.replace(/\s*\([^)]*%\)/g, '').replace(/\s*[\d.]*%/g, '').trim()
+}
+
 interface EnglishQuizSubmissionsTableProps {
   submissions: EnglishQuizSubmission[]
   onView: (submission: EnglishQuizSubmission) => void
@@ -47,6 +52,7 @@ export function EnglishQuizSubmissionsTable({
             <TableHead className="font-semibold">Phone</TableHead>
             <TableHead className="font-semibold">Country</TableHead>
             <TableHead className="font-semibold">City</TableHead>
+            <TableHead className="font-semibold">Score</TableHead>
             <TableHead className="font-semibold">Questions</TableHead>
             <TableHead className="font-semibold">Follow Up</TableHead>
             <TableHead className="font-semibold">Submitted At</TableHead>
@@ -72,6 +78,15 @@ export function EnglishQuizSubmissionsTable({
                 </TableCell>
                 <TableCell className="text-sm">
                   {submission.city || '-'}
+                </TableCell>
+                <TableCell className="text-sm font-medium">
+                  {submission.score ? (
+                    <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20 font-semibold">
+                      {formatScore(submission.score)}
+                    </Badge>
+                  ) : (
+                    '-'
+                  )}
                 </TableCell>
                 <TableCell className="text-sm font-medium">
                   <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20">
@@ -118,7 +133,7 @@ export function EnglishQuizSubmissionsTable({
           {submissions.length === 0 && (
             <TableRow>
               <TableCell
-                colSpan={9}
+                colSpan={10}
                 className="text-center py-12 text-muted-foreground"
               >
                 No quiz submissions found.

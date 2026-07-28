@@ -11,6 +11,7 @@ export interface EnglishQuizSubmission {
   country: string | null
   city: string | null
   followUp: string | null
+  score?: string | null
   questions: EnglishQuizQuestion[]
   createdAt: string
   updatedAt: string

@@ -23,6 +23,8 @@ export interface Workshop {
   discountValue: number | null
   discountType: string | null
   vatRate: number | null
+  startTime?: string | null
+  endTime?: string | null
   orderIndex?: number | null
   translations?: Record<string, WorkshopTranslations> | null
   createdAt: string

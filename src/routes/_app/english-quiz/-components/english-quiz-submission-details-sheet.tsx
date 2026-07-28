@@ -8,7 +8,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
 import { useGetSubmissionDetail } from "../-api";
-import { Loader2, Mail, Phone, MapPin, Calendar, HelpCircle, User } from "lucide-react";
+import { Loader2, Mail, Phone, MapPin, Calendar, HelpCircle, User, Award } from "lucide-react";
 import type { EnglishQuizSubmission } from "../-types";
 
 interface EnglishQuizSubmissionDetailsSheetProps {
@@ -41,6 +41,11 @@ function DetailRow({
 function formatDateTime(val: string | null | undefined) {
   if (!val) return "-";
   return new Date(val).toLocaleString();
+}
+
+function formatScore(scoreStr: string | null | undefined) {
+  if (!scoreStr) return "-";
+  return scoreStr.replace(/\s*\([^)]*%\)/g, '').replace(/\s*[\d.]*%/g, '').trim();
 }
 
 export function EnglishQuizSubmissionDetailsSheet({
@@ -101,6 +106,7 @@ export function EnglishQuizSubmissionDetailsSheet({
                     <DetailRow icon={Mail} label="Email Address" value={submission.email} />
                   </div>
                   <DetailRow icon={Phone} label="Phone Number" value={submission.phone} />
+                  <DetailRow icon={Award} label="Score" value={formatScore(submission.score)} />
                   <DetailRow icon={MapPin} label="Country" value={submission.country} />
                   <DetailRow icon={MapPin} label="City" value={submission.city} />
                   <DetailRow icon={Calendar} label="Submitted At" value={formatDateTime(submission.createdAt)} />
