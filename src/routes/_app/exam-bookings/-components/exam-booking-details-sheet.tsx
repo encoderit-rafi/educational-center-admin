@@ -78,19 +78,29 @@ export function ExamBookingDetailsSheet({
           ) : booking ? (
             <div className="space-y-6">
               {/* Summary Header */}
-              <div className="bg-muted/40 p-4 rounded-xl border border-border/50 flex items-center justify-between">
-                <div>
-                  <span className="text-xs text-muted-foreground block font-medium">Booking Status</span>
-                  <Badge variant={booking.status === 'CONFIRMED' ? 'success' : booking.status === 'CANCELLED' ? 'destructive' : 'warning'} className="mt-1 font-semibold">
-                    {booking.status ?? 'PENDING'}
-                  </Badge>
+              <div className="bg-muted/40 p-4 rounded-xl border border-border/50 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-xs text-muted-foreground block font-medium">Booking Status</span>
+                    <Badge variant={booking.status === 'CONFIRMED' ? 'success' : booking.status === 'CANCELLED' ? 'destructive' : 'warning'} className="mt-1 font-semibold">
+                      {booking.status ?? 'PENDING'}
+                    </Badge>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-xs text-muted-foreground block font-medium">Total Amount</span>
+                    <span className="text-lg font-bold text-primary">
+                      {formatAmount(booking.totalAmount)}
+                    </span>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <span className="text-xs text-muted-foreground block font-medium">Total Amount</span>
-                  <span className="text-lg font-bold text-primary">
-                    {formatAmount(booking.totalAmount)}
-                  </span>
-                </div>
+                {(booking.bookingReference || booking.booking_reference) && (
+                  <div className="pt-2 border-t border-border/30 flex items-center justify-between text-xs">
+                    <span className="text-muted-foreground font-medium">Booking Reference:</span>
+                    <Badge variant="outline" className="font-mono font-semibold bg-background">
+                      {booking.bookingReference || booking.booking_reference}
+                    </Badge>
+                  </div>
+                )}
               </div>
 
               {/* Personal Information */}
@@ -229,10 +239,22 @@ export function ExamBookingDetailsSheet({
                     <span className="text-xs text-muted-foreground font-medium">Total Amount</span>
                     <span className="text-base font-bold text-primary">{formatAmount(booking.totalAmount)}</span>
                   </div>
-                  {booking.paymentId && (
-                    <div className="col-span-2">
-                      <div className="text-xs text-muted-foreground">Payment ID</div>
-                      <div className="font-mono text-xs text-foreground mt-0.5">{booking.paymentId}</div>
+                  {(booking.bookingReference || booking.booking_reference || booking.paymentId) && (
+                    <div className="col-span-2 pt-2 border-t border-border/30 grid grid-cols-2 gap-4">
+                      {(booking.bookingReference || booking.booking_reference) && (
+                        <div>
+                          <div className="text-xs text-muted-foreground">Booking Reference</div>
+                          <div className="font-mono text-xs text-foreground font-semibold mt-0.5">
+                            {booking.bookingReference || booking.booking_reference}
+                          </div>
+                        </div>
+                      )}
+                      {booking.paymentId && (
+                        <div>
+                          <div className="text-xs text-muted-foreground">Payment ID</div>
+                          <div className="font-mono text-xs text-foreground mt-0.5">{booking.paymentId}</div>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>

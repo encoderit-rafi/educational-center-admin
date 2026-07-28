@@ -1,5 +1,7 @@
 export interface ExamBooking {
   id: string
+  bookingReference?: string | null
+  booking_reference?: string | null
   userId?: string | null
   examId?: string | null
   courseId?: string | null

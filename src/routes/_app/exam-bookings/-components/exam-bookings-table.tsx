@@ -108,6 +108,7 @@ export function ExamBookingsTable({
           <TableRow className="hover:bg-transparent">
             <TableHead>Name</TableHead>
             <TableHead>Email</TableHead>
+            <TableHead>Booking Ref</TableHead>
             <TableHead>Exam ID</TableHead>
             <SortHeader column="status" label="Status" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
             <TableHead>Total Amount</TableHead>
@@ -116,60 +117,73 @@ export function ExamBookingsTable({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {bookings.map((booking) => (
-            <TableRow key={booking.id}>
-              <TableCell className="font-medium">
-                {booking.firstName} {booking.lastName}
-              </TableCell>
-              <TableCell className="text-muted-foreground">
-                {booking.email}
-              </TableCell>
-              <TableCell className="text-xs text-muted-foreground">
-                {booking.examId ?? '-'}
-              </TableCell>
-              <TableCell>
-                <Badge variant={statusVariant[booking.status] ?? 'secondary'}>
-                  {booking.status}
-                </Badge>
-              </TableCell>
-              <TableCell>
-                {formatAmount(booking.totalAmount)}
-              </TableCell>
-              <TableCell className="text-xs text-muted-foreground">
-                {formatDate(booking.createdAt)}
-              </TableCell>
-              <TableCell className="text-right">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => onView(booking)}>
-                      <Eye className="mr-2 h-4 w-4" />
-                      View Details
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => onUpdateStatus(booking)}>
-                      <RefreshCw className="mr-2 h-4 w-4" />
-                      Update Status
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => onDelete(booking)}
-                      className="text-destructive"
-                    >
-                      <Trash2 className="mr-2 h-4 w-4" />
-                      Delete
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-          ))}
+          {bookings.map((booking) => {
+            const bookingRef = booking.bookingReference || booking.booking_reference || '-'
+
+            return (
+              <TableRow key={booking.id}>
+                <TableCell className="font-medium">
+                  {booking.firstName} {booking.lastName}
+                </TableCell>
+                <TableCell className="text-muted-foreground">
+                  {booking.email}
+                </TableCell>
+                <TableCell className="font-mono text-xs font-semibold text-foreground">
+                  {bookingRef !== '-' ? (
+                    <Badge variant="outline" className="font-mono text-xs font-medium bg-muted/30">
+                      {bookingRef}
+                    </Badge>
+                  ) : (
+                    '-'
+                  )}
+                </TableCell>
+                <TableCell className="text-xs text-muted-foreground">
+                  {booking.examId ?? '-'}
+                </TableCell>
+                <TableCell>
+                  <Badge variant={statusVariant[booking.status] ?? 'secondary'}>
+                    {booking.status}
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  {formatAmount(booking.totalAmount)}
+                </TableCell>
+                <TableCell className="text-xs text-muted-foreground">
+                  {formatDate(booking.createdAt)}
+                </TableCell>
+                <TableCell className="text-right">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="icon">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem onClick={() => onView(booking)}>
+                        <Eye className="mr-2 h-4 w-4" />
+                        View Details
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => onUpdateStatus(booking)}>
+                        <RefreshCw className="mr-2 h-4 w-4" />
+                        Update Status
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => onDelete(booking)}
+                        className="text-destructive"
+                      >
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        Delete
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
+              </TableRow>
+            )
+          })}
           {bookings.length === 0 && (
             <TableRow>
               <TableCell
-                colSpan={7}
+                colSpan={8}
                 className="text-center py-8 text-muted-foreground"
               >
                 No exam bookings found.
