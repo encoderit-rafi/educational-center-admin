@@ -7,7 +7,6 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import type { EnglishTestAttempt } from '../-types'
 import {
   Eye,
@@ -47,8 +46,6 @@ export function EnglishTestAttemptsTable({
             <TableHead className="font-semibold">Phone</TableHead>
             <TableHead className="font-semibold">Country</TableHead>
             <TableHead className="font-semibold">City</TableHead>
-            <TableHead className="font-semibold">Score</TableHead>
-            <TableHead className="font-semibold">Level</TableHead>
             <TableHead className="font-semibold">Submitted At</TableHead>
             <TableHead className="text-right font-semibold">Actions</TableHead>
           </TableRow>
@@ -62,15 +59,6 @@ export function EnglishTestAttemptsTable({
                 .filter(Boolean)
                 .join(' ') ||
               '-'
-            
-            const scoreVal = attempt.totalScore ?? attempt.total_score ?? attempt.score ?? 0
-            
-            const levelLabel =
-              typeof attempt.englishLevel === 'object' && attempt.englishLevel !== null
-                ? attempt.englishLevel.label || attempt.englishLevel.levelCode
-                : typeof attempt.englishLevel === 'string'
-                ? attempt.englishLevel
-                : attempt.level || '-'
 
             return (
               <TableRow key={attempt.id} className="hover:bg-muted/30 transition-colors">
@@ -88,20 +76,6 @@ export function EnglishTestAttemptsTable({
                 </TableCell>
                 <TableCell className="text-sm">
                   {attempt.city || '-'}
-                </TableCell>
-                <TableCell className="text-sm font-semibold">
-                  <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20">
-                    {scoreVal} pts
-                  </Badge>
-                </TableCell>
-                <TableCell className="text-sm">
-                  {levelLabel !== '-' ? (
-                    <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20">
-                      {levelLabel}
-                    </Badge>
-                  ) : (
-                    '-'
-                  )}
                 </TableCell>
                 <TableCell className="text-xs text-muted-foreground">
                   {formatDate(attempt.submittedAt || attempt.submitted_at || attempt.createdAt || attempt.created_at || attempt.startedAt || attempt.started_at)}
@@ -134,7 +108,7 @@ export function EnglishTestAttemptsTable({
           {attempts.length === 0 && (
             <TableRow>
               <TableCell
-                colSpan={9}
+                colSpan={7}
                 className="text-center py-12 text-muted-foreground"
               >
                 No test attempts found.

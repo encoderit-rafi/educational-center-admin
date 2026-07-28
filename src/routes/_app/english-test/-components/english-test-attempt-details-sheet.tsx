@@ -16,7 +16,6 @@ import {
   Calendar,
   HelpCircle,
   User,
-  Award,
   Clock,
 } from "lucide-react";
 import type { EnglishTestAttempt } from "../-types";
@@ -38,12 +37,14 @@ function DetailRow({
   value: string | null | undefined;
 }) {
   return (
-    <div className="text-sm space-y-1">
+    <div className="text-sm space-y-1 min-w-0">
       <div className="text-xs text-muted-foreground flex items-center gap-1.5">
-        {Icon && <Icon className="h-3.5 w-3.5" />}
+        {Icon && <Icon className="h-3.5 w-3.5 shrink-0" />}
         <span>{label}</span>
       </div>
-      <div className="font-medium text-foreground">{value || "-"}</div>
+      <div className="font-medium text-foreground break-all" title={value || undefined}>
+        {value || "-"}
+      </div>
     </div>
   );
 }
@@ -100,24 +101,10 @@ export function EnglishTestAttemptDetailsSheet({
     attempt?.preferred_time_to_contact_you ||
     apiAttempt?.preferred_time_to_contact_you;
 
-  const totalScore =
-    attempt?.totalScore ??
-    attempt?.total_score ??
-    attempt?.score ??
-    apiAttempt?.total_score ??
-    0;
   const startedAt =
     attempt?.startedAt || attempt?.started_at || apiAttempt?.started_at;
   const submittedAt =
     attempt?.submittedAt || attempt?.submitted_at || apiAttempt?.submitted_at;
-  const pdfUrl = attempt?.pdfUrl || attempt?.pdf_url || apiAttempt?.pdf_url;
-
-  const levelLabel =
-    typeof attempt?.englishLevel === "object" && attempt?.englishLevel !== null
-      ? attempt.englishLevel.label || attempt.englishLevel.levelCode
-      : typeof attempt?.englishLevel === "string"
-        ? attempt.englishLevel
-        : attempt?.level || fetchedData?.english_level?.label || null;
 
   const directAnswers = attempt?.answers ?? [];
   const qAndA = fetchedData?.questions_and_answers ?? [];
@@ -132,7 +119,7 @@ export function EnglishTestAttemptDetailsSheet({
             {fullName}
           </SheetTitle>
           <SheetDescription>
-            Full test attempt details, score breakdown, and questions & answers.
+            Full test attempt details and questions & answers.
           </SheetDescription>
         </SheetHeader>
 
@@ -160,6 +147,10 @@ export function EnglishTestAttemptDetailsSheet({
                   {address && (
                     <DetailRow icon={MapPin} label="Address" value={address} />
                   )}
+                  {startedAt && (
+                    <DetailRow icon={Calendar} label="Started At" value={formatDateTime(startedAt)} />
+                  )}
+                  <DetailRow icon={Calendar} label="Submitted At" value={formatDateTime(submittedAt)} />
                 </div>
               </section>
 
@@ -182,54 +173,6 @@ export function EnglishTestAttemptDetailsSheet({
                   </div>
                 </section>
               )}
-
-              <section className="bg-primary/5 rounded-xl p-4 border border-primary/20 space-y-4">
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-primary flex items-center gap-1.5">
-                  <Award className="h-4 w-4" />
-                  <span>Test Results</span>
-                </h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <div className="text-xs text-muted-foreground">
-                      Total Score
-                    </div>
-                    <div className="text-2xl font-bold text-primary mt-0.5">
-                      {totalScore}{" "}
-                      <span className="text-sm font-normal text-muted-foreground">
-                        pts
-                      </span>
-                    </div>
-                  </div>
-                  {levelLabel && (
-                    <div>
-                      <div className="text-xs text-muted-foreground">
-                        English Level
-                      </div>
-                      <Badge
-                        variant="outline"
-                        className="mt-1 font-semibold text-primary bg-primary/10 border-primary/30"
-                      >
-                        {levelLabel}
-                      </Badge>
-                    </div>
-                  )}
-                  <DetailRow
-                    icon={Calendar}
-                    label="Started At"
-                    value={formatDateTime(startedAt)}
-                  />
-                  <DetailRow
-                    icon={Calendar}
-                    label="Submitted At"
-                    value={formatDateTime(submittedAt)}
-                  />
-                  {pdfUrl && (
-                    <div className="col-span-2">
-                      <DetailRow label="PDF Result URL" value={pdfUrl} />
-                    </div>
-                  )}
-                </div>
-              </section>
 
               <section className="space-y-4">
                 <div className="flex items-center justify-between">
