@@ -21,6 +21,7 @@ export interface Event {
   updatedAt: string
   deletedAt: string | null
   translations?: Record<string, { title?: string; description?: string }> | null
+  bookings?: EventBooking[]
 }
 
 export interface EventsResponse {

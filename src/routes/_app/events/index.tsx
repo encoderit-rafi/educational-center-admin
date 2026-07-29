@@ -28,6 +28,7 @@ import { useQuery, keepPreviousData } from '@tanstack/react-query'
 import { EventsTable } from './-components/events-table'
 import { EventFormDialog, type EventFormData } from './-components/event-form-dialog'
 import { EventDeleteDialog } from './-components/event-delete-dialog'
+import { EventDetailsSheet } from './-components/event-details-sheet'
 import { EventBookingsTable } from './-components/event-bookings-table'
 import { EventBookingDetailsSheet } from './-components/event-booking-details-sheet'
 import { EventBookingDeleteDialog } from './-components/event-booking-delete-dialog'
@@ -127,16 +128,18 @@ function EventsTab() {
 
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false)
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
   const [deleteTarget, setDeleteTarget] = useState<Event | null>(null)
+  const [viewTarget, setViewTarget] = useState<Event | null>(null)
 
   const createMutation = useCreateEvent()
   const updateMutation = useUpdateEvent()
   const deleteMutation = useDeleteEvent()
 
   const handleView = (event: Event) => {
-    setSelectedEvent(event)
-    setIsFormOpen(true)
+    setViewTarget(event)
+    setIsDetailsOpen(true)
   }
 
   const handleAddNew = () => {
@@ -206,7 +209,7 @@ function EventsTab() {
   return (
     <>
       <div className="flex items-center justify-between pb-4">
-        <InputGroup className="w-full max-w-[300px]">
+        <InputGroup className="w-full max-w-75">
           <InputGroupAddon align="inline-start">
             <Search className="h-4 w-4" />
           </InputGroupAddon>
@@ -316,6 +319,12 @@ function EventsTab() {
         event={selectedEvent}
         onSave={handleSave}
         isPending={createMutation.isPending || updateMutation.isPending}
+      />
+      <EventDetailsSheet
+        isOpen={isDetailsOpen}
+        onOpenChange={setIsDetailsOpen}
+        eventSlugOrId={viewTarget?.slug || viewTarget?.id}
+        eventData={viewTarget}
       />
       <EventDeleteDialog
         isOpen={isDeleteOpen}
@@ -436,7 +445,7 @@ function BookingsTab() {
   return (
     <>
       <div className="pb-4">
-        <InputGroup className="w-full max-w-[300px]">
+        <InputGroup className="w-full max-w-75">
           <InputGroupAddon align="inline-start">
             <Search className="h-4 w-4" />
           </InputGroupAddon>

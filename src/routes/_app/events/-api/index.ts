@@ -4,7 +4,7 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query'
-import type { EventsResponse, EventBookingsResponse, EventBooking, CreateEventInput } from '../-types'
+import type { Event, EventsResponse, EventBookingsResponse, EventBooking, CreateEventInput } from '../-types'
 
 export interface EventListParams {
   keyword?: string
@@ -20,6 +20,23 @@ export function useGetEvents(params?: EventListParams) {
     queryFn: async (): Promise<EventsResponse> => {
       const res = await api.get('/admin/events', { params })
       return res.data.data
+    },
+    staleTime: 15 * 60 * 1000,
+    gcTime: 20 * 60 * 1000,
+  })
+}
+
+export function useGetEvent(slugOrId: string) {
+  return queryOptions({
+    queryKey: ['event', slugOrId],
+    queryFn: async (): Promise<Event> => {
+      try {
+        const res = await api.get(`/events/${slugOrId}`)
+        return res.data.data
+      } catch {
+        const res = await api.get(`/admin/events/${slugOrId}`)
+        return res.data.data
+      }
     },
     staleTime: 15 * 60 * 1000,
     gcTime: 20 * 60 * 1000,

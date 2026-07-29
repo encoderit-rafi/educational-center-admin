@@ -80,6 +80,26 @@ const emptyForm: EventFormData = {
   },
 }
 
+function formatTimeTo24h(timeStr?: string | null): string {
+  if (!timeStr) return ''
+  if (/^\d{2}:\d{2}(:\d{2})?$/.test(timeStr)) {
+    return timeStr.slice(0, 5)
+  }
+  if (timeStr.includes('T') || timeStr.includes('Z')) {
+    try {
+      const d = new Date(timeStr)
+      if (!isNaN(d.getTime())) {
+        const hours = d.getUTCHours().toString().padStart(2, '0')
+        const minutes = d.getUTCMinutes().toString().padStart(2, '0')
+        return `${hours}:${minutes}`
+      }
+    } catch {
+      // ignore
+    }
+  }
+  return timeStr
+}
+
 export function EventFormDialog({
   isOpen,
   onOpenChange,
@@ -105,8 +125,8 @@ export function EventFormDialog({
         end_date: event.endDate
           ? format(new Date(event.endDate), 'yyyy-MM-dd')
           : '',
-        start_time: event.startTime ?? '',
-        end_time: event.endTime ?? '',
+        start_time: formatTimeTo24h(event.startTime),
+        end_time: formatTimeTo24h(event.endTime),
         total_seats: event.totalSeats,
         price: event.price ? Number(event.price) : null,
         vat_rate: event.vatRate ? Number(event.vatRate) : null,
