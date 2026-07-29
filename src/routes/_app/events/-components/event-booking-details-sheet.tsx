@@ -16,14 +16,6 @@ interface EventBookingDetailsSheetProps {
   bookingId?: string | null
 }
 
-const statusColors: Record<string, 'default' | 'secondary' | 'destructive' | 'outline'> = {
-  CONFIRMED: 'default',
-  PENDING: 'secondary',
-  PAYMENT_PENDING: 'secondary',
-  CANCELLED: 'destructive',
-  REFUNDED: 'outline',
-}
-
 export function EventBookingDetailsSheet({
   isOpen,
   onOpenChange,

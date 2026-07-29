@@ -29,14 +29,6 @@ function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString()
 }
 
-const statusColors: Record<string, 'default' | 'secondary' | 'destructive' | 'outline'> = {
-  CONFIRMED: 'default',
-  PENDING: 'secondary',
-  PAYMENT_PENDING: 'secondary',
-  CANCELLED: 'destructive',
-  REFUNDED: 'outline',
-}
-
 interface EventBookingsTableProps {
   bookings: EventBooking[]
   onView: (booking: EventBooking) => void

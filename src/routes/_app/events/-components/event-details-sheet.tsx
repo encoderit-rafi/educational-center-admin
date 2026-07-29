@@ -17,7 +17,6 @@ import {
   Globe,
   Video,
   Users,
-  CreditCard,
   Copy,
   FileText,
   Image as ImageIcon,
@@ -41,14 +40,6 @@ interface EventDetailsSheetProps {
   onOpenChange: (open: boolean) => void
   eventSlugOrId?: string | null
   eventData?: Event | null
-}
-
-const statusColors: Record<string, 'default' | 'secondary' | 'destructive' | 'outline'> = {
-  CONFIRMED: 'default',
-  PENDING: 'secondary',
-  PAYMENT_PENDING: 'secondary',
-  CANCELLED: 'destructive',
-  REFUNDED: 'outline',
 }
 
 function formatDate(dateStr?: string | null) {
