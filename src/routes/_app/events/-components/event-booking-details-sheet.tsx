@@ -65,13 +65,7 @@ export function EventBookingDetailsSheet({
                     <div className="text-muted-foreground">Booking Ref</div>
                     <div className="font-mono text-xs">{booking.bookingRef ?? '-'}</div>
                   </div>
-                  <div>
-                    <div className="text-muted-foreground">Status</div>
-                    <Badge variant={statusColors[booking.status ?? ''] ?? 'secondary'}>
-                      {booking.status ?? '-'}
-                    </Badge>
-                  </div>
-                  <div>
+                  <div className="col-span-2">
                     <div className="text-muted-foreground">Attended</div>
                     <Badge variant={booking.attended ? 'default' : 'secondary'}>
                       {booking.attended ? 'Yes' : 'No'}
@@ -98,24 +92,6 @@ export function EventBookingDetailsSheet({
                   <div className="col-span-2">
                     <div className="text-muted-foreground">Address</div>
                     <div>{booking.address ?? '-'}</div>
-                  </div>
-                  <div>
-                    <div className="text-muted-foreground">Price</div>
-                    <div>{booking.price ? `$${booking.price}` : '-'}</div>
-                  </div>
-                  <div>
-                    <div className="text-muted-foreground">VAT</div>
-                    <div>{booking.vatAmount ? `$${booking.vatAmount}` : '-'}</div>
-                  </div>
-                  <div>
-                    <div className="text-muted-foreground">Total</div>
-                    <div className="font-medium">
-                      {booking.totalAmount ? `$${booking.totalAmount}` : '-'}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-muted-foreground">Payment ID</div>
-                    <div className="font-mono text-xs">{booking.paymentId ?? '-'}</div>
                   </div>
                   <div>
                     <div className="text-muted-foreground">Created At</div>

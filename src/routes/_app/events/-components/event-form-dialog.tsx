@@ -36,8 +36,8 @@ interface EventFormData {
   start_time: string
   end_time: string
   total_seats: number | null
-  price: number | null
-  vat_rate: number | null
+  price?: number | null
+  vat_rate?: number | null
   is_active: boolean
   banner_image: string
   translations: {
@@ -69,7 +69,7 @@ const emptyForm: EventFormData = {
   end_time: '',
   total_seats: null,
   price: null,
-  vat_rate: 0,
+  vat_rate: null,
   is_active: true,
   banner_image: '',
   translations: {
@@ -114,7 +114,7 @@ export function EventFormDialog({
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setForm({
         title: event.title ?? '',
-        event_type: event.eventType ? event.eventType.toLowerCase() : '',
+        event_type: event.eventType ? event.eventType.toUpperCase() : '',
         description: event.description ?? '',
         location: event.location ?? '',
         is_online: event.isOnline ?? false,
@@ -145,7 +145,7 @@ export function EventFormDialog({
   }, [event, isOpen])
 
   const isEditing = !!event
-  const isValid = form.title.trim() && form.event_type && form.start_date && form.end_date && form.price !== null
+  const isValid = form.title.trim() && form.event_type && form.start_date && form.end_date
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -355,56 +355,20 @@ export function EventFormDialog({
             </div>
           )}
 
-          <div className="grid grid-cols-3 gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="total_seats">Total Seats</Label>
-              <Input
-                id="total_seats"
-                type="number"
-                value={form.total_seats ?? ''}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    total_seats: e.target.value ? Number(e.target.value) : null,
-                  }))
-                }
-                placeholder="0"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="price">
-                Price <span className="text-destructive">*</span>
-              </Label>
-              <Input
-                id="price"
-                type="number"
-                step="0.01"
-                value={form.price ?? ''}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    price: e.target.value ? Number(e.target.value) : null,
-                  }))
-                }
-                placeholder="0.00"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="vat_rate">VAT Rate (%)</Label>
-              <Input
-                id="vat_rate"
-                type="number"
-                step="0.01"
-                value={form.vat_rate ?? ''}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    vat_rate: e.target.value ? Number(e.target.value) : null,
-                  }))
-                }
-                placeholder="0"
-              />
-            </div>
+          <div className="grid gap-2">
+            <Label htmlFor="total_seats">Total Seats</Label>
+            <Input
+              id="total_seats"
+              type="number"
+              value={form.total_seats ?? ''}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  total_seats: e.target.value ? Number(e.target.value) : null,
+                }))
+              }
+              placeholder="0"
+            />
           </div>
 
           <div className="grid gap-2">

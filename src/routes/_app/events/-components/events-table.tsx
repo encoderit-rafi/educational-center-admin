@@ -95,7 +95,6 @@ export function EventsTable({
             <TableHead>Type</TableHead>
             <SortHeader column="startDate" label="Start Date" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
             <TableHead>Seats</TableHead>
-            <TableHead>Price</TableHead>
             <TableHead>Active</TableHead>
             <SortHeader column="createdAt" label="Created At" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
             <TableHead className="text-right">Actions</TableHead>
@@ -118,7 +117,6 @@ export function EventsTable({
               <TableCell>
                 {event.bookedSeats ?? 0}/{event.totalSeats ?? '-'}
               </TableCell>
-              <TableCell>{event.price ? `$${event.price}` : '-'}</TableCell>
               <TableCell>
                 <Badge variant={event.isActive ? 'success' : 'destructive'}>
                   {event.isActive ? 'Active' : 'Inactive'}
@@ -158,7 +156,7 @@ export function EventsTable({
           {events.length === 0 && (
             <TableRow>
               <TableCell
-                colSpan={8}
+                colSpan={7}
                 className="text-center py-8 text-muted-foreground"
               >
                 No events found.

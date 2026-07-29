@@ -288,10 +288,10 @@ export function EventDetailsSheet({
                 </div>
               </section>
 
-              {/* Seats & Pricing */}
+              {/* Seats */}
               <section className="space-y-3">
                 <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  <CreditCard className="h-4 w-4 text-primary" /> Seats & Pricing
+                  <Users className="h-4 w-4 text-primary" /> Seats
                 </div>
                 <div className="grid grid-cols-2 gap-4 text-sm bg-muted/30 p-4 rounded-xl border border-border/40">
                   <div>
@@ -300,20 +300,6 @@ export function EventDetailsSheet({
                     </div>
                     <div className="font-bold text-foreground text-base mt-0.5">
                       {event.bookedSeats ?? 0} / {event.totalSeats ?? '∞'}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-xs text-muted-foreground flex items-center gap-1">
-                      <CreditCard className="h-3 w-3" /> Ticket Price
-                    </div>
-                    <div className="font-bold text-primary text-base mt-0.5">
-                      {event.price != null ? `$${event.price}` : 'Free'}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-xs text-muted-foreground">VAT Rate</div>
-                    <div className="font-medium text-foreground mt-0.5">
-                      {event.vatRate ? `${event.vatRate}%` : '0%'}
                     </div>
                   </div>
                   <div>
@@ -390,8 +376,6 @@ export function EventDetailsSheet({
                           <TableHead>Ref</TableHead>
                           <TableHead>Customer</TableHead>
                           <TableHead>Email</TableHead>
-                          <TableHead>Status</TableHead>
-                          <TableHead>Total</TableHead>
                           <TableHead>Attended</TableHead>
                         </TableRow>
                       </TableHeader>
@@ -408,19 +392,6 @@ export function EventDetailsSheet({
                             </TableCell>
                             <TableCell className="text-xs text-muted-foreground max-w-37.5 truncate">
                               {b.email}
-                            </TableCell>
-                            <TableCell>
-                              <Badge
-                                variant={
-                                  statusColors[b.status ?? ''] ?? 'secondary'
-                                }
-                                className="text-[10px] px-1.5 py-0.5"
-                              >
-                                {b.status ?? '-'}
-                              </Badge>
-                            </TableCell>
-                            <TableCell className="text-xs font-medium">
-                              {b.totalAmount ? `$${b.totalAmount}` : '-'}
                             </TableCell>
                             <TableCell>
                               {b.attended ? (

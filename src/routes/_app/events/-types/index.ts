@@ -43,7 +43,7 @@ export interface CreateEventInput {
   start_time?: string
   end_time?: string
   total_seats?: number | null
-  price: number
+  price?: number | null
   vat_rate?: number | null
   is_active?: boolean
   banner_image?: string

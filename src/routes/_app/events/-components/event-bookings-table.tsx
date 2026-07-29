@@ -100,9 +100,7 @@ export function EventBookingsTable({
           <TableRow className="hover:bg-transparent">
             <TableHead>Name</TableHead>
             <SortHeader column="email" label="Email" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
-            <SortHeader column="status" label="Status" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
             <TableHead>Attended</TableHead>
-            <TableHead>Total</TableHead>
             <SortHeader column="createdAt" label="Created At" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
@@ -117,21 +115,11 @@ export function EventBookingsTable({
                 {booking.email}
               </TableCell>
               <TableCell>
-                <Badge
-                  variant={statusColors[booking.status ?? ''] ?? 'secondary'}
-                >
-                  {booking.status ?? '-'}
-                </Badge>
-              </TableCell>
-              <TableCell>
                 {booking.attended ? (
                   <Badge variant="default">Yes</Badge>
                 ) : (
                   <Badge variant="secondary">No</Badge>
                 )}
-              </TableCell>
-              <TableCell>
-                {booking.totalAmount ? `$${booking.totalAmount}` : '-'}
               </TableCell>
               <TableCell className="text-xs text-muted-foreground">
                 {formatDate(booking.createdAt)}
@@ -169,7 +157,7 @@ export function EventBookingsTable({
           {bookings.length === 0 && (
             <TableRow>
               <TableCell
-                colSpan={7}
+                colSpan={5}
                 className="text-center py-8 text-muted-foreground"
               >
                 No bookings found.
