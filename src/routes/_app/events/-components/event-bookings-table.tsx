@@ -90,8 +90,11 @@ export function EventBookingsTable({
       <Table containerClassName="flex-1">
         <TableHeader className="sticky top-0 z-10">
           <TableRow className="hover:bg-transparent">
+            <TableHead>Ref</TableHead>
             <TableHead>Name</TableHead>
             <SortHeader column="email" label="Email" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
+            <TableHead>Phone</TableHead>
+            <TableHead>Country / City</TableHead>
             <TableHead>Attended</TableHead>
             <SortHeader column="createdAt" label="Created At" sortBy={sortBy} sortOrder={sortOrder} onSort={onSort} />
             <TableHead className="text-right">Actions</TableHead>
@@ -100,11 +103,22 @@ export function EventBookingsTable({
         <TableBody>
           {bookings.map((booking) => (
             <TableRow key={booking.id}>
+              <TableCell className="font-mono text-xs font-medium">
+                {booking.bookingRef ?? '-'}
+              </TableCell>
               <TableCell className="font-medium">
-                {booking.firstName} {booking.lastName}
+                {[booking.firstName, booking.middleName, booking.lastName]
+                  .filter(Boolean)
+                  .join(' ')}
               </TableCell>
               <TableCell className="text-xs text-muted-foreground">
                 {booking.email}
+              </TableCell>
+              <TableCell className="text-xs text-muted-foreground">
+                {booking.phone ?? '-'}
+              </TableCell>
+              <TableCell className="text-xs text-muted-foreground">
+                {[booking.country, booking.address].filter(Boolean).join(', ') || '-'}
               </TableCell>
               <TableCell>
                 {booking.attended ? (
@@ -149,7 +163,7 @@ export function EventBookingsTable({
           {bookings.length === 0 && (
             <TableRow>
               <TableCell
-                colSpan={5}
+                colSpan={8}
                 className="text-center py-8 text-muted-foreground"
               >
                 No bookings found.

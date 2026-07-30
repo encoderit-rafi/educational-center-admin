@@ -73,6 +73,7 @@ export interface EventBooking {
   createdAt: string
   updatedAt: string
   deletedAt: string | null
+  event?: Event | null
 }
 
 export interface EventBookingsResponse {

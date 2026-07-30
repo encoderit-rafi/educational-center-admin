@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   Sheet,
   SheetContent,
@@ -6,9 +7,10 @@ import {
   SheetTitle,
 } from '@/components/ui/sheet'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { useQuery } from '@tanstack/react-query'
 import { useGetEvent } from '../-api'
-import type { Event } from '../-types'
+import type { Event, EventBooking } from '../-types'
 import {
   Loader2,
   Calendar,
@@ -20,10 +22,9 @@ import {
   Copy,
   FileText,
   Image as ImageIcon,
-  CheckCircle2,
-  XCircle,
   ExternalLink,
   Ticket,
+  Eye,
 } from 'lucide-react'
 import { toast } from 'sonner'
 import {
@@ -34,6 +35,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { EventBookingDetailsSheet } from './event-booking-details-sheet'
 
 interface EventDetailsSheetProps {
   isOpen: boolean
@@ -104,6 +106,7 @@ export function EventDetailsSheet({
   eventData,
 }: EventDetailsSheetProps) {
   const targetKey = eventSlugOrId || eventData?.slug || eventData?.id || ''
+  const [selectedBooking, setSelectedBooking] = useState<EventBooking | null>(null)
 
   const { data, isLoading, isError } = useQuery({
     ...useGetEvent(targetKey),
@@ -363,37 +366,44 @@ export function EventDetailsSheet({
                   <div className="rounded-xl border border-border/50 overflow-hidden">
                     <Table>
                       <TableHeader>
-                        <TableRow className="hover:bg-transparent bg-muted/40">
+                        <TableRow className="hover:bg-transparent bg-muted/40 text-xs">
                           <TableHead>Ref</TableHead>
                           <TableHead>Customer</TableHead>
                           <TableHead>Email</TableHead>
-                          <TableHead>Attended</TableHead>
+                          <TableHead>Phone</TableHead>
+                          <TableHead>Country / City</TableHead>
+                          <TableHead className="text-right">Action</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
                         {event.bookings.map((b) => (
-                          <TableRow key={b.id}>
+                          <TableRow key={b.id} className="hover:bg-muted/30">
                             <TableCell className="font-mono text-xs font-medium">
                               {b.bookingRef ?? '-'}
                             </TableCell>
-                            <TableCell className="font-medium text-sm">
+                            <TableCell className="font-medium text-xs">
                               {[b.firstName, b.middleName, b.lastName]
                                 .filter(Boolean)
                                 .join(' ')}
                             </TableCell>
-                            <TableCell className="text-xs text-muted-foreground max-w-37.5 truncate">
+                            <TableCell className="text-xs text-muted-foreground max-w-32 truncate">
                               {b.email}
                             </TableCell>
-                            <TableCell>
-                              {b.attended ? (
-                                <span className="inline-flex items-center text-emerald-600 gap-1 text-xs">
-                                  <CheckCircle2 className="h-3.5 w-3.5" /> Yes
-                                </span>
-                              ) : (
-                                <span className="inline-flex items-center text-muted-foreground gap-1 text-xs">
-                                  <XCircle className="h-3.5 w-3.5" /> No
-                                </span>
-                              )}
+                            <TableCell className="text-xs text-muted-foreground">
+                              {b.phone ?? '-'}
+                            </TableCell>
+                            <TableCell className="text-xs text-muted-foreground">
+                              {[b.country, b.address].filter(Boolean).join(', ') || '-'}
+                            </TableCell>
+                            <TableCell className="text-right">
+                              <Button
+                                variant="ghost"
+                                size="icon-xs"
+                                onClick={() => setSelectedBooking({ ...b, event })}
+                                title="View booking details"
+                              >
+                                <Eye className="h-3.5 w-3.5" />
+                              </Button>
                             </TableCell>
                           </TableRow>
                         ))}
@@ -414,6 +424,11 @@ export function EventDetailsSheet({
           )}
         </div>
       </SheetContent>
+      <EventBookingDetailsSheet
+        isOpen={!!selectedBooking}
+        onOpenChange={(open) => !open && setSelectedBooking(null)}
+        bookingData={selectedBooking}
+      />
     </Sheet>
   )
 }
