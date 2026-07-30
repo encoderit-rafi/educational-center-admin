@@ -29,6 +29,8 @@ export interface EnglishTestAttempt {
   preferred_contact_method?: string | null
   preferredTimeToContactYou?: string | null
   preferred_time_to_contact_you?: string | null
+  datePreference?: string | null
+  date_preference?: string | null
   totalScore?: number | null
   total_score?: number | null
   score?: number | null
@@ -95,6 +97,8 @@ export interface EnglishTestAttemptData {
   city: string | null
   preferred_contact_method: string | null
   preferred_time_to_contact_you: string | null
+  date_preference?: string | null
+  datePreference?: string | null
   started_at: string | null
   submitted_at: string | null
   total_score: number | null

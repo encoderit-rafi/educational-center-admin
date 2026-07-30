@@ -100,6 +100,10 @@ export function EnglishTestAttemptDetailsSheet({
     attempt?.preferredTimeToContactYou ||
     attempt?.preferred_time_to_contact_you ||
     apiAttempt?.preferred_time_to_contact_you;
+  const datePreference =
+    attempt?.datePreference ||
+    attempt?.date_preference ||
+    apiAttempt?.date_preference;
 
   const startedAt =
     attempt?.startedAt || attempt?.started_at || apiAttempt?.started_at;
@@ -154,10 +158,10 @@ export function EnglishTestAttemptDetailsSheet({
                 </div>
               </section>
 
-              {(preferredContactMethod || preferredTimeToContactYou) && (
+              {(preferredContactMethod || preferredTimeToContactYou || datePreference) && (
                 <section className="bg-muted/30 rounded-xl p-4 border border-border/50 space-y-3">
                   <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Contact Preferences
+                    Contact & Date Preferences
                   </h3>
                   <div className="grid grid-cols-2 gap-4">
                     <DetailRow
@@ -169,6 +173,11 @@ export function EnglishTestAttemptDetailsSheet({
                       icon={Clock}
                       label="Preferred Time"
                       value={preferredTimeToContactYou}
+                    />
+                    <DetailRow
+                      icon={Calendar}
+                      label="Date Preference"
+                      value={datePreference}
                     />
                   </div>
                 </section>
