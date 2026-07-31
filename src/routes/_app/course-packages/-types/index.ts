@@ -8,21 +8,33 @@ export interface CoursePackageTranslations {
 export interface CoursePackage {
   id: string
   courseId: string | null
-  course: { id: string; title: string | null } | null
+  course: {
+    id: string
+    name?: string | null
+    slug?: string | null
+    title: string | null
+    subTitle?: string | null
+    shortDescription?: string | null
+    description?: string | null
+  } | null
   subCourseId: string | null
+  subCourse?: { id: string; title: string | null; name?: string | null } | null
+  sub_course?: { id: string; title: string | null; name?: string | null } | null
   name: string
   slug: string | null
   description: string | null
-  price: number
+  price: number | string
   discountType: 'FLAT' | 'PERCENTAGE' | null
-  discountValue: number | null
+  discountValue: number | string | null
   specialDiscountType: 'FLAT' | 'PERCENTAGE' | null
-  specialDiscount: number | null
-  vatRate: number | null
-  deliveryType: 'CLASSROOM' | 'ONLINE'
-  duration: number | null
-  noOfDaysPerWeek: number | null
-  totalHours: number | null
+  specialDiscount: number | string | null
+  vatRate: number | string | null
+  deliveryType: 'CLASSROOM' | 'ONLINE' | string
+  duration: number | string | null
+  noOfDaysPerWeek: number | string | null
+  totalHours: number | string | null
+  classSize?: number | string | null
+  orderIndex?: number | null
   requirements: string | null
   scheduleInfo: string | null
   bestFor: string[] | null

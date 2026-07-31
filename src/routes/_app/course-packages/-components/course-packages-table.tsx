@@ -44,11 +44,14 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-function formatPrice(price: number) {
+function formatPrice(price?: number | string | null) {
+  if (price == null || price === '') return '-'
+  const num = typeof price === 'string' ? parseFloat(price) : price
+  if (isNaN(num)) return '-'
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
-  }).format(price)
+  }).format(num)
 }
 
 interface CoursePackagesTableProps {

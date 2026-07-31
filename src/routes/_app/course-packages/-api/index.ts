@@ -5,7 +5,7 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query'
-import type { CoursePackagesResponse, CreateCoursePackageInput } from '../-types'
+import type { CoursePackage, CoursePackagesResponse, CreateCoursePackageInput } from '../-types'
 
 export function useGetCourseOptions() {
   return useQuery({
@@ -47,6 +47,23 @@ export function useGetCoursePackages(params?: CoursePackageListParams) {
     queryFn: async (): Promise<CoursePackagesResponse> => {
       const res = await api.get('/admin/course-packages', { params })
       return res.data.data
+    },
+    staleTime: 15 * 60 * 1000,
+    gcTime: 20 * 60 * 1000,
+  })
+}
+
+export function useGetCoursePackage(slugOrId: string) {
+  return queryOptions({
+    queryKey: ['course-package', slugOrId],
+    queryFn: async (): Promise<CoursePackage> => {
+      try {
+        const res = await api.get(`/course-packages/${slugOrId}`)
+        return res.data.data ?? res.data
+      } catch {
+        const res = await api.get(`/admin/course-packages/${slugOrId}`)
+        return res.data.data ?? res.data
+      }
     },
     staleTime: 15 * 60 * 1000,
     gcTime: 20 * 60 * 1000,

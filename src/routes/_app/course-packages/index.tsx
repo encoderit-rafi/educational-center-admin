@@ -34,6 +34,7 @@ import { useQuery, keepPreviousData } from '@tanstack/react-query'
 import { CoursePackagesTable } from './-components/course-packages-table'
 import { CoursePackageFormDialog } from './-components/course-package-form-dialog'
 import { CoursePackageDeleteDialog } from './-components/course-package-delete-dialog'
+import { CoursePackageDetailsSheet } from './-components/course-package-details-sheet'
 import {
   useGetCoursePackages,
   useCreateCoursePackage,
@@ -109,8 +110,10 @@ function CoursePackagesPage() {
 
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false)
   const [selectedPackage, setSelectedPackage] = useState<CoursePackage | null>(null)
   const [deleteTarget, setDeleteTarget] = useState<CoursePackage | null>(null)
+  const [viewPackage, setViewPackage] = useState<CoursePackage | null>(null)
 
   const createMutation = useCreateCoursePackage()
   const updateMutation = useUpdateCoursePackage()
@@ -118,8 +121,8 @@ function CoursePackagesPage() {
   const arrangeMutation = useArrangeCoursePackages()
 
   const handleView = (pkg: CoursePackage) => {
-    setSelectedPackage(pkg)
-    setIsFormOpen(true)
+    setViewPackage(pkg)
+    setIsDetailsOpen(true)
   }
 
   const handleAddNew = () => {
@@ -319,6 +322,12 @@ function CoursePackagesPage() {
         packageName={deleteTarget?.name ?? ''}
         onConfirm={handleConfirmDelete}
         isPending={deleteMutation.isPending}
+      />
+      <CoursePackageDetailsSheet
+        isOpen={isDetailsOpen}
+        onOpenChange={setIsDetailsOpen}
+        packageSlugOrId={viewPackage?.slug || viewPackage?.id}
+        initialData={viewPackage}
       />
     </PageContainer>
   )
