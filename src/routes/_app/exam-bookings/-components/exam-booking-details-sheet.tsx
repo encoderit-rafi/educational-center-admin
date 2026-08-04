@@ -8,7 +8,20 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { useQuery } from '@tanstack/react-query'
 import { useGetExamBooking } from '../-api'
-import { Loader2, User, Mail, Phone, MapPin, CreditCard, Calendar, GraduationCap, FileCheck } from 'lucide-react'
+import {
+  Loader2,
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  CreditCard,
+  Calendar,
+  GraduationCap,
+  FileCheck,
+  FileText,
+  ExternalLink,
+  ClipboardList,
+} from 'lucide-react'
 
 interface ExamBookingDetailsSheetProps {
   isOpen: boolean
@@ -35,6 +48,188 @@ function formatDate(val: string | null | undefined) {
   } catch {
     return val
   }
+}
+
+function formatSectionTitle(key: string): string {
+  const map: Record<string, string> = {
+    fees: 'Fee Details',
+    documents: 'Uploaded Documents',
+    exam_info: 'Exam Information',
+    personal_info: 'Personal Information',
+  }
+  if (map[key]) return map[key]
+
+  return key
+    .replace(/_/g, ' ')
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/\b\w/g, (c) => c.toUpperCase())
+}
+
+function getSectionIcon(key: string) {
+  const normalizedKey = key.toLowerCase()
+  if (normalizedKey.includes('fee') || normalizedKey.includes('payment')) {
+    return <CreditCard className="h-4 w-4 text-primary" />
+  }
+  if (normalizedKey.includes('doc') || normalizedKey.includes('file')) {
+    return <FileCheck className="h-4 w-4 text-primary" />
+  }
+  if (normalizedKey.includes('exam') || normalizedKey.includes('info')) {
+    return <ClipboardList className="h-4 w-4 text-primary" />
+  }
+  return <FileText className="h-4 w-4 text-primary" />
+}
+
+function renderValue(val: unknown) {
+  if (val === null || val === undefined || val === '') {
+    return <span className="text-muted-foreground">-</span>
+  }
+
+  if (typeof val === 'boolean') {
+    return val ? 'Yes' : 'No'
+  }
+
+  if (typeof val === 'string') {
+    if (val.startsWith('http://') || val.startsWith('https://')) {
+      const filename = val.split('/').pop() || 'View File'
+      return (
+        <a
+          href={val}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-primary hover:underline font-medium break-all"
+        >
+          <FileText className="h-3.5 w-3.5 shrink-0" />
+          <span className="truncate max-w-[220px]">{filename}</span>
+          <ExternalLink className="h-3 w-3 shrink-0 opacity-70" />
+        </a>
+      )
+    }
+    return val
+  }
+
+  if (typeof val === 'number') {
+    return String(val)
+  }
+
+  if (Array.isArray(val)) {
+    return (
+      <ul className="list-disc list-inside space-y-1">
+        {val.map((item, i) => (
+          <li key={i}>{typeof item === 'object' ? JSON.stringify(item) : String(item)}</li>
+        ))}
+      </ul>
+    )
+  }
+
+  if (typeof val === 'object') {
+    return (
+      <pre className="text-xs bg-muted p-2 rounded max-h-40 overflow-auto font-mono">
+        {JSON.stringify(val, null, 2)}
+      </pre>
+    )
+  }
+
+  return String(val)
+}
+
+interface FormDataItem {
+  name?: string
+  key?: string
+  label?: string
+  value?: unknown
+}
+
+function FormDataSection({ formData }: { formData: Record<string, unknown> }) {
+  if (!formData || typeof formData !== 'object' || Object.keys(formData).length === 0) {
+    return null
+  }
+
+  const entries = Object.entries(formData)
+
+  return (
+    <div className="space-y-6 pt-4 border-t border-border/40">
+      <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+        Form Data Details
+      </div>
+      {entries.map(([sectionKey, sectionContent]) => {
+        const title = formatSectionTitle(sectionKey)
+        const icon = getSectionIcon(sectionKey)
+
+        if (Array.isArray(sectionContent)) {
+          return (
+            <section key={sectionKey} className="space-y-3">
+              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                {icon} {title}
+              </div>
+              <div className="grid grid-cols-2 gap-4 text-sm bg-muted/30 p-4 rounded-xl border border-border/40">
+                {sectionContent.map((item: FormDataItem | unknown, index: number) => {
+                  if (
+                    item &&
+                    typeof item === 'object' &&
+                    ('label' in item || 'name' in item || 'key' in item || 'value' in item)
+                  ) {
+                    const typedItem = item as FormDataItem
+                    const label =
+                      typedItem.label || typedItem.name || typedItem.key || `Field ${index + 1}`
+                    const val = typedItem.value
+                    const isLongText = typeof val === 'string' && val.length > 40
+
+                    return (
+                      <div key={index} className={isLongText ? 'col-span-2' : 'col-span-1'}>
+                        <div className="text-xs text-muted-foreground">{label}</div>
+                        <div className="font-medium text-foreground mt-0.5">{renderValue(val)}</div>
+                      </div>
+                    )
+                  }
+
+                  return (
+                    <div key={index} className="col-span-2">
+                      <div className="font-medium text-foreground">{renderValue(item)}</div>
+                    </div>
+                  )
+                })}
+              </div>
+            </section>
+          )
+        }
+
+        if (sectionContent && typeof sectionContent === 'object') {
+          const subEntries = Object.entries(sectionContent as Record<string, unknown>)
+          return (
+            <section key={sectionKey} className="space-y-3">
+              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                {icon} {title}
+              </div>
+              <div className="grid grid-cols-2 gap-4 text-sm bg-muted/30 p-4 rounded-xl border border-border/40">
+                {subEntries.map(([subKey, subVal]) => {
+                  const label = formatSectionTitle(subKey)
+                  const isLongText = typeof subVal === 'string' && subVal.length > 40
+
+                  return (
+                    <div key={subKey} className={isLongText ? 'col-span-2' : 'col-span-1'}>
+                      <div className="text-xs text-muted-foreground">{label}</div>
+                      <div className="font-medium text-foreground mt-0.5">{renderValue(subVal)}</div>
+                    </div>
+                  )
+                })}
+              </div>
+            </section>
+          )
+        }
+
+        return (
+          <section key={sectionKey} className="space-y-3">
+            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              {icon} {title}
+            </div>
+            <div className="bg-muted/30 p-4 rounded-xl border border-border/40 text-sm font-medium text-foreground">
+              {renderValue(sectionContent)}
+            </div>
+          </section>
+        )
+      })}
+    </div>
+  )
 }
 
 export function ExamBookingDetailsSheet({
@@ -259,6 +454,11 @@ export function ExamBookingDetailsSheet({
                   )}
                 </div>
               </section>
+
+              {/* Dynamic Form Data Sections */}
+              {booking.formData && (
+                <FormDataSection formData={booking.formData as Record<string, unknown>} />
+              )}
             </div>
           ) : (
             <div className="text-center py-20 text-muted-foreground">
@@ -270,3 +470,4 @@ export function ExamBookingDetailsSheet({
     </Sheet>
   )
 }
+
