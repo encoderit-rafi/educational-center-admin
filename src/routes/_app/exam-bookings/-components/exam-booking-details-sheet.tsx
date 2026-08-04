@@ -169,8 +169,9 @@ function FormDataSection({ formData }: { formData: Record<string, unknown> }) {
                     ('label' in item || 'name' in item || 'key' in item || 'value' in item)
                   ) {
                     const typedItem = item as FormDataItem
-                    const label =
+                    const rawLabel =
                       typedItem.label || typedItem.name || typedItem.key || `Field ${index + 1}`
+                    const label = formatSectionTitle(rawLabel)
                     const val = typedItem.value
                     const isLongText = typeof val === 'string' && val.length > 40
 
