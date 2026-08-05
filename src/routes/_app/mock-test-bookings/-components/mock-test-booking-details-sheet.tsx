@@ -108,7 +108,7 @@ export function MockTestBookingDetailsSheet({
                   {booking.variant && (
                     <div>
                       <div className="text-xs text-muted-foreground">Variant</div>
-                      <Badge variant="outline" className="mt-0.5 font-medium">
+                      <Badge variant="outline" className="mt-0.5 font-medium capitalize">
                         {booking.variant}
                       </Badge>
                     </div>

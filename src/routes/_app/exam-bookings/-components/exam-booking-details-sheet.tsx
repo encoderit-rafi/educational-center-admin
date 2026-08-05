@@ -99,7 +99,7 @@ function renderValue(val: unknown) {
           className="inline-flex items-center gap-1.5 text-primary hover:underline font-medium break-all"
         >
           <FileText className="h-3.5 w-3.5 shrink-0" />
-          <span className="truncate max-w-[220px]">{filename}</span>
+          <span className="truncate max-w-55">{filename}</span>
           <ExternalLink className="h-3 w-3 shrink-0 opacity-70" />
         </a>
       )

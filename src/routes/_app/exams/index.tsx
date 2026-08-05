@@ -210,7 +210,7 @@ function ExamsTab() {
   return (
     <>
       <div className="flex items-center justify-between pb-4">
-        <InputGroup className="w-full max-w-[300px]">
+        <InputGroup className="w-full max-w-75">
           <InputGroupAddon align="inline-start">
             <Search className="h-4 w-4" />
           </InputGroupAddon>
@@ -302,7 +302,7 @@ function ExamsTab() {
             <div className="flex items-center gap-2 justify-end">
               <span className="text-sm text-muted-foreground">Rows per page</span>
               <Select value={String(limit)} onValueChange={(v) => { setLimit(Number(v)); setPage(1) }}>
-                <SelectTrigger className="w-[70px] h-8 text-sm">
+                <SelectTrigger className="w-17.5 h-8 text-sm">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -472,7 +472,7 @@ function TestSchedulesTab() {
   return (
     <>
       <div className="flex items-center justify-between pb-4">
-        <InputGroup className="w-full max-w-[300px]">
+        <InputGroup className="w-full max-w-75">
           <InputGroupAddon align="inline-start">
             <Search className="h-4 w-4" />
           </InputGroupAddon>
