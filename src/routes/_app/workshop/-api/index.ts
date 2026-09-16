@@ -82,6 +82,7 @@ function buildWorkshopPayload(data: CreateWorkshopInput) {
   if (data.description) payload.description = data.description
   if (data.is_active !== undefined) payload.is_active = data.is_active
   if (data.translations) payload.translations = data.translations
+  if (data.vat_rate !== undefined) payload.vat_rate = data.vat_rate
 
   return payload
 }

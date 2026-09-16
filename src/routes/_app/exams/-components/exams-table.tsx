@@ -32,6 +32,7 @@ import {
   MoreHorizontal,
   Trash2,
   Edit,
+  Eye,
   ArrowUpDown,
   ArrowUp,
   ArrowDown,
@@ -51,6 +52,7 @@ function formatDate(dateStr: string | null) {
 
 interface ExamsTableProps {
   exams: Exam[]
+  onView: (exam: Exam) => void
   onEdit: (exam: Exam) => void
   onDelete: (exam: Exam) => void
   sortBy?: string
@@ -100,12 +102,14 @@ function SortHeader({
 function SortableExamRow({
   exam,
   courseMap,
+  onView,
   onEdit,
   onDelete,
   isDragDisabled,
 }: {
   exam: Exam
   courseMap: Record<string, string>
+  onView: (exam: Exam) => void
   onEdit: (exam: Exam) => void
   onDelete: (exam: Exam) => void
   isDragDisabled?: boolean
@@ -162,6 +166,10 @@ function SortableExamRow({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => onView(exam)}>
+              <Eye className="mr-2 h-4 w-4" />
+              View Details
+            </DropdownMenuItem>
             <DropdownMenuItem onClick={() => onEdit(exam)}>
               <Edit className="mr-2 h-4 w-4" />
               Edit
@@ -182,6 +190,7 @@ function SortableExamRow({
 
 export function ExamsTable({
   exams,
+  onView,
   onEdit,
   onDelete,
   sortBy = 'createdAt',
@@ -242,6 +251,7 @@ export function ExamsTable({
                   key={exam.id}
                   exam={exam}
                   courseMap={courseMap}
+                  onView={onView}
                   onEdit={onEdit}
                   onDelete={onDelete}
                   isDragDisabled={isDragDisabled}

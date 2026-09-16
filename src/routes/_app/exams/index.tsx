@@ -35,6 +35,7 @@ import { useQuery, keepPreviousData } from '@tanstack/react-query'
 import { ExamsTable } from './-components/exams-table'
 import { ExamFormDialog } from './-components/exam-form-dialog'
 import { ExamDeleteDialog } from './-components/exam-delete-dialog'
+import { ExamDetailsSheet } from './-components/exam-details-sheet'
 import { ExamTestSchedulesTable } from './-components/exam-test-schedules-table'
 import { ExamTestScheduleFormDialog } from './-components/exam-test-schedule-form-dialog'
 import { ExamTestScheduleDeleteDialog } from './-components/exam-test-schedule-delete-dialog'
@@ -135,8 +136,10 @@ function ExamsTab() {
 
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false)
   const [selectedExam, setSelectedExam] = useState<Exam | null>(null)
   const [deleteTarget, setDeleteTarget] = useState<Exam | null>(null)
+  const [viewExam, setViewExam] = useState<Exam | null>(null)
 
   const createMutation = useCreateExam()
   const updateMutation = useUpdateExam()
@@ -146,6 +149,11 @@ function ExamsTab() {
   const handleAddNew = () => {
     setSelectedExam(null)
     setIsFormOpen(true)
+  }
+
+  const handleView = (exam: Exam) => {
+    setViewExam(exam)
+    setIsDetailsOpen(true)
   }
 
   const handleEdit = (exam: Exam) => {
@@ -262,6 +270,7 @@ function ExamsTab() {
           )}
           <ExamsTable
             exams={exams}
+            onView={handleView}
             onEdit={handleEdit}
             onDelete={handleDelete}
             sortBy={sortBy}
@@ -315,6 +324,12 @@ function ExamsTab() {
           </div>
         </>
       )}
+      <ExamDetailsSheet
+        isOpen={isDetailsOpen}
+        onOpenChange={setIsDetailsOpen}
+        examData={viewExam}
+        examId={viewExam?.id}
+      />
       <ExamFormDialog
         isOpen={isFormOpen}
         onOpenChange={setIsFormOpen}

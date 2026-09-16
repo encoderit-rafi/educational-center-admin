@@ -1,3 +1,31 @@
+export interface ExamTypeItem {
+  id: string
+  name: string
+}
+
+export interface ExamCourseInfo {
+  id: string
+  name?: string | null
+  slug?: string | null
+  title?: string | null
+  subTitle?: string | null
+  shortDescription?: string | null
+  description?: string | null
+  testDateContent?: string | null
+  testRegistrationContent?: string | null
+  websiteUrl?: string | null
+  logo?: string | null
+  bannerImage?: string | null
+  keyBenefits?: unknown | null
+  focusArea?: unknown | null
+  isActive?: boolean | null
+  orderIndex?: number | null
+  translations?: Record<string, unknown> | null
+  createdAt?: string
+  updatedAt?: string
+  deletedAt?: string | null
+}
+
 export interface ExamTranslations {
   name?: string | null
   description?: string | null
@@ -19,14 +47,16 @@ export interface Exam {
   additionalFee: string | null
   vatRate: string | null
   totalFee: string | null
-  examType: unknown | null
+  examType: ExamTypeItem[] | string | unknown | null
   parentId: string | null
   examFormRedirectUrl: string | null
   isActive: boolean | null
+  orderIndex?: number | null
   translations?: Record<string, ExamTranslations> | null
   createdAt: string
   updatedAt: string
   deletedAt: string | null
+  course?: ExamCourseInfo | null
 }
 
 export interface ExamsResponse {

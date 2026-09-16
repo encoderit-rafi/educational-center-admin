@@ -35,6 +35,7 @@ export interface WorkshopFormData {
   banner_image: string
   price: number
   duration: number
+  vat_rate: number
   is_active: boolean
   translations: {
     ar: {
@@ -65,6 +66,7 @@ const emptyForm: WorkshopFormData = {
   banner_image: '',
   price: 0,
   duration: 0,
+  vat_rate: 0,
   is_active: true,
   translations: {
     ar: {
@@ -131,6 +133,7 @@ export function WorkshopFormDialog({
         banner_image: workshop.bannerImage ?? '',
         price: workshop.price ?? 0,
         duration: workshop.duration ?? 0,
+        vat_rate: workshop.vatRate ?? 0,
         is_active: workshop.isActive,
         translations: {
           ar: {
@@ -395,6 +398,25 @@ export function WorkshopFormDialog({
                 placeholder="0"
               />
             </div>
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="vat_rate">VAT Rate (%)</Label>
+            <Input
+              id="vat_rate"
+              type="number"
+              min={0}
+              max={100}
+              step="0.01"
+              value={form.vat_rate}
+              onChange={(e) =>
+                setForm((prev) => ({
+                  ...prev,
+                  vat_rate: parseFloat(e.target.value) || 0,
+                }))
+              }
+              placeholder="0.00"
+            />
           </div>
 
           <div className="flex items-center gap-2">

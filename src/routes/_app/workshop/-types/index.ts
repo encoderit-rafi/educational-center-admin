@@ -52,6 +52,7 @@ export interface CreateWorkshopInput {
   banner_image?: string
   price: number
   duration: number
+  vat_rate?: number
   is_active?: boolean
   translations?: {
     ar?: {

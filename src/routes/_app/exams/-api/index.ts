@@ -17,11 +17,24 @@ export function useGetExamTypes() {
   })
 }
 import type {
+  Exam,
   ExamsResponse,
   CreateExamInput,
   TestSchedulesResponse,
   CreateTestScheduleInput,
 } from '../-types'
+
+export function useGetExam(id: string) {
+  return queryOptions({
+    queryKey: ['exams', id],
+    queryFn: async (): Promise<Exam> => {
+      const res = await api.get(`/admin/exams/${id}`)
+      return res.data.data
+    },
+    enabled: !!id,
+    staleTime: 15 * 60 * 1000,
+  })
+}
 
 export function useGetExamOptions() {
   return useQuery({
